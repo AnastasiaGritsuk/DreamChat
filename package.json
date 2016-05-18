@@ -1,0 +1,23 @@
+{
+  "name": "dreamchat",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "elliptical-ecstatic": "^0.5.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AnastasiaGritsuk/DreamChat.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AnastasiaGritsuk/DreamChat/issues"
+  },
+  "homepage": "https://github.com/AnastasiaGritsuk/DreamChat#readme"
+}
