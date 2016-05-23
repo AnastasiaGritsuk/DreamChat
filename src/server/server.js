@@ -1,6 +1,22 @@
 var http = require('http');
-var fs = require('fs');
-var ecstatic = require('elliptical-ecstatic');
+var ecstatic = require('ecstatic');
+var handler = ecstatic({ root: __dirname + '/public', handleError:false });
+
+http.createServer(function(request, response) {
+	console.log('path is ' + __dirname);
+	console.log('handler ' + handler);
+
+	if(request.url == "/"){
+		handler.apply(null, arguments);
+	}else{
+		requestListener(request, response);
+	}
+	
+}).listen(8080);
+
+console.log('Listening on :8080');
+
+
 
 function send404Response(response){
 	response.writeHead(404, {"Content-Type":"text/plain"});
@@ -13,10 +29,7 @@ var arr = [];
 //Handle user requests
 function requestListener(request, response) {
 
-	if(request.method == "GET" && request.url == "/"){
-		response.writeHead(200, {"Content-Type":"text/html"});
-		fs.createReadStream("../client/index.html").pipe(response);
-	}else if(request.method == "POST" && request.url == "/add"){
+	if(request.method == "POST" && request.url == "/add"){
 
 		request.on('data', function(chunk) {
 			arr.push(chunk.toString());
@@ -28,11 +41,6 @@ function requestListener(request, response) {
 		response.writeHead(200, {"Content-Type":"text/plain"});
 		response.write(arr.toString());
 		response.end();
-		
-	}else{
-		fs.createReadStream("../client" + request.url).pipe(response);
 	}
 }
 
-http.createServer(requestListener).listen(8080);
-console.log('Server is running now...');
