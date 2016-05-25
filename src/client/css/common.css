@@ -1,0 +1,84 @@
+/*header*/
+
+.header {
+	background: #2770a0;
+}
+
+
+/*common*/
+body{
+	font-family: 'Open Sans';
+    font-size: 17px;
+    color: #333333;
+    overflow-x: hidden;
+}
+
+html,body {
+	height: 100%;
+}
+
+.section-inner {
+	max-width: 1020px;
+	margin: 0 auto;
+}
+
+a {
+	font-family: 'Open Sans Semibold';	
+    font-size: 17px;
+}
+
+.all {
+	min-width: 100%;
+    min-height: 100%;
+    position: relative;
+    top: 0;
+    bottom: 100%;
+    left: 0;
+    z-index: 1;
+}
+
+.content {
+	padding-bottom: 100px;
+}
+
+.clearfix:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;	
+}
+
+.errorText i{
+	color: #de3f18;
+}
+
+/*buttons states*/
+.active{
+	display: block;
+}
+
+.hidden{
+	display: none;
+}
+
+.hide {
+	visibility: hidden;
+}
+
+.visible{
+	visibility: visible;
+}
+
+/*footer*/
+.footer {
+	background: #2770a0;
+	clear: both;
+}
+
+.footer-copyright {
+	height: 100px;
+	margin: -100px auto;
+	text-align: center;
+	line-height: 100px;
+}

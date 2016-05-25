@@ -6,7 +6,7 @@ function addData(){
 	
 	var xhr = new XMLHttpRequest();
 
-    xhr.open('POST', 'http://localhost:8080/add', true);
+    xhr.open('POST', 'http://localhost:8080/chat', true);
     //xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhr.onreadystatechange = function () {
         if (xhr.readyState != 4) return;
@@ -21,7 +21,7 @@ function addData(){
 function receiveData(){
 	var xhr = new XMLHttpRequest();
 
-    xhr.open('GET', 'http://localhost:8080/getData', true);
+    xhr.open('GET', 'http://localhost:8080/history', true);
     
     xhr.onreadystatechange = function () {
         if (xhr.readyState != 4) return;
