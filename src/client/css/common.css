@@ -1,15 +1,30 @@
 /*header*/
 
 .header {
-	background: #2770a0;
+	background: #434667;
 }
 
+.nav_service_left{
+	float: left;
+	width: 30%;
+}
+
+.nav_service_right{
+	float: left;
+	width: 70%;
+}
+
+.nav_service_item{
+	display: inline-block;
+    vertical-align: middle;
+    margin: 0 12px;
+}    
 
 /*common*/
 body{
 	font-family: 'Open Sans';
     font-size: 17px;
-    color: #333333;
+    color: #ffffff;
     overflow-x: hidden;
 }
 
@@ -82,3 +97,68 @@ a {
 	text-align: center;
 	line-height: 100px;
 }
+
+.user_profile_img{
+	background-image: url('../img/avatar_login.png');
+    background-repeat: no-repeat;
+    display: block;
+    width: 24px;
+    height: 25px;
+}
+
+.userProfile_link{
+	display: block;
+}
+
+.companion_list-wrap{
+	float: left;
+	width: 30%;
+}
+
+.chat_wrap{
+	float: right;
+	width: 70%;
+}
+
+.chat_history{
+	background-color: #373351;
+	min-height: 400px;
+	height: 100%;
+	width: 100%;
+}
+
+.chat_area{
+	height: 100%;
+	min-height: 100px;
+	width: 100%;
+	resize: none;
+}
+
+.companion_list{
+	width: 100%;
+	height: 100%;
+	min-height: 400px;
+}
+
+.content_inner{
+	background-color: #4f4e69;
+}
+
+.answer_area_wrap{
+	float: left;
+}
+
+.answer_btn_wrap{
+	float: right;
+}
+
+.answer_btn{
+	background-image: url('../img/send-button.png');
+    background-repeat: no-repeat;
+    display: block;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+}
+
+    
