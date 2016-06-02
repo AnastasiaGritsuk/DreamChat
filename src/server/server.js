@@ -32,7 +32,7 @@ function requestListener(request, response) {
 	if(request.method == "POST" && request.url == "/chat"){
 		request.on('data', function(chunk) {
 			arr.push(chunk.toString());
-			response.write("added " + chunk);
+			response.write(chunk);
 		}).on('end', function() {
 		  	response.end();
 		});

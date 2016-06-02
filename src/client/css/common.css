@@ -1,9 +1,5 @@
 /*header*/
 
-.header {
-	background: #434667;
-}
-
 .nav_service_left{
 	float: left;
 	width: 30%;
@@ -43,6 +39,7 @@ a {
 }
 
 .all {
+	
 	min-width: 100%;
     min-height: 100%;
     position: relative;
@@ -50,6 +47,13 @@ a {
     bottom: 100%;
     left: 0;
     z-index: 1;
+}
+
+.nav_service_wrap{
+	background-image: url('../img/purple-background.jpg');
+	background-repeat: no-repeat;
+	background-size: 100%;
+	padding: 40px 0;
 }
 
 .content {
@@ -113,6 +117,8 @@ a {
 .companion_list-wrap{
 	float: left;
 	width: 30%;
+	min-height: 497px;
+	background-color: #494a68;
 }
 
 .chat_wrap{
@@ -120,8 +126,15 @@ a {
 	width: 70%;
 }
 
-.chat_history{
+.chat_history_wrap{
 	background-color: #373351;
+    padding: 10px 20px;
+}
+.content_inner{
+
+}
+
+.chat_history{
 	min-height: 400px;
 	height: 100%;
 	width: 100%;
@@ -135,26 +148,20 @@ a {
 }
 
 .companion_list{
-	width: 100%;
-	height: 100%;
-	min-height: 400px;
-}
-
-.content_inner{
-	background-color: #4f4e69;
+	
 }
 
 .answer_area_wrap{
 	float: left;
-	width: 90%;
-
+	width: 80%;
+	padding: 10px 20px;
 }
 
 .answer_btn_wrap{
 	float: right;
     line-height: 86px;
     height: 76px;
-    margin: 0 20px 0 0;
+    padding: 0 20px 0 24px;
 }
 
 .answer_btn{
@@ -168,5 +175,16 @@ a {
 
 .answer_area{
 	width: 100%;
-	height: 70px;
+    height: 52px;
+    background-color: #373351;
+    outline: 0px none transparent;
+    border: none;
+    resize: none;
+    color: #fff;
+    font-size: 15px;
+}
+
+.answerService{
+	background-color: #373351;
+	border-top: 1px solid #fff;
 }
