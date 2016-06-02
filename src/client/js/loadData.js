@@ -1,10 +1,32 @@
-var answer = document.getElementById('answer');
-var data = document.getElementById('data');
+var sendButton = document.getElementById('sendButton');
+var newMessageBox = document.getElementById('newMessageBox');
+var historyBox = document.getElementById('historyBox');
 
-function addData(){
-	var newData = data.value;
-	
-	var xhr = new XMLHttpRequest();
+function run(){
+    newMessageBox.addEventListener('keypress', function(e){
+        if(e.keyCode == 13)
+            onSendButtonClick();
+        return false;
+    });
+    sendButton.addEventListener('click', onSendButtonClick);
+    //doPolling();
+}
+
+function onSendButtonClick(){
+	var newMessage = newMessageBox.value;
+
+    if(newMessage.value == '')
+        return;
+
+    newMessageBox.value = '';
+
+    sendMessage(newMessage, function(){
+        console.log('Message sent ' + newMessage);
+    });
+}
+
+function sendMessage(message, continueWith){
+    var xhr = new XMLHttpRequest();
 
     xhr.open('POST', 'http://localhost:8080/chat', true);
     //xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
@@ -12,10 +34,10 @@ function addData(){
         if (xhr.readyState != 4) return;
         var response = xhr.responseText;
 
-        answer.innerHTML = response;
+        historyBox.innerHTML = response;
     }
 
-    xhr.send(newData);
+    xhr.send(message);
 }
 
 function receiveData(){
@@ -27,7 +49,7 @@ function receiveData(){
         if (xhr.readyState != 4) return;
         var response = xhr.responseText;
 
-        answer.innerHTML = response;
+        sendButton.innerHTML = response;
     }
 
     xhr.send(null);

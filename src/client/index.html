@@ -8,7 +8,7 @@
 		<link href="css/reset.css" rel="stylesheet">
 		<link href="css/common.css" rel="stylesheet">	
 	</head>
-	<body>
+	<body onload = "run()">
 
 	<div class="all">
 		<header class="header" >
@@ -45,15 +45,15 @@
 					</div>
 					<div class="chat_wrap">
 						<div class="chat_history_wrap">
-							<div id = "answer"class="chat_history"></div>
+							<div id = "historyBox" class="chat_history"></div>
 							
 						</div>
-						<div class="answerService">
+						<div class="answerService clearfix">
 							<div class="answer_area_wrap">
-								<textarea id="data" class="answer_area"></textarea>	
+								<textarea id="newMessageBox" class="answer_area"></textarea>	
 							</div>
 							<div class="answer_btn_wrap">
-								<a class="answer_btn" onclick="addData()"></a>	
+								<a id = "sendButton" class="answer_btn"></a>
 							</div>							
 						</div>
 					</div>
