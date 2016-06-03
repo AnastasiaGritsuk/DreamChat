@@ -2,6 +2,16 @@ var sendButton = document.getElementById('sendButton');
 var newMessageBox = document.getElementById('newMessageBox');
 var historyBox = document.getElementById('historyBox');
 
+var theMessage = function(text){
+    return {
+        text:text
+    }
+}
+
+var appState = {
+    history:[]
+}
+
 function run(){
     newMessageBox.addEventListener('keypress', function(e){
         if(e.keyCode == 13)
@@ -9,13 +19,13 @@ function run(){
         return false;
     });
     sendButton.addEventListener('click', onSendButtonClick);
-    //doPolling();
+    doPolling();
 }
 
 function onSendButtonClick(){
-	var newMessage = newMessageBox.value;
+	var newMessage = theMessage(newMessageBox.value);
 
-    if(newMessage.value == '')
+    if(newMessageBox.value == '')
         return;
 
     newMessageBox.value = '';
@@ -37,20 +47,34 @@ function sendMessage(message, continueWith){
         historyBox.innerHTML = response;
     }
 
-    xhr.send(message);
+    xhr.send(JSON.stringify(message));
 }
 
-function receiveData(){
-	var xhr = new XMLHttpRequest();
+function doPolling(){
+    function loop(){
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'http://localhost:8080/history', true);
 
-    xhr.open('GET', 'http://localhost:8080/history', true);
-    
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState != 4) return;
-        var response = xhr.responseText;
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState != 4) return;
+            var response = JSON.parse(xhr.responseText);
 
-        sendButton.innerHTML = response;
+            updateHistory(response);
+            setTimeout(loop, 1000);
+        }
+
+        xhr.send(null);
+
     }
 
-    xhr.send(null);
+    loop();
+}
+
+function updateHistory(newMessages){
+    // for(var i = 0; i < newMessages.length; i++)
+        addMessageInternal(newMessages);
+}
+
+function addMessageInternal(message){
+    historyBox.innerText = message;
 }
