@@ -19,7 +19,7 @@ function run(){
         return false;
     });
     sendButton.addEventListener('click', onSendButtonClick);
-    doPolling();
+    //doPolling();
 }
 
 function onSendButtonClick(){
@@ -39,12 +39,11 @@ function sendMessage(message, continueWith){
     var xhr = new XMLHttpRequest();
 
     xhr.open('POST', 'http://localhost:8080/chat', true);
-    //xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhr.onreadystatechange = function () {
         if (xhr.readyState != 4) return;
-        var response = xhr.responseText;
-
-        historyBox.innerHTML = response;
+        var response = JSON.parse(xhr.responseText);
+        console.log('here is response ' + response);
+        historyBox.innerHTML = response.text;
     }
 
     xhr.send(JSON.stringify(message));
@@ -58,6 +57,7 @@ function doPolling(){
         xhr.onreadystatechange = function () {
             if (xhr.readyState != 4) return;
             var response = JSON.parse(xhr.responseText);
+            console.log(response);
 
             updateHistory(response);
             setTimeout(loop, 1000);
@@ -71,8 +71,8 @@ function doPolling(){
 }
 
 function updateHistory(newMessages){
-    // for(var i = 0; i < newMessages.length; i++)
-        addMessageInternal(newMessages);
+    for(var i = 0; i < newMessages.length; i++)
+        addMessageInternal(newMessages[i]);
 }
 
 function addMessageInternal(message){

@@ -30,15 +30,23 @@ var arr = [];
 function requestListener(request, response) {
 
 	if(request.method == "POST" && request.url == "/chat"){
-		request.on('data', function(chunk) {
-			arr.push(chunk.toString());
-			response.write(chunk);
-		}).on('end', function() {
-		  	response.end();
+		var data = '';
+		request.on('data', function(text) {
+			data = text;	
+			data = JSON.parse(data);
+			response.write(JSON.stringify(data));		
 		});
+
+		request.on('end', function() {
+			response.end();
+		});
+
 	}else if(request.method == "GET" && request.url == "/history"){
 		response.writeHead(200, {"Content-Type":"text/plain"});
 		response.write(arr.toString());
-		response.end();
+		
 	}
+
+	
+	
 }
