@@ -36,10 +36,12 @@ function Connect() {
 function tryJSON(text) {
 	try{
 		var json  = JSON.parse(text);
+		console.log(json);
 
 		return JSON.stringify(json, null, 2);
 	}
 	catch(ex) {
+		console.log('here!!');
 		return text;
 	}
 }

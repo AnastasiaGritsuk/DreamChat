@@ -40,13 +40,12 @@ function sendMessage(message, continueWith){
     
 
     xhr.open('POST', 'http://localhost:8080/chat', true);
-    xhr.setRequestHeader( 'Access-Control-Allow-Origin', '*');
     xhr.onreadystatechange = function () {
         if (xhr.readyState != 4) return;
 
         var response = JSON.parse(xhr.responseText);
-        console.log('here is response ' + response);
-        historyBox.innerHTML = response.text;
+        
+        historyBox.innerHTML = JSON.parse(response.body).text;
     }
 
     xhr.send(JSON.stringify(message));

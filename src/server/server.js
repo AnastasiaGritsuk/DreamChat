@@ -24,33 +24,57 @@ function send404Response(response){
 	response.end();
 }
 
-var arr = [];
+var body = [];
 
 //Handle user requests
 function requestListener(request, response) {
+	var headers =  request.headers;
+	var method = request.method;
+	var url = request.url;
+	
+	if(method == "POST" && url == "/chat"){
 
-	if(request.method == "POST" && request.url == "/chat"){
+		request.on('error', function(err) {
+			console.error(err);
+		}).on('data', function(chunk) {
+			body.push(chunk);
 
+		}).on('end', function() {
+			body = Buffer.concat(body).toString();
 
-		var data = '';
-		request.on('data', function(text) {
-			data = text;	
-			data = JSON.parse(data);
-			response.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
-			response.write(JSON.stringify(data));		
-		});
+			response.on('error', function(err) {
+				console.error(err);
+			});
 
-		request.on('end', function() {
+			response.statusCode = 200;
+			response.setHeader('Content-Type', 'application/json');
 
+			var responseBody = {
+				headers: headers,
+				method:method,
+				url:url,
+				body:body
+			};
+
+			response.write(JSON.stringify(responseBody));
 			response.end();
 		});
-
-	}else if(request.method == "GET" && request.url == "/history"){
-		response.writeHead(200, {"Content-Type":"text/plain"});
-		response.write(arr.toString());
-		
 	}
 
+	if(method == "GET" && url == "/chat"){
+
+		response.statusCode = 200;
+		response.setHeader('Content-Type', 'application/json');
+		response.write(JSON.stringify(body));
+		response.end();
+	}
+
+	else if(request.method == "GET" && request.url == "/history"){
+
+		response.writeHead(200, {"Content-Type":"text/plain"});
+		response.write('history');
+		
+	}	
 	
 	
 }
