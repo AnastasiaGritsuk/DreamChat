@@ -30,14 +30,18 @@ var arr = [];
 function requestListener(request, response) {
 
 	if(request.method == "POST" && request.url == "/chat"){
+
+
 		var data = '';
 		request.on('data', function(text) {
 			data = text;	
 			data = JSON.parse(data);
+			response.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
 			response.write(JSON.stringify(data));		
 		});
 
 		request.on('end', function() {
+
 			response.end();
 		});
 

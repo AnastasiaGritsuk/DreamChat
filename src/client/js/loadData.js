@@ -37,10 +37,13 @@ function onSendButtonClick(){
 
 function sendMessage(message, continueWith){
     var xhr = new XMLHttpRequest();
+    
 
     xhr.open('POST', 'http://localhost:8080/chat', true);
+    xhr.setRequestHeader( 'Access-Control-Allow-Origin', '*');
     xhr.onreadystatechange = function () {
         if (xhr.readyState != 4) return;
+
         var response = JSON.parse(xhr.responseText);
         console.log('here is response ' + response);
         historyBox.innerHTML = response.text;
