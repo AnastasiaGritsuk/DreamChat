@@ -3,7 +3,7 @@
 body{
 	font-family: 'Open Sans';
     font-size: 17px;
-    color: #ffffff;
+    color: #0c2211;
     overflow-x: hidden;
 }
 
@@ -12,7 +12,7 @@ html,body {
 }
 
 .section-inner {
-	max-width: 1020px;
+	max-width: 900px;
 	margin: 0 auto;
 }
 
@@ -30,13 +30,6 @@ a {
     bottom: 100%;
     left: 0;
     z-index: 1;
-}
-
-.nav_service_wrap{
-	background-image: url('../img/purple-background.jpg');
-	background-repeat: no-repeat;
-	background-size: 100%;
-	padding: 40px 0;
 }
 
 .content {
@@ -95,11 +88,4 @@ a {
 
 .userProfile_link{
 	display: block;
-}
-
-.companion_list-wrap{
-	float: left;
-	width: 30%;
-	min-height: 497px;
-	background-color: #494a68;
 }
