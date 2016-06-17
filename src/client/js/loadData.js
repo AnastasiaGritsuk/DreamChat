@@ -21,7 +21,7 @@ var appState = {
     user: 'User' + uniqueId(),
     mainUrl: 'http://localhost:8080/chat',
     history:[],
-    token: ''
+    token: 0
 }
 
 function run(){
@@ -31,7 +31,7 @@ function run(){
         return false;
     });
     sendButton.addEventListener('click', onSendButtonClick);
-    //doPolling();
+    doPolling();
 }
 
 function onSendButtonClick(){
@@ -66,8 +66,8 @@ function doPolling(){
             if (xhr.readyState != 4) return;
             var response = JSON.parse(xhr.responseText);
             console.log(response);
-
-            updateHistory(response);
+            appState.token = response.token;
+            updateHistory(response.messages);
             setTimeout(loop, 1000);
         }
 
@@ -84,5 +84,7 @@ function updateHistory(newMessages){
 }
 
 function addMessageInternal(message){
-    historyBox.innerText = message;
+    var newline = document.createElement("span"); 
+    newline.innerText = message;
+    historyBox.appendChild(newline);
 }

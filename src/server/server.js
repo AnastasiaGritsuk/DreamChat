@@ -4,6 +4,8 @@ var handler = ecstatic({ root: '../client', handleError:false });
 var url = require('url');
 
 var messageHistory = [];
+var tokenHistory = [];
+var currentToken =  0 ;
 
 http.createServer(function(request, response) {
 	if(isMy(request.url) != -1){
@@ -17,7 +19,6 @@ http.createServer(function(request, response) {
 console.log('Listening on :8080');
 
 function isMy(url){
-	console.log(url);
 	return url.indexOf('/chat');
 }
 
@@ -31,7 +32,6 @@ var body = [];
 
 //Handle user requests
 function requestListener(request, response) {
-	console.log('here');
 	var headers =  request.headers;
 	var method = request.method;
 	var url = request.url;
@@ -63,18 +63,30 @@ function requestListener(request, response) {
 			// response.write(JSON.stringify(responseBody));
 			messageHistory.push(JSON.parse(body));
 			body = [];
-			console.log(messageHistory);
+			currentToken = currentToken + 1;
+			console.log(currentToken);
 			response.end();
 		});
 	}
 
 	if(method == "GET"){
 
+		console.log(url);
+		var token = +url.split('?')[1].split('=')[1];
+		tokenHistory.push(token);
+		var messagesArr = [];
+		for(var i=token;i<messageHistory.length;i++){
+			messagesArr.push(messageHistory[i]);
+		}
 
+		var responseBody = {
+			messages: messagesArr,
+			token: currentToken
+		};
 
 		response.statusCode = 200;
 		response.setHeader('Content-Type', 'application/json');
-		response.write(JSON.stringify(body));
+		response.write(JSON.stringify(responseBody));
 		response.end();
 	}
 

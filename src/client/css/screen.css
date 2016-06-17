@@ -269,14 +269,14 @@ a {
   resize: none;
 }
 
-/* line 26, D:/DreamChat/src/client/scss/_chat.scss */
+/* line 27, D:/DreamChat/src/client/scss/_chat.scss */
 .answer_area_wrap {
   float: left;
   width: 80%;
   padding: 10px 0;
 }
 
-/* line 32, D:/DreamChat/src/client/scss/_chat.scss */
+/* line 33, D:/DreamChat/src/client/scss/_chat.scss */
 .answer_btn_wrap {
   float: right;
   height: 76px;
@@ -285,7 +285,7 @@ a {
   width: 40px;
 }
 
-/* line 40, D:/DreamChat/src/client/scss/_chat.scss */
+/* line 41, D:/DreamChat/src/client/scss/_chat.scss */
 .answer_btn {
   background-image: url("../img/arrow.png");
   background-repeat: no-repeat;
@@ -297,7 +297,7 @@ a {
   margin-top: -20px;
 }
 
-/* line 51, D:/DreamChat/src/client/scss/_chat.scss */
+/* line 52, D:/DreamChat/src/client/scss/_chat.scss */
 .answer_area {
   width: 100%;
   height: 52px;
@@ -308,7 +308,7 @@ a {
   font-size: 15px;
 }
 
-/* line 61, D:/DreamChat/src/client/scss/_chat.scss */
+/* line 62, D:/DreamChat/src/client/scss/_chat.scss */
 .answerService {
   background-color: #ffffff;
   padding: 0 30px;
