@@ -313,3 +313,8 @@ a {
   background-color: #ffffff;
   padding: 0 30px;
 }
+
+/* line 67, D:/DreamChat/src/client/scss/_chat.scss */
+.message {
+  margin: 10px 0;
+}

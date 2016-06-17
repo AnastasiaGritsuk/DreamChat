@@ -52,18 +52,10 @@ function requestListener(request, response) {
 
 			response.statusCode = 200;
 			response.setHeader('Content-Type', 'application/json');
-
-			// var responseBody = {
-			// 	headers: headers,
-			// 	method:method,
-			// 	url:url,
-			// 	body:body
-			// };
-
-			// response.write(JSON.stringify(responseBody));
 			messageHistory.push(JSON.parse(body));
 			body = [];
 			currentToken = currentToken + 1;
+			tokenHistory.push(currentToken);
 			console.log(currentToken);
 			response.end();
 		});
@@ -73,7 +65,9 @@ function requestListener(request, response) {
 
 		console.log(url);
 		var token = +url.split('?')[1].split('=')[1];
-		tokenHistory.push(token);
+		if(token == null){
+			token == messageHistory.length;
+		}
 		var messagesArr = [];
 		for(var i=token;i<messageHistory.length;i++){
 			messagesArr.push(messageHistory[i]);

@@ -21,7 +21,7 @@ var appState = {
     user: 'User' + uniqueId(),
     mainUrl: 'http://localhost:8080/chat',
     history:[],
-    token: 0
+    token: null
 }
 
 function run(){
@@ -84,7 +84,8 @@ function updateHistory(newMessages){
 }
 
 function addMessageInternal(message){
-    var newline = document.createElement("span"); 
-    newline.innerText = message;
+    var newline = document.createElement("p"); 
+    newline.innerText = message.user + message.text;
+    newline.classList.add('message');
     historyBox.appendChild(newline);
 }
