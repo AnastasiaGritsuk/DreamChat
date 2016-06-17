@@ -4,13 +4,24 @@ var historyBox = document.getElementById('historyBox');
 
 var theMessage = function(text){
     return {
-        text:text
+        id: uniqueId(),
+        text:text,
+        user: appState.user
     }
 }
 
+var uniqueId = function() {
+    var date = Date.now();
+    var random = Math.random() * Math.random();
+
+    return Math.floor(date * random).toString();
+};
+
 var appState = {
-    mainUrl: 'http://localhost:8080/history',
-    history:[]
+    user: 'User' + uniqueId(),
+    mainUrl: 'http://localhost:8080/chat',
+    history:[],
+    token: ''
 }
 
 function run(){
@@ -49,7 +60,7 @@ function sendMessage(message, continueWith){
 function doPolling(){
     function loop(){
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'http://localhost:8080/history', true);
+        xhr.open('GET', appState.mainUrl + '?token=' + appState.token, true);
 
         xhr.onreadystatechange = function () {
             if (xhr.readyState != 4) return;

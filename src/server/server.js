@@ -6,7 +6,7 @@ var url = require('url');
 var messageHistory = [];
 
 http.createServer(function(request, response) {
-	if(isMy(request.url)){
+	if(isMy(request.url) != -1){
 		requestListener(request, response);
 	}else{
 		handler.apply(null, arguments);
@@ -17,7 +17,8 @@ http.createServer(function(request, response) {
 console.log('Listening on :8080');
 
 function isMy(url){
-	return url == '/chat' || url == "/history";
+	console.log(url);
+	return url.indexOf('/chat');
 }
 
 function send404Response(response){
@@ -30,6 +31,7 @@ var body = [];
 
 //Handle user requests
 function requestListener(request, response) {
+	console.log('here');
 	var headers =  request.headers;
 	var method = request.method;
 	var url = request.url;
@@ -66,7 +68,9 @@ function requestListener(request, response) {
 		});
 	}
 
-	if(method == "GET" && url == "/chat"){
+	if(method == "GET"){
+
+
 
 		response.statusCode = 200;
 		response.setHeader('Content-Type', 'application/json');
