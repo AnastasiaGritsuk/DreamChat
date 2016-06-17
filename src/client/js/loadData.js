@@ -9,6 +9,7 @@ var theMessage = function(text){
 }
 
 var appState = {
+    mainUrl: 'http://localhost:8080/history',
     history:[]
 }
 
@@ -37,15 +38,9 @@ function onSendButtonClick(){
 
 function sendMessage(message, continueWith){
     var xhr = new XMLHttpRequest();
-    
-
-    xhr.open('POST', 'http://localhost:8080/chat', true);
+    xhr.open('POST', appState.mainUrl, true);
     xhr.onreadystatechange = function () {
         if (xhr.readyState != 4) return;
-
-        var response = JSON.parse(xhr.responseText);
-        
-        historyBox.innerHTML = JSON.parse(response.body).text;
     }
 
     xhr.send(JSON.stringify(message));

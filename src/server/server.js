@@ -3,6 +3,8 @@ var ecstatic = require('ecstatic');
 var handler = ecstatic({ root: '../client', handleError:false });
 var url = require('url');
 
+var messageHistory = [];
+
 http.createServer(function(request, response) {
 	if(isMy(request.url)){
 		requestListener(request, response);
@@ -32,7 +34,7 @@ function requestListener(request, response) {
 	var method = request.method;
 	var url = request.url;
 	
-	if(method == "POST" && url == "/chat"){
+	if(method == "POST"){
 
 		request.on('error', function(err) {
 			console.error(err);
@@ -49,14 +51,17 @@ function requestListener(request, response) {
 			response.statusCode = 200;
 			response.setHeader('Content-Type', 'application/json');
 
-			var responseBody = {
-				headers: headers,
-				method:method,
-				url:url,
-				body:body
-			};
+			// var responseBody = {
+			// 	headers: headers,
+			// 	method:method,
+			// 	url:url,
+			// 	body:body
+			// };
 
-			response.write(JSON.stringify(responseBody));
+			// response.write(JSON.stringify(responseBody));
+			messageHistory.push(JSON.parse(body));
+			body = [];
+			console.log(messageHistory);
 			response.end();
 		});
 	}
