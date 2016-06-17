@@ -1,4 +1,4 @@
 *.orig
 node_modules/
-history.txt
+/history.txt
 .sass-cache/
