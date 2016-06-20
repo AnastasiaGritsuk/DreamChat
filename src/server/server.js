@@ -1,6 +1,6 @@
 var http = require('http');
 var ecstatic = require('ecstatic');
-var handler = ecstatic({ root: '../client', handleError:false });
+var staticHandler = ecstatic({ root: '../client', handleError:false });
 var url = require('url');
 
 var messageHistory = [];
@@ -9,9 +9,9 @@ var currentToken =  0 ;
 
 http.createServer(function(request, response) {
 	if(isMy(request.url) != -1){
-		requestListener(request, response);
+		handler(request, response);
 	}else{
-		handler.apply(null, arguments);
+		staticHandler.apply(null, arguments);
 	}	
 
 }).listen(8080);
@@ -31,7 +31,7 @@ function send404Response(response){
 var body = [];
 
 //Handle user requests
-function requestListener(request, response) {
+function handler(request, response) {
 	var headers =  request.headers;
 	var method = request.method;
 	var url = request.url;
@@ -82,6 +82,30 @@ function requestListener(request, response) {
 		response.setHeader('Content-Type', 'application/json');
 		response.write(JSON.stringify(responseBody));
 		response.end();
+	}
+
+	if(method == 'PUT'){
+		request.on('error', function(err) {
+			console.error(err);
+		}).on('data', function(chunk) {
+			body.push(chunk);
+
+		}).on('end', function() {
+			body = Buffer.concat(body).toString();
+
+			response.on('error', function(err) {
+				console.error(err);
+			});
+
+			response.statusCode = 200;
+			response.setHeader('Content-Type', 'application/json');
+			messageHistory.push(JSON.parse(body));
+			body = [];
+			currentToken = currentToken + 1;
+			tokenHistory.push(currentToken);
+			console.log(currentToken);
+			response.end();
+		});
 	}
 
 	else if(request.method == "GET" && request.url == "/history"){

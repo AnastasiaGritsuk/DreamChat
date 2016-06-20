@@ -12,6 +12,8 @@
 	min-height: 400px;
 	height: 100%;
 	width: 100%;
+    max-height: 400px;
+    overflow: auto;
 }
 
 .chat_area{
@@ -90,4 +92,12 @@
     margin-left: 10px;
     border-radius: 5px;
     background-color: #e4d4ee;
+}
+
+.message-edit{
+    cursor: pointer;
+}
+
+.message-delete{
+    cursor: pointer;
 }

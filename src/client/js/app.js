@@ -1,6 +1,7 @@
 var sendButton = document.getElementById('sendButton');
 var newMessageBox = document.getElementById('newMessageBox');
 var historyBox = document.getElementById('historyBox');
+historyBox.addEventListener('click', delegateEvent);
 
 var theMessage = function(text){
     return {
@@ -97,4 +98,15 @@ function elementFromTemplate(){
 function renderItemState(element, message){
     element.getElementsByClassName('message-username')[0].innerHTML = message.user;
     element.getElementsByClassName('message-text')[0].innerHTML = message.text;
+}
+
+function delegateEvent(evtObj){
+    if(evtObj.type == 'click') {
+        onEditClick(evtObj);
+        return;
+    }
+}
+
+function onEditClick(evtObj){
+   alert('ff');
 }
