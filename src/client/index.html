@@ -6,6 +6,8 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Chat Project</title>
 		<link href="css/screen.css" rel="stylesheet">	
+		<link href="css/font-awesome.css" rel="stylesheet">
+		<link href="css/font-awesome.min.css" rel="stylesheet">
 	</head>
 	<body onload = "run()">
 
@@ -37,6 +39,21 @@
 			</div>
 		</main>
 	</div>
-	<script src="js/loadData.js"></script>
+
+	<div id="message" class="message hidden">
+		<div class="arrow-left"></div>
+		<div class="message-content">
+			<span class="message-username">Username</span>
+			<span class="message-text">Hello baby</span>
+		</div>
+		<span class="message-edit">
+			<i class="icon-edit"></i>
+		</span>
+		<span class="message-delete">
+			<i class="icon-remove-circle"></i> 
+		</span>
+	</div>
+
+	<script src="js/app.js"></script>
 	</body>
 </html>
