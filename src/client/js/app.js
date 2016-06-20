@@ -84,8 +84,17 @@ function updateHistory(newMessages){
 }
 
 function addMessageInternal(message){
-    var newline = document.createElement("p"); 
-    newline.innerText = message.user + message.text;
-    newline.classList.add('message');
-    historyBox.appendChild(newline);
+    var element = elementFromTemplate();
+    renderItemState(element, message);
+    historyBox.appendChild(element);
+}
+
+function elementFromTemplate(){
+    var template = document.getElementById('message-template');
+    return template.firstElementChild.cloneNode(true);
+}
+
+function renderItemState(element, message){
+    element.getElementsByClassName('message-username')[0].innerHTML = message.user;
+    element.getElementsByClassName('message-text')[0].innerHTML = message.text;
 }
