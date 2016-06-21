@@ -100,6 +100,7 @@ function handler(request, response) {
 			response.statusCode = 200;
 			response.setHeader('Content-Type', 'application/json');
 			messageHistory.push(JSON.parse(body));
+			console.log(messageHistory);
 			body = [];
 			currentToken = currentToken + 1;
 			tokenHistory.push(currentToken);

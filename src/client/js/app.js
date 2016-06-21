@@ -66,7 +66,6 @@ function doPolling(){
         xhr.onreadystatechange = function () {
             if (xhr.readyState != 4) return;
             var response = JSON.parse(xhr.responseText);
-            console.log(response);
             appState.token = response.token;
             updateHistory(response.messages);
             setTimeout(loop, 1000);
@@ -96,17 +95,40 @@ function elementFromTemplate(){
 }
 
 function renderItemState(element, message){
+    element.setAttribute('id', message.id);
     element.getElementsByClassName('message-username')[0].innerHTML = message.user;
     element.getElementsByClassName('message-text')[0].innerHTML = message.text;
 }
 
 function delegateEvent(evtObj){
-    if(evtObj.type == 'click') {
+    if(evtObj.type == 'click' && evtObj.target.className == 'icon-edit') {
         onEditClick(evtObj);
+        return;
+    }
+
+    if(evtObj.type == 'click' && evtObj.target.className == 'icon-remove-circle') {
+        onDeleteClick(evtObj);
         return;
     }
 }
 
 function onEditClick(evtObj){
-   alert('ff');
+    var updatedMessage = {
+        id: evtObj.path[2].id,
+        text:'updated!!!!',
+        user: appState.user
+    }
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('PUT', appState.mainUrl, true);
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState != 4) return;
+    }
+
+    xhr.send(JSON.stringify(updatedMessage));
+
+}
+
+function onDeleteClick(evtObj){
+    alert('x');
 }
