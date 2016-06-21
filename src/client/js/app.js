@@ -67,6 +67,7 @@ function doPolling(){
             if (xhr.readyState != 4) return;
             var response = JSON.parse(xhr.responseText);
             appState.token = response.token;
+
             updateHistory(response.messages);
             setTimeout(loop, 1000);
         }
@@ -79,11 +80,22 @@ function doPolling(){
 }
 
 function updateHistory(newMessages){
+
     for(var i = 0; i < newMessages.length; i++)
         addMessageInternal(newMessages[i]);
 }
 
 function addMessageInternal(message){
+    var childnodes = historyBox.childNodes;
+
+    for(var i=0;i < childnodes.length;i++){
+        if(message.id == childnodes[i].getAttribute('id')){
+            childnodes[i].getElementsByClassName('message-username')[0].innerHTML = message.user;
+            childnodes[i].getElementsByClassName('message-text')[0].innerHTML = message.text;
+            return;
+        }
+    }
+
     var element = elementFromTemplate();
     renderItemState(element, message);
     historyBox.appendChild(element);
