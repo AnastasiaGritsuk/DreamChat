@@ -142,5 +142,13 @@ function onEditClick(evtObj){
 }
 
 function onDeleteClick(evtObj){
-    alert('x');
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('DELETE', appState.mainUrl + '?message=' + evtObj.path[2].id, true);
+
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState != 4) return;
+    }
+
+    xhr.send(null);
 }

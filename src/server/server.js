@@ -109,6 +109,26 @@ function handler(request, response) {
 		});
 	}
 
+	if(method == 'DELETE'){
+		var messageId = +url.split('?')[1].split('=')[1];
+
+		var deletedMessage = {
+			id: messageId,
+			text: "message has been removed",
+			user: ''
+		}
+		
+		messageHistory.push(deletedMessage);
+
+		response.statusCode = 200;
+		response.setHeader('Content-Type', 'application/json');
+		currentToken = currentToken + 1;
+		tokenHistory.push(currentToken);
+
+		response.end();
+
+	}
+
 	else if(request.method == "GET" && request.url == "/history"){
 
 		response.writeHead(200, {"Content-Type":"text/plain"});
