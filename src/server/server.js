@@ -65,6 +65,14 @@ function handler(request, response) {
 	if(method == "GET"){
 
 		console.log(url);
+
+		if(url.search(/token=/i) == -1) {
+			response.statusCode = 400;
+			response.write('bad request');
+			response.end();
+			return;
+		}
+
 		var token = +url.split('?')[1].split('=')[1];
 		if(token == null){
 			token == messageHistory.length;
@@ -102,11 +110,9 @@ function handler(request, response) {
 			response.statusCode = 200;
 			response.setHeader('Content-Type', 'application/json');
 			messageHistory.push(JSON.parse(body));
-			console.log(messageHistory);
 			body = [];
 			currentToken = currentToken + 1;
 			tokenHistory.push(currentToken);
-			console.log(currentToken);
 			response.end();
 		});
 	}
@@ -129,7 +135,5 @@ function handler(request, response) {
 		tokenHistory.push(currentToken);
 
 		response.end();
-
 	}
-	
 }
