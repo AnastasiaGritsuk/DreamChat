@@ -52,6 +52,7 @@ function handler(request, response) {
 
 			response.statusCode = 200;
 			response.setHeader('Content-Type', 'application/json');
+			response.setHeader("Access-Control-Allow-Origin", "*");
 			messageHistory.push(JSON.parse(body));
 			body = [];
 			currentToken = currentToken + 1;
@@ -80,6 +81,7 @@ function handler(request, response) {
 
 		response.statusCode = 200;
 		response.setHeader('Content-Type', 'application/json');
+		response.setHeader("Access-Control-Allow-Origin", "*");
 		response.write(JSON.stringify(responseBody));
 		response.end();
 	}
@@ -122,19 +124,12 @@ function handler(request, response) {
 
 		response.statusCode = 200;
 		response.setHeader('Content-Type', 'application/json');
+		response.setHeader("Access-Control-Allow-Origin", "*");
 		currentToken = currentToken + 1;
 		tokenHistory.push(currentToken);
 
 		response.end();
 
 	}
-
-	else if(request.method == "GET" && request.url == "/history"){
-
-		response.writeHead(200, {"Content-Type":"text/plain"});
-		response.write('history');
-		
-	}	
-	
 	
 }

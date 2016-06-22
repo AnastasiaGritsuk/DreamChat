@@ -22,7 +22,7 @@ var appState = {
     user: 'User' + uniqueId(),
     mainUrl: 'http://localhost:8080/chat',
     history:[],
-    token: null
+    token: ''
 }
 
 function run(){
