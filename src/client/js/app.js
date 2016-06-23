@@ -133,18 +133,33 @@ function delegateEvent(evtObj){
 }
 
 function onEditClick(evtObj){
-    
+    var current = evtObj.target.offsetParent;
+    var input = current.getElementsByTagName('input')[0];
+    input.classList.remove('hidden');
+    input.classList.add('active-inline');
+
+    var oldText = current.getElementsByClassName('message-text')[0];
+    oldText.classList.add('hidden');
+
+    var editIcon = current.getElementsByClassName('message-edit')[0];
+    editIcon.classList.add('hidden');
+    input.classList.remove('hidden');
+    input.classList.add('active-inline');
+
+    var completeIcon = current.getElementsByClassName('message-edit-complete')[0];
+    completeIcon.classList.remove('hidden');
+    completeIcon.classList.add('active-inline');
 
 }
 
 function onEditComplete(evtObj){
 
     var current = evtObj.target.offsetParent;
-    var inputValue = current.getElementsByTagName('input')[0].value;
+    var input = current.getElementsByTagName('input')[0];
 
     var updatedMessage = {
         id: evtObj.path[2].id,
-        text: inputValue,
+        text: input.value,
         user: appState.user
     }
 
@@ -152,6 +167,20 @@ function onEditComplete(evtObj){
     xhr.open('PUT', appState.mainUrl, true);
     xhr.onreadystatechange = function () {
         if (xhr.readyState != 4) return;
+        input.classList.remove('active-inline');
+        input.classList.add('hidden');
+
+        var oldText = current.getElementsByClassName('message-text')[0];
+        oldText.classList.remove('hidden');
+        oldText.classList.add('active-inline');
+
+        var editIcon = current.getElementsByClassName('message-edit')[0];
+        editIcon.classList.remove('hidden');
+        editIcon.classList.add('active-inline');
+         var completeIcon = current.getElementsByClassName('message-edit-complete')[0];
+        completeIcon.classList.remove('active-inline');
+        completeIcon.classList.add('hidden');
+
     }
 
     xhr.send(JSON.stringify(updatedMessage));

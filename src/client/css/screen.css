@@ -197,28 +197,33 @@ a {
 }
 
 /* line 56, D:/DreamChat/src/client/scss/_common.scss */
+.active-inline {
+  display: inline-block;
+}
+
+/* line 60, D:/DreamChat/src/client/scss/_common.scss */
 .hidden {
   display: none;
 }
 
-/* line 60, D:/DreamChat/src/client/scss/_common.scss */
+/* line 64, D:/DreamChat/src/client/scss/_common.scss */
 .hide {
   visibility: hidden;
 }
 
-/* line 64, D:/DreamChat/src/client/scss/_common.scss */
+/* line 68, D:/DreamChat/src/client/scss/_common.scss */
 .visible {
   visibility: visible;
 }
 
 /*footer*/
-/* line 69, D:/DreamChat/src/client/scss/_common.scss */
+/* line 73, D:/DreamChat/src/client/scss/_common.scss */
 .footer {
   background: #2770a0;
   clear: both;
 }
 
-/* line 74, D:/DreamChat/src/client/scss/_common.scss */
+/* line 78, D:/DreamChat/src/client/scss/_common.scss */
 .footer-copyright {
   height: 100px;
   margin: -100px auto;
@@ -226,7 +231,7 @@ a {
   line-height: 100px;
 }
 
-/* line 81, D:/DreamChat/src/client/scss/_common.scss */
+/* line 85, D:/DreamChat/src/client/scss/_common.scss */
 .user_profile_img {
   background-image: url("../img/avatar_login.png");
   background-repeat: no-repeat;
@@ -235,7 +240,7 @@ a {
   height: 25px;
 }
 
-/* line 89, D:/DreamChat/src/client/scss/_common.scss */
+/* line 93, D:/DreamChat/src/client/scss/_common.scss */
 .userProfile_link {
   display: block;
 }
