@@ -65,17 +65,20 @@ function doPolling(){
 
         xhr.onreadystatechange = function () {
             if (xhr.readyState != 4) return;
-            var response = JSON.parse(xhr.responseText);
-            appState.token = response.token;
 
-            updateHistory(response.messages);
+            if(xhr.status == 400){
+                console.log(xhr.responseText);
+            }else{
+                var response = JSON.parse(xhr.responseText);
+                appState.token = response.token;
+
+                updateHistory(response.messages);
+            }
             setTimeout(loop, 1000);
         }
 
         xhr.send(null);
-
     }
-
     loop();
 }
 
@@ -122,12 +125,26 @@ function delegateEvent(evtObj){
         onDeleteClick(evtObj);
         return;
     }
+
+    if(evtObj.type == 'click' && evtObj.target.className == 'fa fa-check-square-o') {
+        onEditComplete(evtObj);
+        return;
+    }
 }
 
 function onEditClick(evtObj){
+    
+
+}
+
+function onEditComplete(evtObj){
+
+    var current = evtObj.target.offsetParent;
+    var inputValue = current.getElementsByTagName('input')[0].value;
+
     var updatedMessage = {
         id: evtObj.path[2].id,
-        text:'updated!!!!',
+        text: inputValue,
         user: appState.user
     }
 
@@ -138,7 +155,6 @@ function onEditClick(evtObj){
     }
 
     xhr.send(JSON.stringify(updatedMessage));
-
 }
 
 function onDeleteClick(evtObj){
