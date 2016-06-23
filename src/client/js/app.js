@@ -95,12 +95,6 @@ function addMessageInternal(message){
 
     for(var i=0;i < childnodes.length;i++){
 
-        // if(message.user != childnodes[i].getElementsByClassName('message-username')[0].innerHTML){
-        //     var element = elementFromTemplate('other');
-        //     renderItemState(element, message);
-        //     historyBox.appendChild(element);        
-        // }
-
         if(message.id == childnodes[i].getAttribute('id')){
 
             childnodes[i].getElementsByClassName('message-username')[0].innerHTML = message.user;
@@ -156,8 +150,9 @@ function delegateEvent(evtObj){
 }
 
 function onEditClick(evtObj){
-    var current = evtObj.target.offsetParent;
+    var current = evtObj.target.parentNode.parentNode;
     var input = current.getElementsByTagName('input')[0];
+
     input.classList.remove('hidden');
     input.classList.add('active-inline');
 
@@ -177,7 +172,7 @@ function onEditClick(evtObj){
 
 function onEditComplete(evtObj){
 
-    var current = evtObj.target.offsetParent;
+    var current = evtObj.target.parentNode.parentNode;
     var input = current.getElementsByTagName('input')[0];
 
     var updatedMessage = {
