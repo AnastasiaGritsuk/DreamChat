@@ -118,22 +118,45 @@ function handler(request, response) {
 	}
 
 	if(method == 'DELETE'){
-		var messageId = +url.split('?')[1].split('=')[1];
+		// var messageId = +url.split('?')[1].split('=')[1];
 
-		var deletedMessage = {
-			id: messageId,
-			text: "message has been removed",
-			user: ''
-		}
+		// var deletedMessage = {
+		// 	id: messageId,
+		// 	text: "message has been removed",
+		// 	user: ''
+		// }
 		
-		messageHistory.push(deletedMessage);
+		// messageHistory.push(deletedMessage);
 
-		response.statusCode = 200;
-		response.setHeader('Content-Type', 'application/json');
-		response.setHeader("Access-Control-Allow-Origin", "*");
-		currentToken = currentToken + 1;
-		tokenHistory.push(currentToken);
+		// response.statusCode = 200;
+		// response.setHeader('Content-Type', 'application/json');
+		// response.setHeader("Access-Control-Allow-Origin", "*");
+		// currentToken = currentToken + 1;
+		// tokenHistory.push(currentToken);
 
-		response.end();
+		// response.end();
+
+		request.on('error', function(err) {
+			console.error(err);
+		}).on('data', function(chunk) {
+			body.push(chunk);
+
+		}).on('end', function() {
+			body = Buffer.concat(body).toString();
+
+			response.on('error', function(err) {
+				console.error(err);
+			});
+
+			response.statusCode = 200;
+			response.setHeader('Content-Type', 'application/json');
+			response.setHeader("Access-Control-Allow-Origin", "*");
+			messageHistory.push(JSON.parse(body));
+			body = [];
+			currentToken = currentToken + 1;
+			tokenHistory.push(currentToken);
+			console.log(currentToken);
+			response.end();
+		});
 	}
 }

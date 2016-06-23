@@ -188,12 +188,18 @@ function onEditComplete(evtObj){
 
 function onDeleteClick(evtObj){
 
+    var deletedMessage = {
+        id: evtObj.path[2].id,
+        text: "message has been removed",
+        user: appState.user
+    }
+
     var xhr = new XMLHttpRequest();
-    xhr.open('DELETE', appState.mainUrl + '?message=' + evtObj.path[2].id, true);
+    xhr.open('DELETE', appState.mainUrl, true);
 
     xhr.onreadystatechange = function () {
         if (xhr.readyState != 4) return;
     }
 
-    xhr.send(null);
+    xhr.send(JSON.stringify(deletedMessage));
 }
