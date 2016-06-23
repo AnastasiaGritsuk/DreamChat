@@ -18,7 +18,6 @@ var uniqueId = function() {
     return Math.floor(date * random).toString();
 };
 
-var counter = 0;
 var appState = {
     user: 'User' + uniqueId(),
     mainUrl: 'http://localhost:8080/chat',
@@ -54,7 +53,7 @@ function sendMessage(message, continueWith){
     xhr.open('POST', appState.mainUrl, true);
     xhr.onreadystatechange = function () {
         if (xhr.readyState != 4) return;
-        counter = counter + 1;
+       
     }
 
     xhr.send(JSON.stringify(message));
@@ -74,7 +73,6 @@ function doPolling(){
             }else{
                 var response = JSON.parse(xhr.responseText);
                 appState.token = response.token;
-                console.log('appState token ' + appState.token);
 
                 updateHistory(response.messages);
             }
@@ -96,21 +94,42 @@ function addMessageInternal(message){
     var childnodes = historyBox.childNodes;
 
     for(var i=0;i < childnodes.length;i++){
+
+        // if(message.user != childnodes[i].getElementsByClassName('message-username')[0].innerHTML){
+        //     var element = elementFromTemplate('other');
+        //     renderItemState(element, message);
+        //     historyBox.appendChild(element);        
+        // }
+
         if(message.id == childnodes[i].getAttribute('id')){
+
             childnodes[i].getElementsByClassName('message-username')[0].innerHTML = message.user;
             childnodes[i].getElementsByClassName('message-text')[0].innerHTML = message.text;
             return;
         }
+
     }
 
-    var element = elementFromTemplate();
-    renderItemState(element, message);
-    historyBox.appendChild(element);
+    if(message.user != appState.user){
+        var element = elementFromTemplate('other');
+        renderItemState(element, message);
+        historyBox.appendChild(element);        
+    }
+    else{
+        var element = elementFromTemplate();
+        renderItemState(element, message);
+        historyBox.appendChild(element);
+    }
 }
 
-function elementFromTemplate(){
+function elementFromTemplate(mode){
     var template = document.getElementById('message-template');
-    return template.firstElementChild.cloneNode(true);
+    if(!mode)
+        return template.firstElementChild.cloneNode(true)
+    
+    var newDiv = template.firstElementChild.cloneNode(true);
+    newDiv.classList.add('other');
+    return newDiv;
 }
 
 function renderItemState(element, message){

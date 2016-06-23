@@ -73,16 +73,17 @@ function handler(request, response) {
 			return;
 		}
 
-		var token = +url.split('?')[1].split('=')[1];
+		var token = url.split('?')[1].split('=')[1];
 		console.log('token from url ' + token);
 
 		if(token === ''){
 			console.log('xxx');
 			token = messageHistory.length;
-			console.log('initial token: ' + token);
+			
 		}
 
 		var messagesArr = [];
+
 		for(var i=token;i<messageHistory.length;i++){
 			messagesArr.push(messageHistory[i]);
 		}
@@ -123,23 +124,6 @@ function handler(request, response) {
 	}
 
 	if(method == 'DELETE'){
-		// var messageId = +url.split('?')[1].split('=')[1];
-
-		// var deletedMessage = {
-		// 	id: messageId,
-		// 	text: "message has been removed",
-		// 	user: ''
-		// }
-		
-		// messageHistory.push(deletedMessage);
-
-		// response.statusCode = 200;
-		// response.setHeader('Content-Type', 'application/json');
-		// response.setHeader("Access-Control-Allow-Origin", "*");
-		// currentToken = currentToken + 1;
-		// tokenHistory.push(currentToken);
-
-		// response.end();
 
 		request.on('error', function(err) {
 			console.error(err);
@@ -160,7 +144,7 @@ function handler(request, response) {
 			body = [];
 			currentToken = currentToken + 1;
 			tokenHistory.push(currentToken);
-			console.log(currentToken);
+			
 			response.end();
 		});
 	}

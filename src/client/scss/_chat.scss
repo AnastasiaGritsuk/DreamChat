@@ -65,6 +65,9 @@
 }
 
 .message{
+    display: inline-block;
+    width: 100%;
+    text-align: left;
     margin: 10px 0;
     position: relative;
 }
@@ -100,4 +103,9 @@
 
 .message-delete{
     cursor: pointer;
+}
+
+.other{
+    width: 100%;
+    text-align: right;
 }
