@@ -18,6 +18,7 @@ var uniqueId = function() {
     return Math.floor(date * random).toString();
 };
 
+var counter = 0;
 var appState = {
     user: 'User' + uniqueId(),
     mainUrl: 'http://localhost:8080/chat',
@@ -53,6 +54,7 @@ function sendMessage(message, continueWith){
     xhr.open('POST', appState.mainUrl, true);
     xhr.onreadystatechange = function () {
         if (xhr.readyState != 4) return;
+        counter = counter + 1;
     }
 
     xhr.send(JSON.stringify(message));
@@ -60,6 +62,7 @@ function sendMessage(message, continueWith){
 
 function doPolling(){
     function loop(){
+
         var xhr = new XMLHttpRequest();
         xhr.open('GET', appState.mainUrl + '?token=' + appState.token, true);
 
@@ -71,6 +74,7 @@ function doPolling(){
             }else{
                 var response = JSON.parse(xhr.responseText);
                 appState.token = response.token;
+                console.log('appState token ' + appState.token);
 
                 updateHistory(response.messages);
             }

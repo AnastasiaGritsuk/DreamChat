@@ -74,9 +74,14 @@ function handler(request, response) {
 		}
 
 		var token = +url.split('?')[1].split('=')[1];
-		if(token == null){
-			token == messageHistory.length;
+		console.log('token from url ' + token);
+
+		if(token === ''){
+			console.log('xxx');
+			token = messageHistory.length;
+			console.log('initial token: ' + token);
 		}
+
 		var messagesArr = [];
 		for(var i=token;i<messageHistory.length;i++){
 			messagesArr.push(messageHistory[i]);
