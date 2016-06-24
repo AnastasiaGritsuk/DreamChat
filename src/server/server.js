@@ -115,6 +115,7 @@ function handler(request, response) {
 
 			response.statusCode = 200;
 			response.setHeader('Content-Type', 'application/json');
+			response.setHeader("Access-Control-Allow-Origin", "*");
 			messageHistory.push(JSON.parse(body));
 			body = [];
 			currentToken = currentToken + 1;

@@ -123,6 +123,8 @@ function elementFromTemplate(mode){
     
     var newDiv = template.firstElementChild.cloneNode(true);
     newDiv.classList.add('other');
+    newDiv.getElementsByClassName('message-edit')[0].classList.add('hidden');
+    newDiv.getElementsByClassName('message-delete')[0].classList.add('hidden');
     return newDiv;
 }
 
