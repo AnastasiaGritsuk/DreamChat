@@ -2,6 +2,7 @@ var sendButton = document.getElementById('sendButton');
 var newMessageBox = document.getElementById('newMessageBox');
 var historyBox = document.getElementById('historyBox');
 historyBox.addEventListener('click', delegateEvent);
+var shadow = document.getElementById('historyBox').createShadowRoot();
 
 var theMessage = function(text){
     return {
@@ -91,7 +92,7 @@ function updateHistory(newMessages){
 }
 
 function addMessageInternal(message){
-    var childnodes = historyBox.childNodes;
+    var childnodes = shadow.children;
 
     for(var i=0;i < childnodes.length;i++){
 
@@ -107,52 +108,56 @@ function addMessageInternal(message){
     if(message.user != appState.user){
         var element = elementFromTemplate('other');
         renderItemState(element, message);
-        historyBox.appendChild(element);        
+
+        shadow.appendChild(element);        
     }
     else{
         var element = elementFromTemplate();
         renderItemState(element, message);
-        historyBox.appendChild(element);
+        shadow.appendChild(element);
     }
 }
 
 function elementFromTemplate(mode){
-    var template = document.getElementById('message-template');
+    var template1 = document.getElementById('message-template');
+    var template = document.importNode(template1.content, true);
+
     if(!mode)
-        return template.firstElementChild.cloneNode(true)
+        return template;
+    // template.firstElementChild.cloneNode(true)
     
-    var newDiv = template.firstElementChild.cloneNode(true);
-    newDiv.classList.add('other');
-    newDiv.getElementsByClassName('message-edit')[0].classList.add('hidden');
-    newDiv.getElementsByClassName('message-delete')[0].classList.add('hidden');
-    return newDiv;
+    var otherMes = template.children[1];
+    otherMes.classList.add('other');
+    otherMes.getElementsByClassName('message-edit')[0].classList.add('hidden');
+    otherMes.getElementsByClassName('message-delete')[0].classList.add('hidden');
+    return otherMes;
 }
 
 function renderItemState(element, message){
-    element.setAttribute('id', message.id);
-    element.getElementsByClassName('message-username')[0].innerHTML = message.user;
-    element.getElementsByClassName('message-text')[0].innerHTML = message.text;
+    element.children[1].setAttribute('id', message.id);
+    element.children[1].getElementsByClassName('message-username')[0].innerHTML = message.user;
+    element.children[1].getElementsByClassName('message-text')[0].innerHTML = message.text;
 }
 
 function delegateEvent(evtObj){
-    if(evtObj.type == 'click' && evtObj.target.className == 'icon-edit') {
+    if(evtObj.type == 'click' && evtObj.path[0].className == 'icon-edit') {
         onEditClick(evtObj);
         return;
     }
 
-    if(evtObj.type == 'click' && evtObj.target.className == 'icon-remove-circle') {
+    if(evtObj.type == 'click' && evtObj.path[0].className == 'icon-remove-circle') {
         onDeleteClick(evtObj);
         return;
     }
 
-    if(evtObj.type == 'click' && evtObj.target.className == 'fa fa-check-square-o') {
+    if(evtObj.type == 'click' && evtObj.path[0].className == 'fa fa-check-square-o') {
         onEditComplete(evtObj);
         return;
     }
 }
 
 function onEditClick(evtObj){
-    var current = evtObj.target.parentNode.parentNode;
+    var current = evtObj.path[2];
     var input = current.getElementsByTagName('input')[0];
 
     input.classList.remove('hidden');
@@ -174,7 +179,7 @@ function onEditClick(evtObj){
 
 function onEditComplete(evtObj){
 
-    var current = evtObj.target.parentNode.parentNode;
+    var current = evtObj.path[2];
     var input = current.getElementsByTagName('input')[0];
 
     var updatedMessage = {
