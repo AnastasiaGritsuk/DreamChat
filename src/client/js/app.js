@@ -127,10 +127,10 @@ function elementFromTemplate(mode){
     // template.firstElementChild.cloneNode(true)
     
     var otherMes = template.children[1];
-    otherMes.classList.add('other');
-    otherMes.getElementsByClassName('message-edit')[0].classList.add('hidden');
-    otherMes.getElementsByClassName('message-delete')[0].classList.add('hidden');
-    return otherMes;
+    template.children[1].classList.add('other');
+    template.children[1].getElementsByClassName('message-edit')[0].classList.add('hidden');
+    template.children[1].getElementsByClassName('message-delete')[0].classList.add('hidden');
+    return template;
 }
 
 function renderItemState(element, message){
