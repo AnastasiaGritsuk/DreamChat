@@ -2,25 +2,38 @@
     display: inline-block;
     width: 100%;
     text-align: left;
-    margin: 10px 0;
-    
+   
 }
 
 .message-username{
-    color: #646fe2;
+    color: #434E3C;
     font-weight: 600;
 }
 
 .message-content{
+    padding: 5px;
+    display: inline-block;
+}
+
+.message.other .message-text{
+    background-color: #cc6699;
+}
+
+.message.other .message-text:before{
+     border-right: 10px solid #cc6699;
+}
+
+.message-text{
     position: relative;
     display: inline-block;
-    padding: 10px;
     margin-left: 10px;
     border-radius: 5px;
     background-color: #893667;
+    padding: 10px;
+    color: #fff;
 }
 
-.message-content:before {
+.message-text:before {
     content: " ";
     position: absolute;
     left: -10px;

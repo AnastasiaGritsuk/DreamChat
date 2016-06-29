@@ -239,14 +239,14 @@ a {
 .user-profile {
   display: table-cell;
   vertical-align: middle;
-  padding: 5px 0 0 0;
+  padding: 5px 0 0 5px;
 }
 
 /* line 12, D:/DreamChat/src/client/scss/_header.scss */
 .chat-service {
   display: table-cell;
   vertical-align: middle;
-  padding: 5px 0 0 0;
+  padding: 5px 0 0 5px;
 }
 
 /* line 19, D:/DreamChat/src/client/scss/_header.scss */
