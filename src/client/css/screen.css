@@ -171,7 +171,7 @@ a {
   bottom: 0;
   top: 62px;
   width: 100%;
-  padding-bottom: 120px;
+  padding-bottom: 110px;
 }
 
 /* line 37, D:/DreamChat/src/client/scss/_common.scss */
@@ -233,22 +233,23 @@ a {
 .header-content {
   display: table;
   width: 100%;
-  padding: 10px;
 }
 
-/* line 7, D:/DreamChat/src/client/scss/_header.scss */
+/* line 6, D:/DreamChat/src/client/scss/_header.scss */
 .user-profile {
   display: table-cell;
   vertical-align: middle;
+  padding: 5px 0 0 0;
 }
 
 /* line 12, D:/DreamChat/src/client/scss/_header.scss */
 .chat-service {
   display: table-cell;
   vertical-align: middle;
+  padding: 5px 0 0 0;
 }
 
-/* line 18, D:/DreamChat/src/client/scss/_header.scss */
+/* line 19, D:/DreamChat/src/client/scss/_header.scss */
 .server-img {
   background: url("../img/server.png");
   display: inline-block;
@@ -257,7 +258,7 @@ a {
   cursor: pointer;
 }
 
-/* line 26, D:/DreamChat/src/client/scss/_header.scss */
+/* line 27, D:/DreamChat/src/client/scss/_header.scss */
 .user-profile-img {
   font-size: 40px;
   color: #434E3C;
@@ -268,7 +269,7 @@ a {
 .chat_wrap {
   background: #F5F4EB;
   height: 100%;
-  padding: 10px;
+  padding: 5px;
 }
 
 /* line 8, D:/DreamChat/src/client/scss/_chat.scss */
@@ -320,7 +321,7 @@ a {
 /* line 49, D:/DreamChat/src/client/scss/_chat.scss */
 .answerService {
   background-color: #F5F4EB;
-  padding: 0 10px;
+  padding: 0 5px;
   box-sizing: border-box;
   height: 100px;
   font: 0/0 a;
