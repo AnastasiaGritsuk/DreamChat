@@ -1,0 +1,30 @@
+.header-content{
+	display: table;
+    width: 100%;
+    padding: 10px;
+}
+
+.user-profile{
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.chat-service{
+	display: table-cell;
+	vertical-align: middle;
+}
+
+
+.server-img{
+	background: url('../img/server.png');
+	display: inline-block;
+	width: 40px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.user-profile-img{
+	font-size: 40px;
+	color: #434E3C;
+	cursor: pointer;
+}

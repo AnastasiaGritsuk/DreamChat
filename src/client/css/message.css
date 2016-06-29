@@ -17,7 +17,7 @@
     padding: 10px;
     margin-left: 10px;
     border-radius: 5px;
-    background-color: #e4d4ee;
+    background-color: #893667;
 }
 
 .message-content:before {
@@ -30,7 +30,7 @@
     height: 0px;
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent;
-    border-right: 10px solid #e4d4ee;
+    border-right: 10px solid #893667;
 }
 
 .message-edit{

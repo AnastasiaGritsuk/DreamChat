@@ -14,6 +14,7 @@ html,body {
 .section-inner {
 	max-width: 900px;
 	margin: 0 auto;
+	
 }
 
 a {
@@ -22,18 +23,15 @@ a {
 }
 
 .all {
-	
-	min-width: 100%;
     min-height: 100%;
-    position: relative;
-    top: 0;
-    bottom: 100%;
-    left: 0;
-    z-index: 1;
 }
 
 .content {
-	padding-bottom: 100px;
+	position: absolute;
+    bottom: 0;
+    top: 62px;
+    width: 100%;
+    padding-bottom: 120px;
 }
 
 .clearfix:after {
@@ -70,26 +68,16 @@ a {
 }
 
 /*footer*/
-.footer {
-	background: #2770a0;
-	clear: both;
+
+
+.footer-inner{
+	position: relative;
+    height: 100px;
+    max-width: 900px;
+    margin: -100px auto;
 }
 
-.footer-copyright {
-	height: 100px;
-	margin: -100px auto;
-	text-align: center;
-	line-height: 100px;
-}
-
-.user_profile_img{
-	background-image: url('../img/avatar_login.png');
-    background-repeat: no-repeat;
-    display: block;
-    width: 24px;
-    height: 25px;
-}
-
-.userProfile_link{
-	display: block;
+.header-inner{
+	/*position: relative;
+	z-index: 1;*/
 }

@@ -12,33 +12,52 @@
 	<body onload = "run()">
 
 	<div class="all">
-		<header class="header" >
+		<header class="header">
+			<div class="section-inner">
+				<div class="header-content">
+					<div class="user-profile">
+						<span class="user-profile-img">
+							<i class="icon-male"></i> 
+						</span>
+						<span>username</span>
+					</div>
+					<div class="chat-service">
+						<div class="chat-service-item">
+							<span class="server-img">
+								
+							</span>
+						</div>
+						<div class="chat-service-item">
+							
+						</div>
+					</div>
+				</div>
+			</div>
 			
 		</header>
 			
 		<main class="content">
-			<div class="section-inner">
-				<div class="content_inner clearfix">
-					<div class="chat_wrap clearfix">
-						<div class="chat_history_wrap">
-							
-							<div id = "historyBox" class="chat_history"></div>
-							
-						</div>
-						<div class="answerService clearfix">
-							<div class="answer_area_wrap">
-								<textarea id="newMessageBox" class="answer_area"></textarea>	
-							</div>
-							<div class="answer_btn_wrap">
-								<a id = "sendButton" class="answer_btn"></a>
-							</div>							
-						</div>
-					</div>
-					
+			<div class="content-inner">
+				<div class="chat_wrap clearfix">
+					<div id = "historyBox" class="chat_history"></div>
 				</div>
 			</div>
 		</main>
 	</div>
+	<footer class="footer">
+		<div class="footer-inner">
+			<div class="answerService clearfix">
+				<div class="answer_area_wrap">
+					<textarea id="newMessageBox" class="answer_area"></textarea>	
+				</div>
+				<div class="answer_btn_wrap">
+					<a id = "sendButton" class="answer_btn">
+						<i class="icon-location-arrow"></i>
+					</a>
+				</div>							
+			</div>
+		<div>
+	</footer>
 
 	<template id="message-template">
 
