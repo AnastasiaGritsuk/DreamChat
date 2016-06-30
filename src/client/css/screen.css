@@ -355,3 +355,154 @@ a {
     font-size: 4vw;
   }
 }
+/* line 1, D:/DreamChat/src/client/scss/_popup_block.scss */
+.popup_wrap {
+  display: none;
+}
+
+/* line 5, D:/DreamChat/src/client/scss/_popup_block.scss */
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  overflow: auto;
+}
+
+/* line 18, D:/DreamChat/src/client/scss/_popup_block.scss */
+.popup_cover {
+  background: #6b6e73;
+  opacity: 0.9;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9000;
+  width: 100%;
+  height: 100%;
+}
+
+/* line 29, D:/DreamChat/src/client/scss/_popup_block.scss */
+.popup:after {
+  display: inline-block;
+  height: 100%;
+  content: '';
+  vertical-align: middle;
+}
+
+/* line 36, D:/DreamChat/src/client/scss/_popup_block.scss */
+.popup_inner {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  margin: 70px 0 40px;
+  width: 100%;
+  max-width: 900px;
+  padding: 20px;
+}
+
+/* line 46, D:/DreamChat/src/client/scss/_popup_block.scss */
+.popup_inner:before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #cedeff;
+  top: 0;
+  left: 0;
+  opacity: 0.3;
+  -moz-border-radius: 25px;
+  -webkit-border-radius: 25px;
+  border-radius: 25px;
+}
+
+/* line 60, D:/DreamChat/src/client/scss/_popup_block.scss */
+.popup_content_wrap, .dialog_content_wrap {
+  background: #fff;
+  border: 1px solid #000;
+  border-radius: 5px;
+  position: relative;
+}
+
+/*available scroll*/
+/* line 69, D:/DreamChat/src/client/scss/_popup_block.scss */
+html.overflow .popup {
+  overflow: auto;
+  overflow-y: scroll;
+}
+/* line 75, D:/DreamChat/src/client/scss/_popup_block.scss */
+html.overflow body {
+  overflow: hidden;
+}
+
+/* line 80, D:/DreamChat/src/client/scss/_popup_block.scss */
+.popup_title {
+  background-color: #eff2f9;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  text-align: left;
+  padding: 12px 14px;
+  position: relative;
+}
+/* line 88, D:/DreamChat/src/client/scss/_popup_block.scss */
+.popup_title .remove_icon {
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  margin-top: -8px;
+  right: 14px;
+}
+
+/* line 97, D:/DreamChat/src/client/scss/_popup_block.scss */
+.popup_icon {
+  /*background-image: url("../images/success_icon.png");*/
+  background-repeat: no-repeat;
+  width: 44px;
+  height: 41px;
+  display: inline-block;
+  vertical-align: top;
+}
+
+/* line 106, D:/DreamChat/src/client/scss/_popup_block.scss */
+.popup_img_wrap {
+  margin: 0 0 20px 0;
+}
+
+/* line 110, D:/DreamChat/src/client/scss/_popup_block.scss */
+.popup_content {
+  padding: 30px 0;
+  min-height: 226px;
+  text-align: center;
+}
+
+/* line 116, D:/DreamChat/src/client/scss/_popup_block.scss */
+.popup_message_title {
+  margin: 0 0 10px;
+  color: #424242;
+  text-transform: uppercase;
+}
+
+/* line 123, D:/DreamChat/src/client/scss/_popup_block.scss */
+.popup_message_text {
+  font-family: 'Open Sans Semibold';
+  margin: 0 0 34px;
+}
+
+/* line 132, D:/DreamChat/src/client/scss/_popup_block.scss */
+.popup_message_link {
+  text-decoration: none;
+  cursor: pointer;
+  color: #3c4f8b;
+}
+
+/* line 138, D:/DreamChat/src/client/scss/_popup_block.scss */
+.popup_header_text {
+  color: #3c508b;
+  vertical-align: bottom;
+  font-family: 'Roboto Slab';
+  font-weight: 700;
+}
