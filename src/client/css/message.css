@@ -31,6 +31,7 @@
     background-color: #893667;
     padding: 10px;
     color: #fff;
+    max-width: 70%;
 }
 
 .message-text:before {

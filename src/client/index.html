@@ -5,7 +5,8 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Chat Project</title>
-		<link href="css/screen.css" rel="stylesheet">	
+		<link href="css/screen.css" rel="stylesheet">
+		<link href="css/message.css" rel="stylesheet">		
 		<link href="css/font-awesome.css" rel="stylesheet">
 		<link href="css/font-awesome.min.css" rel="stylesheet">
 	</head>
@@ -73,18 +74,20 @@
 		<div id="message" class="message">
 			<div class="message-content">
 				<span class="message-username">Username</span>
+				
 				<span class="message-text">Hello baby</span>
 				<input type="text" name="" class="hidden">
+			
+				<span class="message-edit">
+					<i class="icon-edit"></i>
+				</span>
+				<span class="message-edit-complete hidden">
+					<i class="fa fa-check-square-o"></i>
+				</span>
+				<span class="message-delete">
+					<i class="icon-remove-circle"></i> 
+				</span>
 			</div>
-			<span class="message-edit">
-				<i class="icon-edit"></i>
-			</span>
-			<span class="message-edit-complete hidden">
-				<i class="fa fa-check-square-o"></i>
-			</span>
-			<span class="message-delete">
-				<i class="icon-remove-circle"></i> 
-			</span>
 		</div>
 
 	</template>
