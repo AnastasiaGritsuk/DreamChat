@@ -1,6 +1,6 @@
 var http = require('http');
 var ecstatic = require('ecstatic');
-var staticHandler = ecstatic({ root: '../client', handleError:false });
+var handler = ecstatic({ root: '../client', handleError:false });
 var url = require('url');
 
 var messageHistory = [];
@@ -9,9 +9,9 @@ var currentToken =  0 ;
 
 http.createServer(function(request, response) {
 	if(isMy(request.url) != -1){
-		handler(request, response);
+		respond(request, response);
 	}else{
-		staticHandler.apply(null, arguments);
+		handler.apply(null, arguments);
 	}	
 
 }).listen(8080);
@@ -31,13 +31,13 @@ function send404Response(response){
 var body = [];
 
 //Handle user requests
-function handler(request, response) {
+function respond(request, response) {
 	var headers =  request.headers;
 	var method = request.method;
 	var url = request.url;
-	
-	if(method == "POST"){
 
+
+	if(method != 'GET'){
 		request.on('error', function(err) {
 			console.error(err);
 		}).on('data', function(chunk) {
@@ -57,15 +57,11 @@ function handler(request, response) {
 			body = [];
 			currentToken = currentToken + 1;
 			tokenHistory.push(currentToken);
-			console.log(currentToken);
+			
 			response.end();
 		});
-	}
-
-	if(method == "GET"){
-
+	}else{
 		console.log(url);
-
 		if(url.search(/token=/i) == -1) {
 			response.statusCode = 400;
 			response.write('bad request');
@@ -74,12 +70,9 @@ function handler(request, response) {
 		}
 
 		var token = url.split('?')[1].split('=')[1];
-		console.log('token from url ' + token);
 
 		if(token === ''){
-			console.log('xxx');
-			token = messageHistory.length;
-			
+			token = messageHistory.length;	
 		}
 
 		var messagesArr = [];
@@ -98,55 +91,6 @@ function handler(request, response) {
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		response.write(JSON.stringify(responseBody));
 		response.end();
-	}
-
-	if(method == 'PUT'){
-		request.on('error', function(err) {
-			console.error(err);
-		}).on('data', function(chunk) {
-			body.push(chunk);
-
-		}).on('end', function() {
-			body = Buffer.concat(body).toString();
-
-			response.on('error', function(err) {
-				console.error(err);
-			});
-
-			response.statusCode = 200;
-			response.setHeader('Content-Type', 'application/json');
-			response.setHeader("Access-Control-Allow-Origin", "*");
-			messageHistory.push(JSON.parse(body));
-			body = [];
-			currentToken = currentToken + 1;
-			tokenHistory.push(currentToken);
-			response.end();
-		});
-	}
-
-	if(method == 'DELETE'){
-
-		request.on('error', function(err) {
-			console.error(err);
-		}).on('data', function(chunk) {
-			body.push(chunk);
-
-		}).on('end', function() {
-			body = Buffer.concat(body).toString();
-
-			response.on('error', function(err) {
-				console.error(err);
-			});
-
-			response.statusCode = 200;
-			response.setHeader('Content-Type', 'application/json');
-			response.setHeader("Access-Control-Allow-Origin", "*");
-			messageHistory.push(JSON.parse(body));
-			body = [];
-			currentToken = currentToken + 1;
-			tokenHistory.push(currentToken);
-			
-			response.end();
-		});
-	}
+		
+	}	
 }
