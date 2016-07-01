@@ -183,7 +183,7 @@ function onEditComplete(evtObj){
     var input = current.getElementsByTagName('input')[0];
 
     var updatedMessage = {
-        id: evtObj.path[2].id,
+        id: evtObj.path[3].id,
         text: input.value,
         user: appState.user
     }
@@ -214,7 +214,7 @@ function onEditComplete(evtObj){
 function onDeleteClick(evtObj){
 
     var deletedMessage = {
-        id: evtObj.path[2].id,
+        id: evtObj.path[3].id,
         text: "message has been removed",
         user: appState.user
     }
