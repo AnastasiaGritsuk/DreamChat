@@ -68,9 +68,14 @@ function doPolling(){
         ajax('GET', appState.mainUrl + '?token=' + appState.token, null, function(response){
             var response = JSON.parse(response);
             appState.token = response.token;
+
+            for(var i=0;i<response.messages.length;i++){
+                appState.history.push(response.messages[i]);
+            }
+
             updateHistory(response.messages);
 
-            setTimeout(loop, 1000);
+            setTimeout(loop, 3000);
         });
     }
 

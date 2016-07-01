@@ -2,8 +2,9 @@ var http = require('http');
 var ecstatic = require('ecstatic');
 var handler = ecstatic({ root: '../client', handleError:false });
 var url = require('url');
+var history = require('./history');
 
-var messageHistory = [];
+
 var tokenHistory = [];
 var currentToken =  0 ;
 
@@ -53,7 +54,7 @@ function respond(request, response) {
 			response.statusCode = 200;
 			response.setHeader('Content-Type', 'application/json');
 			response.setHeader("Access-Control-Allow-Origin", "*");
-			messageHistory.push(JSON.parse(body));
+			history.messageHistory.push(JSON.parse(body));
 			body = [];
 			currentToken = currentToken + 1;
 			tokenHistory.push(currentToken);
@@ -72,13 +73,13 @@ function respond(request, response) {
 		var token = url.split('?')[1].split('=')[1];
 
 		if(token === ''){
-			token = messageHistory.length;	
+			token = history.messageHistory.length;	
 		}
 
 		var messagesArr = [];
 
-		for(var i=token;i<messageHistory.length;i++){
-			messagesArr.push(messageHistory[i]);
+		for(var i=token;i<history.messageHistory.length;i++){
+			messagesArr.push(history.messageHistory[i]);
 		}
 
 		var responseBody = {
