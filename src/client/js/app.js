@@ -64,24 +64,16 @@ function doPolling(){
     function loop(){
 
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', appState.mainUrl + '?token=' + appState.token, true);
 
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState != 4) return;
+        ajax('GET', appState.mainUrl + '?token=' + appState.token, null, function(response){
+            var response = JSON.parse(response);
+            appState.token = response.token;
+            updateHistory(response.messages);
 
-            if(xhr.status == 400){
-                console.log(xhr.responseText);
-            }else{
-                var response = JSON.parse(xhr.responseText);
-                appState.token = response.token;
-
-                updateHistory(response.messages);
-            }
             setTimeout(loop, 1000);
-        }
-
-        xhr.send(null);
+        });
     }
+
     loop();
 }
 
