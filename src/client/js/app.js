@@ -33,7 +33,7 @@ function run(){
         return false;
     });
     sendButton.addEventListener('click', onSendButtonClick);
-    doPolling();
+   // doPolling();
 }
 
 function onSendButtonClick(){

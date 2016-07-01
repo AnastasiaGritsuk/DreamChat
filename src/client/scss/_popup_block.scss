@@ -12,7 +12,7 @@
 	width: 100%;
 	height: 100%;
 	text-align: center;
-	overflow: auto; //Depends on the user agent. Desktop browsers like Firefox provide scrollbars if content overflows.
+	/*overflow: auto; //Depends on the user agent. Desktop browsers like Firefox provide scrollbars if content overflows.*/
 }
 
 .popup_cover {
@@ -37,10 +37,8 @@
   position: relative;
   display: inline-block;
   vertical-align: middle;
-  margin: 70px 0 40px;
   width: 100%;
   max-width: 900px;
-  padding: 20px;
 }
 
 .popup_inner:before {
@@ -48,13 +46,9 @@
   position: absolute;
   width: 100%;
   height: 100%;
-  background: #cedeff;
   top: 0;
   left: 0;
   opacity: 0.3;
-  -moz-border-radius: 25px;
-  -webkit-border-radius: 25px;
-  border-radius: 25px;
 }
 
 .popup_content_wrap,.dialog_content_wrap {
@@ -109,7 +103,6 @@ html.overflow {
 
 .popup_content {
 	padding: 30px 0;
-	min-height: 226px;
 	text-align: center;
 }
 
@@ -141,4 +134,13 @@ html.overflow {
 	vertical-align: bottom;
 	font-family: 'Roboto Slab';
     font-weight: 700;
+}
+
+.popup_button{
+	display: inline-block;
+	cursor: pointer;
+}
+
+.newUsername_wrap{
+
 }
