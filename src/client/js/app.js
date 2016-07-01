@@ -51,13 +51,13 @@ function onSendButtonClick(){
 
 function sendMessage(message, continueWith){
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', appState.mainUrl, true);
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState != 4) return;
-       
-    }
 
-    xhr.send(JSON.stringify(message));
+    ajax('POST', appState.mainUrl, JSON.stringify(message), function(response){
+        console.log('message has been sent ' + response);
+    }, function(errorText){
+        console.log(errorText);
+    });
+
 }
 
 function doPolling(){
@@ -235,6 +235,8 @@ function ajax(method, url, data, continueWith, continueWithError){
     continueWithError = continueWithError || defaultErrorHandler;
     xhr.open(method || 'GET', url, true);
 
+    xhr.timeout = 5000;
+
     xhr.onload = function(){
         if(xhr.readyState !==4)
             return;
@@ -244,10 +246,37 @@ function ajax(method, url, data, continueWith, continueWithError){
             return;
         }
 
+        if(isError(xhr.responseText)) {
+            continueWithError('Error on the server side, response ' + xhr.responseText);
+            return;
+        }
 
-    }
+        continueWith(xhr.responseText);
+
+    };
+
+    xhr.ontimeout = function(){
+        continueWithError('Server timed out !');
+    };
+
+    xhr.onerror = function (e) {
+        var errMsg = 'Server connection error !\n'+
+        '\n' +
+        'Check if \n'+
+        '- server is active\n'+
+        '- server sends header "Access-Control-Allow-Origin:*"\n'+
+        '- server sends header "Access-Control-Allow-Methods: PUT, DELETE, POST, GET, OPTIONS"\n';
+
+        continueWithError(errMsg);
+    };
+
+    xhr.send(data);
 
 }
+
+window.onerror = function(err) {
+   // output(err.toString());
+};
 
 
 function defaultErrorHandler(message){
@@ -265,5 +294,5 @@ function isError(text){
         return true;
     }
 
-    return 
+    return !!obj.error;
 }
