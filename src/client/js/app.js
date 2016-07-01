@@ -181,6 +181,7 @@ function onEditComplete(evtObj){
     }
 
     var xhr = new XMLHttpRequest();
+
     xhr.open('PUT', appState.mainUrl, true);
     xhr.onreadystatechange = function () {
         if (xhr.readyState != 4) return;
@@ -211,14 +212,9 @@ function onDeleteClick(evtObj){
         user: appState.user
     }
 
-    var xhr = new XMLHttpRequest();
-    xhr.open('DELETE', appState.mainUrl, true);
-
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState != 4) return;
-    }
-
-    xhr.send(JSON.stringify(deletedMessage));
+    ajax('DELETE', appState.mainUrl, JSON.stringify(deletedMessage), function(response){
+        console.log('message has been removed ' + response);
+    });
 }
 
 function ajax(method, url, data, continueWith, continueWithError){
