@@ -180,11 +180,7 @@ function onEditComplete(evtObj){
         user: appState.user
     }
 
-    var xhr = new XMLHttpRequest();
-
-    xhr.open('PUT', appState.mainUrl, true);
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState != 4) return;
+    ajax('PUT', appState.mainUrl, JSON.stringify(updatedMessage), function(response){
         input.classList.remove('active-inline');
         input.classList.add('hidden');
 
@@ -195,13 +191,10 @@ function onEditComplete(evtObj){
         var editIcon = current.getElementsByClassName('message-edit')[0];
         editIcon.classList.remove('hidden');
         editIcon.classList.add('active-inline');
-         var completeIcon = current.getElementsByClassName('message-edit-complete')[0];
+        var completeIcon = current.getElementsByClassName('message-edit-complete')[0];
         completeIcon.classList.remove('active-inline');
         completeIcon.classList.add('hidden');
-
-    }
-
-    xhr.send(JSON.stringify(updatedMessage));
+    });
 }
 
 function onDeleteClick(evtObj){
