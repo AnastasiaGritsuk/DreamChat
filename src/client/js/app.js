@@ -33,7 +33,7 @@ function run(){
         return false;
     });
     sendButton.addEventListener('click', onSendButtonClick);
-   // doPolling();
+    doPolling();
 }
 
 function onSendButtonClick(){
@@ -227,4 +227,43 @@ function onDeleteClick(evtObj){
     }
 
     xhr.send(JSON.stringify(deletedMessage));
+}
+
+function ajax(method, url, data, continueWith, continueWithError){
+    var xhr = new XMLHttpRequest();
+
+    continueWithError = continueWithError || defaultErrorHandler;
+    xhr.open(method || 'GET', url, true);
+
+    xhr.onload = function(){
+        if(xhr.readyState !==4)
+            return;
+
+        if(xhr.status !=200){
+            continueWithError('Error on the server side, response ' + xhr.status);
+            return;
+        }
+
+
+    }
+
+}
+
+
+function defaultErrorHandler(message){
+    console.error(message);
+    // output(message);
+}
+
+function isError(text){
+    if(text == "")
+        return false;
+
+    try{
+        var obj = JSON.parse(text);
+    }catch(ex){
+        return true;
+    }
+
+    return 
 }
