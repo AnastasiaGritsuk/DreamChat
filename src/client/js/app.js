@@ -8,7 +8,8 @@ var theMessage = function(text){
     return {
         id: uniqueId(),
         text:text,
-        user: appState.user
+        user: appState.user,
+        flag: 0
     }
 }
 
@@ -73,34 +74,55 @@ function doPolling(){
                 appState.history.push(response.messages[i]);
             }
 
-            updateHistory(response.messages);
+            updateHistory();
 
-            setTimeout(loop, 3000);
+            setTimeout(loop, 1000);
         });
     }
 
     loop();
 }
 
-function updateHistory(newMessages){
+function updateHistory1(newMessages){
 
     for(var i = 0; i < newMessages.length; i++)
         addMessageInternal(newMessages[i]);
 }
 
-function addMessageInternal(message){
+function updateHistory(){
+
+    //check only divs not style tag
     var childnodes = shadow.children;
+    var mesHistory = appState.history;
+    var j = 1;
 
-    for(var i=0;i < childnodes.length;i++){
+    for (var i = 0; i < mesHistory.length; i++){
+        
+        if( !childnodes[j] || mesHistory[i].id !== childnodes[j].id){
+            if(mesHistory[i].flag !== 0){
+                //update in dom
+                for (var k = 0; k <= j; k++){
+                    if(mesHistory[i].id == childnodes[k].id){
+                        //update text
+                        childnodes[k].getElementsByClassName('message-text')[0].innerHTML = mesHistory[i].text;
+                        j = j + 2;
+                        return;
+                    }
+                }
+            }else{
+                addMessageInternal(mesHistory[i]);
+                j = j + 2;
+            }
 
-        if(message.id == childnodes[i].getAttribute('id')){
-
-            childnodes[i].getElementsByClassName('message-username')[0].innerHTML = message.user;
-            childnodes[i].getElementsByClassName('message-text')[0].innerHTML = message.text;
-            return;
+        }else{
+            console.log('id matches');
+            j = j + 2;
         }
-
     }
+    
+}
+
+function addMessageInternal(message){
 
     if(message.user != appState.user){
         var element = elementFromTemplate('other');
