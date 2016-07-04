@@ -101,11 +101,11 @@ function updateHistory(){
         if( !childnodes[j] || mesHistory[i].id !== childnodes[j].id){
             if(mesHistory[i].flag !== 0){
                 //update in dom
-                for (var k = 0; k <= j; k++){
+                for (var k = 1; k <= j; k++){
                     if(mesHistory[i].id == childnodes[k].id){
                         //update text
                         childnodes[k].getElementsByClassName('message-text')[0].innerHTML = mesHistory[i].text;
-                        j = j + 2;
+                        k = k + 2;
                         return;
                     }
                 }
@@ -204,7 +204,8 @@ function onEditComplete(evtObj){
     var updatedMessage = {
         id: evtObj.path[3].id,
         text: input.value,
-        user: appState.user
+        user: appState.user,
+        flag: 1
     }
 
     ajax('PUT', appState.mainUrl, JSON.stringify(updatedMessage), function(response){
@@ -229,7 +230,8 @@ function onDeleteClick(evtObj){
     var deletedMessage = {
         id: evtObj.path[3].id,
         text: "message has been removed",
-        user: appState.user
+        user: appState.user,
+        flag: 1
     }
 
     ajax('DELETE', appState.mainUrl, JSON.stringify(deletedMessage), function(response){
@@ -243,7 +245,7 @@ function ajax(method, url, data, continueWith, continueWithError){
     continueWithError = continueWithError || defaultErrorHandler;
     xhr.open(method || 'GET', url, true);
 
-    xhr.timeout = 5000;
+    //xhr.timeout = 5000;
 
     xhr.onload = function(){
         if(xhr.readyState !==4)
