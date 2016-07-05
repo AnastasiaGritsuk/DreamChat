@@ -9,7 +9,8 @@ var theMessage = function(text){
         id: uniqueId(),
         text:text,
         user: appState.user,
-        flag: 0
+        flag: 0,
+        time:''
     }
 }
 
@@ -106,6 +107,7 @@ function updateHistory(){
                 if(mesHistory[i].id == childnodes[k].id){
                     if(mesHistory[i].text !== childnodes[k].getElementsByClassName('message-text')[0].innerHTML){
                         childnodes[k].getElementsByClassName('message-text')[0].textContent = mesHistory[i].text;
+                        childnodes[k].getElementsByClassName('message-time')[0].innerHTML = mesHistory[i].time;
                     }
                 }
             }
@@ -140,6 +142,7 @@ function renderItemState(element, message){
     element.children[1].id = message.id;
     element.children[1].getElementsByClassName('message-username')[0].innerHTML = message.user;
     element.children[1].getElementsByClassName('message-text')[0].textContent = message.text;
+    element.children[1].getElementsByClassName('message-time')[0].textContent = message.time;
 }
 
 function delegateEvent(evtObj){
