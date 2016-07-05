@@ -54,7 +54,7 @@ function sendMessage(message, continueWith){
     var xhr = new XMLHttpRequest();
 
     ajax('POST', appState.mainUrl, JSON.stringify(message), function(response){
-        console.log('message has been sent ' + response);
+        console.log('message has been sent ');
     }, function(errorText){
         console.log(errorText);
     });
@@ -63,7 +63,6 @@ function sendMessage(message, continueWith){
 
 function doPolling(){
     function loop(){
-
         var xhr = new XMLHttpRequest();
 
         ajax('GET', appState.mainUrl + '?token=' + appState.token, null, function(response){
@@ -77,19 +76,11 @@ function doPolling(){
 
                 updateHistory();
             }
-            
-
             setTimeout(loop, 1000);
         });
     }
 
     loop();
-}
-
-function updateHistory1(newMessages){
-
-    for(var i = 0; i < newMessages.length; i++)
-        addMessageInternal(newMessages[i]);
 }
 
 function updateHistory(){
@@ -123,28 +114,25 @@ function updateHistory(){
 }
 
 function addMessageInternal(message){
+    var mode;
 
     if(message.user != appState.user){
-        var element = elementFromTemplate('other');
-        renderItemState(element, message);
-
-        shadow.appendChild(element);        
+        mode = 'other';       
     }
-    else{
-        var element = elementFromTemplate();
-        renderItemState(element, message);
-        shadow.appendChild(element);
-    }
+  
+    var element = elementFromTemplate(mode);
+    renderItemState(element, message);
+    shadow.appendChild(element);
 }
 
 function elementFromTemplate(mode){
     var template1 = document.getElementById('message-template');
     var template = document.importNode(template1.content, true);
 
-    if(!mode)
-        return template;
-
-    template.children[1].classList.add('other'); 
+    if(mode){
+        template.children[1].classList.add('other');
+    }
+     
     return template;
 }
 
@@ -177,7 +165,6 @@ function onEditClick(evtObj){
 }
 
 function onEditComplete(evtObj){
-
     var current = evtObj.path[2];
     var input = current.getElementsByTagName('input')[0];
 
@@ -194,7 +181,7 @@ function onEditComplete(evtObj){
 }
 
 function onDeleteClick(evtObj){
-     var current = evtObj.path[2];
+    var current = evtObj.path[2];
 
     var deletedMessage = {
         id: evtObj.path[3].id,
