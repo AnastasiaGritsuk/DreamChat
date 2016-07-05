@@ -67,3 +67,78 @@
 .active-inline{
     display: inline-block;
 }
+
+/*initial state*/
+.message[data-state="initial"] input{
+    display: none;
+}
+
+.message[data-state="initial"] .message-edit{
+    display: inline-block;
+}
+
+.message[data-state="initial"] .message-text{
+    display: inline-block;
+}
+
+.message[data-state="initial"] .message-edit-complete{
+    display: none;
+}
+
+.message[data-state="initial"] .message-delete{
+    display: inline-block;
+}
+
+/*initial Other state*/
+
+.message[data-state="initial"].other .message-edit{
+    display: none;
+}
+
+.message[data-state="initial"].other .message-delete{
+    display: none;
+}
+
+/*edit state*/
+
+.message[data-state="edit"] input{
+    display: inline-block;
+}
+
+.message[data-state="edit"] .message-edit{
+    display: none;
+}
+
+.message[data-state="edit"] .message-text{
+    display: none;
+}
+
+.message[data-state="edit"] .message-edit-complete{
+    display: inline-block;
+}
+
+.message[data-state="edit"] .message-delete{
+    display: none;
+}
+
+/*deleted state*/
+
+.message[data-state="deleted"] input{
+    display: none;
+}
+
+.message[data-state="deleted"] .message-edit{
+    display: none;
+}
+
+.message[data-state="deleted"] .message-text{
+    display: inline-block;
+}
+
+.message[data-state="deleted"] .message-edit-complete{
+    display: none;
+}
+
+.message[data-state="deleted"] .message-delete{
+    display: none;
+}

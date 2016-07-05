@@ -143,12 +143,8 @@ function elementFromTemplate(mode){
 
     if(!mode)
         return template;
-    // template.firstElementChild.cloneNode(true)
-    
-    var otherMes = template.children[1];
-    template.children[1].classList.add('other');
-    template.children[1].getElementsByClassName('message-edit')[0].classList.add('hidden');
-    template.children[1].getElementsByClassName('message-delete')[0].classList.add('hidden');
+
+    template.children[1].classList.add('other'); 
     return template;
 }
 
@@ -177,27 +173,7 @@ function delegateEvent(evtObj){
 
 function onEditClick(evtObj){
     var current = evtObj.path[2];
-    var input = current.getElementsByTagName('input')[0];
-
-    input.classList.remove('hidden');
-    input.classList.add('active-inline');
-
-    var oldText = current.getElementsByClassName('message-text')[0];
-    oldText.classList.add('hidden');
-
-    var editIcon = current.getElementsByClassName('message-edit')[0];
-    editIcon.classList.add('hidden');
-
-    input.classList.remove('hidden');
-    input.classList.add('active-inline');
-
-    var completeIcon = current.getElementsByClassName('message-edit-complete')[0];
-    completeIcon.classList.remove('hidden');
-    completeIcon.classList.add('active-inline');
-
-    var deleteIcon = current.getElementsByClassName('message-delete')[0];
-    deleteIcon.classList.add('hidden');
-
+    current.parentNode.dataset.state = "edit"; 
 }
 
 function onEditComplete(evtObj){
@@ -213,23 +189,7 @@ function onEditComplete(evtObj){
     }
 
     ajax('PUT', appState.mainUrl, JSON.stringify(updatedMessage), function(response){
-        input.classList.remove('active-inline');
-        input.classList.add('hidden');
-
-        var oldText = current.getElementsByClassName('message-text')[0];
-        oldText.classList.remove('hidden');
-        oldText.classList.add('active-inline');
-
-        var editIcon = current.getElementsByClassName('message-edit')[0];
-        editIcon.classList.remove('hidden');
-        editIcon.classList.add('active-inline');
-        var completeIcon = current.getElementsByClassName('message-edit-complete')[0];
-        completeIcon.classList.remove('active-inline');
-        completeIcon.classList.add('hidden');
-
-        var deleteIcon = current.getElementsByClassName('message-delete')[0];
-        deleteIcon.classList.remove('hidden');
-        deleteIcon.classList.add('active-inline');
+        current.parentNode.dataset.state = "initial"; 
     });
 }
 
@@ -244,14 +204,7 @@ function onDeleteClick(evtObj){
     }
 
     ajax('DELETE', appState.mainUrl, JSON.stringify(deletedMessage), function(response){
-        console.log('message has been removed ' + response);
-        var editIcon = current.getElementsByClassName('message-edit')[0];
-        editIcon.classList.add('hidden');
-        editIcon.classList.remove('active-inline');
-        var deleteIcon = current.getElementsByClassName('message-delete')[0];
-        deleteIcon.classList.add('hidden');
-        deleteIcon.classList.remove('active-inline');
-
+        current.parentNode.dataset.state = "deleted"; 
     });
 }
 
