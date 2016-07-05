@@ -114,7 +114,7 @@ function updateHistory(){
             for(var k = 1; k < childnodes.length; k = k + 2){
                 if(mesHistory[i].id == childnodes[k].id){
                     if(mesHistory[i].text !== childnodes[k].getElementsByClassName('message-text')[0].innerHTML){
-                        childnodes[k].getElementsByClassName('message-text')[0].innerHTML = mesHistory[i].text;
+                        childnodes[k].getElementsByClassName('message-text')[0].textContent = mesHistory[i].text;
                     }
                 }
             }
@@ -155,7 +155,7 @@ function elementFromTemplate(mode){
 function renderItemState(element, message){
     element.children[1].id = message.id;
     element.children[1].getElementsByClassName('message-username')[0].innerHTML = message.user;
-    element.children[1].getElementsByClassName('message-text')[0].innerHTML = message.text;
+    element.children[1].getElementsByClassName('message-text')[0].textContent = message.text;
 }
 
 function delegateEvent(evtObj){
@@ -187,12 +187,16 @@ function onEditClick(evtObj){
 
     var editIcon = current.getElementsByClassName('message-edit')[0];
     editIcon.classList.add('hidden');
+
     input.classList.remove('hidden');
     input.classList.add('active-inline');
 
     var completeIcon = current.getElementsByClassName('message-edit-complete')[0];
     completeIcon.classList.remove('hidden');
     completeIcon.classList.add('active-inline');
+
+    var deleteIcon = current.getElementsByClassName('message-delete')[0];
+    deleteIcon.classList.add('hidden');
 
 }
 
@@ -222,10 +226,15 @@ function onEditComplete(evtObj){
         var completeIcon = current.getElementsByClassName('message-edit-complete')[0];
         completeIcon.classList.remove('active-inline');
         completeIcon.classList.add('hidden');
+
+        var deleteIcon = current.getElementsByClassName('message-delete')[0];
+        deleteIcon.classList.remove('hidden');
+        deleteIcon.classList.add('active-inline');
     });
 }
 
 function onDeleteClick(evtObj){
+     var current = evtObj.path[2];
 
     var deletedMessage = {
         id: evtObj.path[3].id,
@@ -236,6 +245,13 @@ function onDeleteClick(evtObj){
 
     ajax('DELETE', appState.mainUrl, JSON.stringify(deletedMessage), function(response){
         console.log('message has been removed ' + response);
+        var editIcon = current.getElementsByClassName('message-edit')[0];
+        editIcon.classList.add('hidden');
+        editIcon.classList.remove('active-inline');
+        var deleteIcon = current.getElementsByClassName('message-delete')[0];
+        deleteIcon.classList.add('hidden');
+        deleteIcon.classList.remove('active-inline');
+
     });
 }
 
