@@ -70,11 +70,14 @@ function doPolling(){
             var response = JSON.parse(response);
             appState.token = response.token;
 
-            for(var i=0;i<response.messages.length;i++){
-                appState.history.push(response.messages[i]);
-            }
+            if(response.messages.length !== 0){
+                for(var i=0;i<response.messages.length;i++){
+                    appState.history.push(response.messages[i]);
+                }
 
-            updateHistory();
+                updateHistory();
+            }
+            
 
             setTimeout(loop, 1000);
         });
@@ -91,35 +94,32 @@ function updateHistory1(newMessages){
 
 function updateHistory(){
 
-    //check only divs not style tag
     var childnodes = shadow.children;
     var mesHistory = appState.history;
+
     var j = 1;
 
     for (var i = 0; i < mesHistory.length; i++){
-        
-        if( !childnodes[j] || mesHistory[i].id !== childnodes[j].id){
-            if(mesHistory[i].flag !== 0){
-                //update in dom
-                for (var k = 1; k <= j; k++){
-                    if(mesHistory[i].id == childnodes[k].id){
-                        //update text
+        if(mesHistory[i].flag === 0 && !childnodes[j]){
+            addMessageInternal(mesHistory[i]);
+            continue;
+        }
+
+        if(childnodes[j] && mesHistory[i].flag === 0 && mesHistory[i].id === childnodes[j].id){
+            j = j + 2;
+            continue;
+        }
+
+        if(mesHistory[i].flag === 1 && (!childnodes[j] || mesHistory[i].id !== childnodes[j].id) ){
+            for(var k = 1; k < childnodes.length; k = k + 2){
+                if(mesHistory[i].id == childnodes[k].id){
+                    if(mesHistory[i].text !== childnodes[k].getElementsByClassName('message-text')[0].innerHTML){
                         childnodes[k].getElementsByClassName('message-text')[0].innerHTML = mesHistory[i].text;
-                        k = k + 2;
-                        return;
                     }
                 }
-            }else{
-                addMessageInternal(mesHistory[i]);
-                j = j + 2;
             }
-
-        }else{
-            console.log('id matches');
-            j = j + 2;
         }
-    }
-    
+    } 
 }
 
 function addMessageInternal(message){
@@ -153,7 +153,7 @@ function elementFromTemplate(mode){
 }
 
 function renderItemState(element, message){
-    element.children[1].setAttribute('id', message.id);
+    element.children[1].id = message.id;
     element.children[1].getElementsByClassName('message-username')[0].innerHTML = message.user;
     element.children[1].getElementsByClassName('message-text')[0].innerHTML = message.text;
 }
