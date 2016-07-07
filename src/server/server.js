@@ -44,6 +44,19 @@ function extractToken(str){
 	return token;
 }
 
+function awaitBody(request, done){
+	var body = [];
+	
+	request.on('error', function(err) {
+		console.error(err);
+	}).on('data', function(chunk) {
+		body.push(chunk);
+	}).on('end', function() {
+		body = Buffer.concat(body).toString();
+		done(body);
+	});
+};
+
 //Handle users requests
 function respond(request, response) {
 
@@ -51,21 +64,8 @@ function respond(request, response) {
 	var method = request.method;
 	var url = request.url;
 
-	var body = [];
-
-	function awaitBody(done){
-		request.on('error', function(err) {
-			console.error(err);
-		}).on('data', function(chunk) {
-			body.push(chunk);
-		}).on('end', function() {
-			body = Buffer.concat(body).toString();
-			done(body);
-		});
-	};	
-
 	if(method !== "GET"){
-		awaitBody(function(body){
+		awaitBody(request, function(body){
 			var message = JSON.parse(body);
 
 			history.post(message, function(){
