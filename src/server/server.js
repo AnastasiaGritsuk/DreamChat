@@ -2,11 +2,9 @@ var http = require('http');
 var ecstatic = require('ecstatic');
 var handler = ecstatic({ root: '../client', handleError:false });
 var url = require('url');
-var history = require('./history');
+var HistoryModule = require('./history');
 
-
-var tokenHistory = [];
-var currentToken =  0 ;
+var history = new HistoryModule.history();
 
 http.createServer(function(request, response) {
 	if(isMy(request.url) != -1){
@@ -29,82 +27,119 @@ function send404Response(response){
 	response.end();
 }
 
-var body = [];
+function endResponse(response, answer){
+	response.statusCode = 200;
+	response.setHeader('Content-Type', 'application/json');
+	response.setHeader("Access-Control-Allow-Origin", "*");
+	response.end(JSON.stringify(answer));
+}
 
-//Handle user requests
+function extractToken(str){
+	var token = str.split('?')[1].split('=')[1];
+
+	if(token === ''){
+		token = history.messageHistory.length;	
+	}
+
+	return token;
+}
+
+//Handle users requests
 function respond(request, response) {
+
 	var headers =  request.headers;
 	var method = request.method;
 	var url = request.url;
 
-	if(method != 'GET'){
+	var body = [];
+
+	function awaitBody(done){
 		request.on('error', function(err) {
 			console.error(err);
 		}).on('data', function(chunk) {
 			body.push(chunk);
-
 		}).on('end', function() {
 			body = Buffer.concat(body).toString();
-
-			response.on('error', function(err) {
-				console.error(err);
-			});
-
-			response.statusCode = 200;
-			response.setHeader('Content-Type', 'application/json');
-			response.setHeader("Access-Control-Allow-Origin", "*");
-			history.messageHistory.push(JSON.parse(body));
-			body = [];
-			currentToken = currentToken + 1;
-			tokenHistory.push(currentToken);
-			
-			response.end();
+			done(body);
 		});
-	}else{
-		console.log(url);
-		if(url.search(/token=/i) == -1) {
-			response.statusCode = 400;
-			response.write('bad request');
-			response.end();
-			return;
-		}
+	};	
 
-		var token = url.split('?')[1].split('=')[1];
+	if(method == "POST"){
+		awaitBody(function(body){
+			var message = JSON.parse(body);
 
-		if(token === ''){
-			token = history.messageHistory.length;	
-		}
+			history.post(message, function(){
+				endResponse(response);
+			});
+		});
 
-		var messagesArr = [];
+		return;
+	}
 
-		for(var i=token;i<history.messageHistory.length;i++){
-			history.messageHistory[i].time = getDateTime();
-			messagesArr.push(history.messageHistory[i]);
-		}
+	if(method == "GET"){
+		var token = extractToken(url);
 
-		var responseBody = {
-			messages: messagesArr,
-			token: currentToken
-		};
+		history.get(token, function(messages, newToken){
+			endResponse(response, {messages:messages, token:newToken});
+		});
+		return;
+	}
 
-		response.statusCode = 200;
-		response.setHeader('Content-Type', 'application/json');
-		response.setHeader("Access-Control-Allow-Origin", "*");
-		response.write(JSON.stringify(responseBody));
-		response.end();
+	// if(method != 'GET'){
+	// 	request.on('error', function(err) {
+	// 		console.error(err);
+	// 	}).on('data', function(chunk) {
+	// 		body.push(chunk);
+
+	// 	}).on('end', function() {
+	// 		body = Buffer.concat(body).toString();
+
+	// 		response.on('error', function(err) {
+	// 			console.error(err);
+	// 		});
+
+	// 		response.statusCode = 200;
+	// 		response.setHeader('Content-Type', 'application/json');
+	// 		response.setHeader("Access-Control-Allow-Origin", "*");
+	// 		history.messageHistory.push(JSON.parse(body));
+	// 		body = [];
+	// 		currentToken = currentToken + 1;
+			
+	// 		response.end();
+	// 	});
+	// }else{
+	// 	console.log(url);
+	// 	if(url.search(/token=/i) == -1) {
+	// 		response.statusCode = 400;
+	// 		response.write('bad request');
+	// 		response.end();
+	// 		return;
+	// 	}
+
+	// 	var token = url.split('?')[1].split('=')[1];
+
+	// 	if(token === ''){
+	// 		token = history.messageHistory.length;	
+	// 	}
+
+	// 	var messagesArr = [];
+
+	// 	for(var i=token;i<history.messageHistory.length;i++){
+	// 		history.messageHistory[i].time = getDateTime();
+	// 		messagesArr.push(history.messageHistory[i]);
+	// 	}
+
+	// 	var responseBody = {
+	// 		messages: messagesArr,
+	// 		token: currentToken
+	// 	};
+
+	// 	response.statusCode = 200;
+	// 	response.setHeader('Content-Type', 'application/json');
+	// 	response.setHeader("Access-Control-Allow-Origin", "*");
+	// 	response.write(JSON.stringify(responseBody));
+	// 	response.end();
 		
-	}	
+	// }	
 }
 
-function getDateTime() {
-
-    var date = new Date();
-
-    var hour = date.getHours();
-    hour = (hour < 10 ? "0" : "") + hour;
-
-    var min  = date.getMinutes();
-    min = (min < 10 ? "0" : "") + min;
-
-    return hour + ":" + min;
-}
