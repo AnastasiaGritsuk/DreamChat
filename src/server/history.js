@@ -1,11 +1,9 @@
 function History() {
 	this.messageHistory = [];
-	this.currentToken = 0;
 }
 
 History.prototype.post = function(newMessage, callback){
 	this.messageHistory.push(newMessage);
-	this.currentToken ++;
 	callback();
 }
 
@@ -17,11 +15,10 @@ History.prototype.get = function(token, callback){
 		answer.push(this.messageHistory[i]);
 	}
 
-	callback(answer, this.currentToken);
+	callback(answer, this.messageHistory.length);
 }
 
 module.exports.history = History;
-
 
 function getDateTime() {
 
