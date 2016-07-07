@@ -64,7 +64,7 @@ function respond(request, response) {
 		});
 	};	
 
-	if(method == "POST"){
+	if(method !== "GET"){
 		awaitBody(function(body){
 			var message = JSON.parse(body);
 
@@ -84,62 +84,5 @@ function respond(request, response) {
 		});
 		return;
 	}
-
-	// if(method != 'GET'){
-	// 	request.on('error', function(err) {
-	// 		console.error(err);
-	// 	}).on('data', function(chunk) {
-	// 		body.push(chunk);
-
-	// 	}).on('end', function() {
-	// 		body = Buffer.concat(body).toString();
-
-	// 		response.on('error', function(err) {
-	// 			console.error(err);
-	// 		});
-
-	// 		response.statusCode = 200;
-	// 		response.setHeader('Content-Type', 'application/json');
-	// 		response.setHeader("Access-Control-Allow-Origin", "*");
-	// 		history.messageHistory.push(JSON.parse(body));
-	// 		body = [];
-	// 		currentToken = currentToken + 1;
-			
-	// 		response.end();
-	// 	});
-	// }else{
-	// 	console.log(url);
-	// 	if(url.search(/token=/i) == -1) {
-	// 		response.statusCode = 400;
-	// 		response.write('bad request');
-	// 		response.end();
-	// 		return;
-	// 	}
-
-	// 	var token = url.split('?')[1].split('=')[1];
-
-	// 	if(token === ''){
-	// 		token = history.messageHistory.length;	
-	// 	}
-
-	// 	var messagesArr = [];
-
-	// 	for(var i=token;i<history.messageHistory.length;i++){
-	// 		history.messageHistory[i].time = getDateTime();
-	// 		messagesArr.push(history.messageHistory[i]);
-	// 	}
-
-	// 	var responseBody = {
-	// 		messages: messagesArr,
-	// 		token: currentToken
-	// 	};
-
-	// 	response.statusCode = 200;
-	// 	response.setHeader('Content-Type', 'application/json');
-	// 	response.setHeader("Access-Control-Allow-Origin", "*");
-	// 	response.write(JSON.stringify(responseBody));
-	// 	response.end();
-		
-	// }	
 }
 
