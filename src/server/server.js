@@ -27,11 +27,11 @@ function send404Response(response){
 	response.end();
 }
 
-function endResponse(response, answer){
+function endResponse(response, responseBody){
 	response.statusCode = 200;
 	response.setHeader('Content-Type', 'application/json');
 	response.setHeader("Access-Control-Allow-Origin", "*");
-	response.end(JSON.stringify(answer));
+	response.end(JSON.stringify(responseBody));
 }
 
 function extractToken(str){
