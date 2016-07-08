@@ -1,8 +1,8 @@
 var sendButton = document.getElementById('sendButton');
 var newMessageBox = document.getElementById('newMessageBox');
-var historyBox = document.getElementById('historyBox');
-historyBox.addEventListener('click', delegateEvent);
+document.addEventListener('click', delegateEvent);
 var shadow = document.getElementById('historyBox').createShadowRoot();
+var popup = document.getElementById('popup');
 
 var theMessage = function(text){
     return {
@@ -160,7 +160,28 @@ function delegateEvent(evtObj){
         onEditComplete(evtObj);
         return;
     }
+
+    if(evtObj.type == 'click' && evtObj.target.className == 'icon-male' || evtObj.target.className == 'server-img') {
+        showPopup(evtObj);
+        return;
+    }
+
+    if(evtObj.type == 'click' && evtObj.target.className == 'icon-remove') {
+        closePopup(evtObj);
+        return;
+    }
 }
+
+function showPopup(){
+    popup.classList.remove('hidden');
+    popup.classList.add('active');
+}
+
+function closePopup(){
+    popup.classList.remove('active');
+    popup.classList.add('hidden');
+}
+
 
 function onEditClick(evtObj){
     var current = evtObj.path[2];
