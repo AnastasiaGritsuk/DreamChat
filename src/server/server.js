@@ -44,6 +44,18 @@ function extractToken(str){
 	return token;
 }
 
+function extractData(url, value){
+	var parameters = url.split('/');
+
+	if(value == 'user'){
+		return parameters[2];
+	}
+	if(value == 'id'){
+		return parameters[4];
+	}
+	
+}
+
 function awaitBody(request, done){
 	var body = [];
 	
@@ -64,6 +76,17 @@ function respond(request, response) {
 	var method = request.method;
 	var url = request.url;
 
+	if(method == "DELETE"){
+		var id = extractData(url, 'id');
+		var user = extractData(url, 'user');
+
+		history.delete(id, user, function(){
+			endResponse(response);
+		});
+
+		return;
+	}
+
 	if(method !== "GET"){
 		awaitBody(request, function(body){
 			var message = JSON.parse(body);
@@ -77,6 +100,7 @@ function respond(request, response) {
 	}
 
 	if(method == "GET"){
+		console.log(url);
 		var token = extractToken(url);
 
 		history.get(token, function(messages, newToken){

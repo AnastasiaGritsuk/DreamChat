@@ -18,6 +18,22 @@ History.prototype.get = function(token, callback){
 	callback(answer, this.messageHistory.length);
 }
 
+History.prototype.delete = function(id, user, callback){
+	this.messageHistory.push(
+	{
+		"id":id,
+		"text": "message has been removed",
+		"user": user,
+		"flag": 1
+	});
+
+	for(var i =0;i<this.messageHistory.length;i++){
+		console.log(this.messageHistory[i]);	
+	}
+	
+	callback();
+}
+
 module.exports.history = History;
 
 function getDateTime() {

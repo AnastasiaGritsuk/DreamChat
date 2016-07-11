@@ -199,7 +199,7 @@ function onEditComplete(evtObj){
         flag: 1
     }
 
-    ajax('PUT', appState.mainUrl, JSON.stringify(updatedMessage), function(response){
+    ajax('PUT', appState.mainUrl, JSON.stringify(updatedMessage), function(){
         current.parentNode.dataset.state = "initial"; 
     });
 }
@@ -207,14 +207,7 @@ function onEditComplete(evtObj){
 function onDeleteClick(evtObj){
     var current = evtObj.path[2];
 
-    var deletedMessage = {
-        id: evtObj.path[3].id,
-        text: "message has been removed",
-        user: appState.user,
-        flag: 1
-    }
-
-    ajax('DELETE', appState.mainUrl, JSON.stringify(deletedMessage), function(response){
+    ajax('DELETE', appState.mainUrl + '/' + appState.user + '/delete/' + evtObj.path[3].id, null, function(){
         current.parentNode.dataset.state = "deleted"; 
     });
 }
