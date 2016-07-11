@@ -63,8 +63,6 @@ function sendMessage(message, continueWith){
 
     ajax('POST', appState.mainUrl, JSON.stringify(message), function(response){
         console.log('message has been sent ');
-    }, function(errorText){
-        console.log(errorText);
     });
 
 }
@@ -146,10 +144,11 @@ function elementFromTemplate(mode){
 }
 
 function renderItemState(element, message){
-    element.children[1].id = message.id;
-    element.children[1].getElementsByClassName('message-username')[0].innerHTML = message.user;
-    element.children[1].getElementsByClassName('message-text')[0].textContent = message.text;
-    element.children[1].getElementsByClassName('message-time')[0].textContent = message.time;
+    var item = element.children[1];
+    item.id = message.id;
+    item.getElementsByClassName('message-username')[0].innerHTML = message.user;
+    item.getElementsByClassName('message-text')[0].textContent = message.text;
+    item.getElementsByClassName('message-time')[0].textContent = message.time;
 }
 
 function delegateEvent(evtObj){
@@ -189,7 +188,7 @@ function delegateEvent(evtObj){
     }
 
     if(evtObj.type == 'click' && evtObj.path[6].dataset.state == 'changeserver') {
-        changeserver();
+        changeServer();
         return;
     }
 }
@@ -318,7 +317,6 @@ function isError(text){
 }
 
 function changeServer(){
-    var newServerValue;
 
 }
 
