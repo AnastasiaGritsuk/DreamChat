@@ -487,7 +487,8 @@ html.overflow body {
   color: #3c4f8b;
 }
 
-/* line 127, D:/DreamChat/src/client/scss/_popup_block.scss */
+/* line 126, D:/DreamChat/src/client/scss/_popup_block.scss */
+s
 .popup_header_text {
   color: #3c508b;
   vertical-align: bottom;
@@ -497,6 +498,27 @@ html.overflow body {
 
 /* line 135, D:/DreamChat/src/client/scss/_popup_block.scss */
 .popup_button {
-  display: inline-block;
   cursor: pointer;
+  border: 1px solid #893667;
+  padding: 3px 12px;
+  background: #F5F4EB;
+  font-size: 14px;
+}
+
+/* line 143, D:/DreamChat/src/client/scss/_popup_block.scss */
+.popup_button_wrap {
+  display: inline-block;
+}
+
+/* line 147, D:/DreamChat/src/client/scss/_popup_block.scss */
+.newUsername_wrap {
+  display: inline-block;
+}
+
+/* line 151, D:/DreamChat/src/client/scss/_popup_block.scss */
+.newUsername_form_label {
+  margin-bottom: 12px;
+  display: inline-block;
+  color: #893667;
+  font-family: 'Open Sans Semibold';
 }

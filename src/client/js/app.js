@@ -9,8 +9,7 @@ var theMessage = function(text){
         id: uniqueId(),
         text:text,
         user: appState.user,
-        flag: 0,
-        time:''
+        flag: 0
     }
 }
 
@@ -185,12 +184,33 @@ function delegateEvent(evtObj){
     }
 
     if(evtObj.type == 'click' && evtObj.path[6].dataset.state == 'changeusername') {
-        changeUsername(evtObj);
+        changeUsername();
+        return;
+    }
+
+    if(evtObj.type == 'click' && evtObj.path[6].dataset.state == 'changeserver') {
+        changeserver();
+        return;
+    }
+}
+
+function generatePopupState(state){
+    var headerText = document.getElementsByClassName('popup_header_text')[0];
+    var label = document.getElementsByClassName('newUsername_form_label')[0];
+    if(state == 'changeserver'){
+        headerText.innerHTML = 'New Server';
+        label.innerHTML = "New Server";
+        return;
+    }
+    if(state == 'changeusername'){
+        headerText.innerHTML = 'New Username';
+        label.innerHTML = "New Username";
         return;
     }
 }
 
 function showPopup(state){
+    generatePopupState(state);
     popup.classList.remove('hidden');
     popup.classList.add('active');
     popup.dataset.state = state;
@@ -236,8 +256,6 @@ function ajax(method, url, data, continueWith, continueWithError){
 
     continueWithError = continueWithError || defaultErrorHandler;
     xhr.open(method || 'GET', url, true);
-
-    //xhr.timeout = 5000;
 
     xhr.onload = function(){
         if(xhr.readyState !==4)
@@ -305,7 +323,6 @@ function changeServer(){
 }
 
 function changeUsername(){
-    //get new username
     var newUsername = document.getElementById('newUsername').value;
     setUsername(newUsername);
     closePopup();

@@ -123,7 +123,7 @@ html.overflow {
 	cursor: pointer;
 	color: #3c4f8b;
 }
-
+s
 .popup_header_text {
 	color: #3c508b;
 	
@@ -133,6 +133,24 @@ html.overflow {
 }
 
 .popup_button{
-	display: inline-block;
 	cursor: pointer;
+	border: 1px solid #893667;
+    padding: 3px 12px;
+    background: #F5F4EB;
+    font-size: 14px;
+}
+
+.popup_button_wrap{
+	display: inline-block;
+}
+
+.newUsername_wrap{
+	display: inline-block;
+}
+
+.newUsername_form_label{
+	margin-bottom: 12px;
+    display: inline-block;
+	color: #893667;
+    font-family: 'Open Sans Semibold';
 }

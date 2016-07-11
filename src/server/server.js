@@ -15,7 +15,7 @@ http.createServer(function(request, response) {
 
 }).listen(8080);
 
-console.log('Listening on :8080');
+console.log('Listening on : 8080');
 
 function isMy(url){
 	return url.indexOf('/chat');
@@ -87,7 +87,7 @@ function respond(request, response) {
 		return;
 	}
 
-	if(method !== "GET"){
+	if(method == "POST" || method == "PUT"){
 		awaitBody(request, function(body){
 			var message = JSON.parse(body);
 
