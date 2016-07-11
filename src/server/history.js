@@ -26,10 +26,6 @@ History.prototype.delete = function(id, user, callback){
 		"user": user,
 		"flag": 1
 	});
-
-	for(var i =0;i<this.messageHistory.length;i++){
-		console.log(this.messageHistory[i]);	
-	}
 	
 	callback();
 }

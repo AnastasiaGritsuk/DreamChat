@@ -34,12 +34,14 @@ function run(){
             onSendButtonClick();
         return false;
     });
+
     sendButton.addEventListener('click', onSendButtonClick);
     doPolling();
 }
 
 function onSendButtonClick(){
 	var newMessage = theMessage(newMessageBox.value);
+    setUsername(newMessage.user);
 
     if(newMessageBox.value == '')
         return;
@@ -49,6 +51,12 @@ function onSendButtonClick(){
     sendMessage(newMessage, function(){
         console.log('Message sent ' + newMessage);
     });
+}
+
+function setUsername(name){
+    var userProfileName = document.getElementsByClassName('user-profile-name')[0];
+    appState.user = name;
+    userProfileName.innerHTML = name;
 }
 
 function sendMessage(message, continueWith){
@@ -161,8 +169,13 @@ function delegateEvent(evtObj){
         return;
     }
 
-    if(evtObj.type == 'click' && evtObj.target.className == 'icon-male' || evtObj.target.className == 'server-img') {
-        showPopup(evtObj);
+    if(evtObj.type == 'click' && evtObj.target.className == 'icon-male') {
+        showPopup('changeusername');
+        return;
+    }
+
+    if(evtObj.type == 'click' && evtObj.target.className == 'server-img' ) {
+        showPopup('changeserver');
         return;
     }
 
@@ -170,11 +183,17 @@ function delegateEvent(evtObj){
         closePopup(evtObj);
         return;
     }
+
+    if(evtObj.type == 'click' && evtObj.path[6].dataset.state == 'changeusername') {
+        changeUsername(evtObj);
+        return;
+    }
 }
 
-function showPopup(){
+function showPopup(state){
     popup.classList.remove('hidden');
     popup.classList.add('active');
+    popup.dataset.state = state;
 }
 
 function closePopup(){
@@ -278,4 +297,16 @@ function isError(text){
     }
 
     return !!obj.error;
+}
+
+function changeServer(){
+    var newServerValue;
+
+}
+
+function changeUsername(){
+    //get new username
+    var newUsername = document.getElementById('newUsername').value;
+    setUsername(newUsername);
+    closePopup();
 }
