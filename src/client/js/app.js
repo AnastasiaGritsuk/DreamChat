@@ -98,7 +98,13 @@ function updateHistory(){
 
     for (var i = 0; i < mesHistory.length; i++){
         if(mesHistory[i].flag === 0 && !childnodes[j]){
+            var out = document.getElementById('historyBox');
+            var isScrolledToBottom = out.scrollHeight - out.clientHeight <= out.scrollTop + 1;
+
             addMessageInternal(mesHistory[i]);
+
+            if(isScrolledToBottom)
+                out.scrollTop = out.scrollHeight - out.clientHeight;
             continue;
         }
 
@@ -324,4 +330,9 @@ function changeUsername(){
     var newUsername = document.getElementById('newUsername').value;
     setUsername(newUsername);
     closePopup();
+}
+
+function scrollToBottom(){
+    
+    
 }
