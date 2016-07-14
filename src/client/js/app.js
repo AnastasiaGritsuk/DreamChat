@@ -75,13 +75,8 @@ function doPolling(){
             var response = JSON.parse(response);
             appState.token = response.token;
 
-            if(response.messages.length !== 0){
-                for(var i=0;i<response.messages.length;i++){
-                    appState.history.push(response.messages[i]);
-                }
+            updateHistory(response.messages);
 
-                updateHistory();
-            }
             setTimeout(loop, 1000);
         });
     }
@@ -89,7 +84,32 @@ function doPolling(){
     loop();
 }
 
-function updateHistory(){
+function updateHistory(newMsg){
+    if(newMsg.length === 0)
+        return;
+
+    var msgHistory = appState.history;
+    var counter = 0;
+
+    if(msgHistory.length === 0){
+        msgHistory.push(newMsg[0]);
+        return;
+    }
+    
+    for (var i = 0; i < msgHistory.length; i++) {
+        
+        if(newMsg[0].id === msgHistory[i].id){
+            msgHistory[i].text = newMsg[0].text;
+            counter++;
+        }
+    }
+    if(counter === 0){
+        msgHistory.push(newMsg[0]);
+    }
+
+}
+
+function updateHistory1(){
 
     var childnodes = shadow.children;
     var mesHistory = appState.history;
@@ -105,6 +125,7 @@ function updateHistory(){
 
             if(isScrolledToBottom)
                 out.scrollTop = out.scrollHeight - out.clientHeight;
+
             continue;
         }
 
@@ -188,15 +209,15 @@ function delegateEvent(evtObj){
         return;
     }
 
-    if(evtObj.type == 'click' && evtObj.path[6].dataset.state == 'changeusername') {
-        changeUsername();
-        return;
-    }
+    // if(evtObj.type == 'click' && evtObj.path[6].dataset.state == 'changeusername') {
+    //     changeUsername();
+    //     return;
+    // }
 
-    if(evtObj.type == 'click' && evtObj.path[6].dataset.state == 'changeserver') {
-        changeServer();
-        return;
-    }
+    // if(evtObj.type == 'click' && evtObj.path[6].dataset.state == 'changeserver') {
+    //     changeServer();
+    //     return;
+    // }
 }
 
 function generatePopupState(state){
