@@ -44,16 +44,19 @@ function extractToken(str){
 	return token;
 }
 
-function extractData(url, value){
-	var parameters = url.split('/');
+function extractId(url){
+	var parameters = url.split('');
+	for(var i = 0; i < parameters.length; i++){
+		if(parameters[i] == '('){
+			var begin = i+1;
+		}
 
-	if(value == 'user'){
-		return parameters[2];
+		if(parameters[i] == ')'){
+			var end = i;
+		}
 	}
-	if(value == 'id'){
-		return parameters[4];
-	}
-	
+
+	return parameters.slice(begin, end).join('');
 }
 
 function awaitBody(request, done){
@@ -77,10 +80,11 @@ function respond(request, response) {
 	var url = request.url;
 
 	if(method == "DELETE"){
-		var id = extractData(url, 'id');
-		var user = extractData(url, 'user');
+		console.log(url);
+		var id = extractId(url);
+		console.log(id);
 
-		history.delete(id, user, function(){
+		history.delete(id, function(){
 			endResponse(response);
 		});
 

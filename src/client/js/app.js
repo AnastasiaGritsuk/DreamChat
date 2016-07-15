@@ -8,8 +8,7 @@ var theMessage = function(text){
     return {
         id: uniqueId(),
         text:text,
-        user: appState.user,
-        flag: 0
+        user: appState.user
     }
 }
 
@@ -267,8 +266,7 @@ function onEditComplete(evtObj){
     var updatedMessage = {
         id: evtObj.path[3].id,
         text: input.value,
-        user: appState.user,
-        flag: 1
+        user: appState.user 
     }
 
     ajax('PUT', appState.mainUrl, JSON.stringify(updatedMessage), function(){
@@ -279,7 +277,7 @@ function onEditComplete(evtObj){
 function onDeleteClick(evtObj){
     var current = evtObj.path[2];
 
-    ajax('DELETE', appState.mainUrl + '/' + appState.user + '/delete/' + evtObj.path[3].id, null, function(){
+    ajax('DELETE', appState.mainUrl + '/'  + 'delete(' + evtObj.path[3].id + ')', null, function(){
         current.parentNode.dataset.state = "deleted"; 
     });
 }
