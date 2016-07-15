@@ -35,7 +35,9 @@ function run(){
     });
 
     sendButton.addEventListener('click', onSendButtonClick);
-    doPolling();
+    doPolling(function(){
+        render(appState);
+    });
 }
 
 
@@ -76,7 +78,7 @@ function doPolling(done){
             var response = JSON.parse(response);
             appState.token = response.token;
 
-            updateHistory(appState.messages);
+            updateHistory(response.messages);
             done();
 
             setTimeout(loop, 1000);
@@ -93,7 +95,6 @@ function updateHistory(newMsg){
     if(appState.history.length === 0){
         for(var i=0;i<newMsg.length;i++){
             appState.history.push(newMsg[i]); 
-            addMessageInternal(newMsg[i]);   
         }
         return;
     }
@@ -110,13 +111,12 @@ function updateHistory(newMsg){
     for(var n = 0; n < newMsg.length; n++){
         if(newMsg[n].id !== null){
             appState.history.push(newMsg[n]);
-            addMessageInternal(newMsg[n]);
         }
     }
 }
 
 function render(appState){
-    var msgHistory = appState.messages;
+    var msgHistory = appState.history;
 
     if(msgHistory.length === 0)
         return;
@@ -135,8 +135,12 @@ function render(appState){
                 console.log('There is an error in history sync');
                 return null;
             }
+        }else if(msgHistory[index] && !prevDomHistory[k]){
+            addMessageInternal(msgHistory[index]);
+        }else{
+            console.log('Error in history rendering');
         }
-        
+
         index ++;
         k = k + 2;
     }
