@@ -77,7 +77,7 @@ function doPolling(){
 
             updateHistory(response.messages);
 
-            setTimeout(loop, 1000);
+            setTimeout(loop, 10000);
         });
     }
 
@@ -92,21 +92,29 @@ function updateHistory(newMsg){
     var counter = 0;
 
     if(msgHistory.length === 0){
-        msgHistory.push(newMsg[0]);
+        for(var i=0;i<newMsg.length;i++){
+            msgHistory.push(newMsg[i]);    
+        }
         return;
     }
     
-    for (var i = 0; i < msgHistory.length; i++) {
+    for (var j = 0; j < msgHistory.length; j++) {
         
-        if(newMsg[0].id === msgHistory[i].id){
-            msgHistory[i].text = newMsg[0].text;
-            counter++;
+
+        for(var k = 0; k < newMsg.length;k++){
+            if(msgHistory[j].id === newMsg[k].id){
+                msgHistory[i].text = newMsg[0].text;
+                newMsg[k] = null;
+            }    
         }
-    }
-    if(counter === 0){
-        msgHistory.push(newMsg[0]);
+
     }
 
+    for(var n = 0; n < newMsg.length; n++){
+        if(newMsg[n] !== null){
+            msgHistory.push(newMsg[n]);
+        }
+    }
 }
 
 function updateHistory1(){
