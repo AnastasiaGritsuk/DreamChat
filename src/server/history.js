@@ -7,6 +7,12 @@ History.prototype.post = function(newMessage, callback){
 	callback();
 }
 
+History.prototype.put = function(newMessage, callback){
+	this.messageHistory.push(newMessage);
+	callback();
+}
+
+
 History.prototype.get = function(token, callback){
 	var answer = [];
 

@@ -38,6 +38,7 @@ function run(){
     doPolling();
 }
 
+
 function onSendButtonClick(){
 	var newMessage = theMessage(newMessageBox.value);
     setUsername(newMessage.user);
@@ -67,7 +68,7 @@ function sendMessage(message, continueWith){
 
 }
 
-function doPolling(){
+function doPolling(done){
     function loop(){
         var xhr = new XMLHttpRequest();
 
@@ -75,7 +76,8 @@ function doPolling(){
             var response = JSON.parse(response);
             appState.token = response.token;
 
-            updateHistory(response.messages);
+            updateHistory(appState.messages);
+            done();
 
             setTimeout(loop, 1000);
         });
@@ -88,39 +90,34 @@ function updateHistory(newMsg){
     if(newMsg.length === 0)
         return;
 
-    var msgHistory = appState.history;
-
-    if(msgHistory.length === 0){
+    if(appState.history.length === 0){
         for(var i=0;i<newMsg.length;i++){
-            msgHistory.push(newMsg[i]); 
+            appState.history.push(newMsg[i]); 
             addMessageInternal(newMsg[i]);   
         }
         return;
     }
     
-    for (var j = 0; j < msgHistory.length; j++) {
-        
-
+    for (var j = 0; j < appState.history.length; j++) {
         for(var k = 0; k < newMsg.length;k++){
-            if(msgHistory[j].id === newMsg[k].id){
-                msgHistory[j].text = newMsg[k].text;
+            if(appState.history[j].id === newMsg[k].id){
+                appState.history[j].text = newMsg[k].text;
                 newMsg[k].id = null;
             }    
         }
-
     }
 
     for(var n = 0; n < newMsg.length; n++){
         if(newMsg[n].id !== null){
-            msgHistory.push(newMsg[n]);
+            appState.history.push(newMsg[n]);
             addMessageInternal(newMsg[n]);
         }
     }
-
-    syncDomHistory(msgHistory);
 }
 
-function syncDomHistory(msgHistory){
+function render(appState){
+    var msgHistory = appState.messages;
+
     if(msgHistory.length === 0)
         return;
 
@@ -135,10 +132,11 @@ function syncDomHistory(msgHistory){
                     setMsgText(prevDomHistory[k], msgHistory[index].text);
                 }
             }else{
-                console.log('error');
+                console.log('There is an error in history sync');
                 return null;
             }
         }
+        
         index ++;
         k = k + 2;
     }

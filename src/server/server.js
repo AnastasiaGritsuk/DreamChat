@@ -87,11 +87,23 @@ function respond(request, response) {
 		return;
 	}
 
-	if(method == "POST" || method == "PUT"){
+	if(method == "POST"){
 		awaitBody(request, function(body){
 			var message = JSON.parse(body);
 
 			history.post(message, function(){
+				endResponse(response);
+			});
+		});
+
+		return;
+	}
+
+	if(method == "PUT"){
+		awaitBody(request, function(body){
+			var message = JSON.parse(body);
+
+			history.put(message, function(){
 				endResponse(response);
 			});
 		});
