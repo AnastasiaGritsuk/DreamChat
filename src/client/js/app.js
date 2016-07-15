@@ -77,7 +77,7 @@ function doPolling(){
 
             updateHistory(response.messages);
 
-            setTimeout(loop, 10000);
+            setTimeout(loop, 1000);
         });
     }
 
@@ -89,11 +89,11 @@ function updateHistory(newMsg){
         return;
 
     var msgHistory = appState.history;
-    var counter = 0;
 
     if(msgHistory.length === 0){
         for(var i=0;i<newMsg.length;i++){
-            msgHistory.push(newMsg[i]);    
+            msgHistory.push(newMsg[i]); 
+            addMessageInternal(newMsg[i]);   
         }
         return;
     }
@@ -103,56 +103,53 @@ function updateHistory(newMsg){
 
         for(var k = 0; k < newMsg.length;k++){
             if(msgHistory[j].id === newMsg[k].id){
-                msgHistory[i].text = newMsg[0].text;
-                newMsg[k] = null;
+                msgHistory[j].text = newMsg[k].text;
+                newMsg[k].id = null;
             }    
         }
 
     }
 
     for(var n = 0; n < newMsg.length; n++){
-        if(newMsg[n] !== null){
+        if(newMsg[n].id !== null){
             msgHistory.push(newMsg[n]);
+            addMessageInternal(newMsg[n]);
         }
+    }
+
+    syncDomHistory(msgHistory);
+}
+
+function syncDomHistory(msgHistory){
+    if(msgHistory.length === 0)
+        return;
+
+    var prevDomHistory = shadow.children;
+    var index = 0;
+    var k = 1;
+
+    while(index < msgHistory.length){
+        if(msgHistory[index] && prevDomHistory[k]){
+            if(msgHistory[index].id == prevDomHistory[k].id){
+                if(msgHistory[index].text != getMsgText(prevDomHistory[k])){
+                    setMsgText(prevDomHistory[k], msgHistory[index].text);
+                }
+            }else{
+                console.log('error');
+                return null;
+            }
+        }
+        index ++;
+        k = k + 2;
     }
 }
 
-function updateHistory1(){
+function getMsgText(item){
+    return item.getElementsByClassName('message-text')[0].innerHTML;
+}
 
-    var childnodes = shadow.children;
-    var mesHistory = appState.history;
-
-    var j = 1;
-
-    for (var i = 0; i < mesHistory.length; i++){
-        if(mesHistory[i].flag === 0 && !childnodes[j]){
-            var out = document.getElementById('historyBox');
-            var isScrolledToBottom = out.scrollHeight - out.clientHeight <= out.scrollTop + 1;
-
-            addMessageInternal(mesHistory[i]);
-
-            if(isScrolledToBottom)
-                out.scrollTop = out.scrollHeight - out.clientHeight;
-
-            continue;
-        }
-
-        if(childnodes[j] && mesHistory[i].flag === 0 && mesHistory[i].id === childnodes[j].id){
-            j = j + 2;
-            continue;
-        }
-
-        if(mesHistory[i].flag === 1 && (!childnodes[j] || mesHistory[i].id !== childnodes[j].id) ){
-            for(var k = 1; k < childnodes.length; k = k + 2){
-                if(mesHistory[i].id == childnodes[k].id){
-                    if(mesHistory[i].text !== childnodes[k].getElementsByClassName('message-text')[0].innerHTML){
-                        childnodes[k].getElementsByClassName('message-text')[0].textContent = mesHistory[i].text;
-                        childnodes[k].getElementsByClassName('message-time')[0].innerHTML = mesHistory[i].time;
-                    }
-                }
-            }
-        }
-    } 
+function setMsgText(item, newText){
+    item.getElementsByClassName('message-text')[0].innerHTML = newText;
 }
 
 function addMessageInternal(message){
