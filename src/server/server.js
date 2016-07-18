@@ -79,6 +79,16 @@ function respond(request, response) {
 	var method = request.method;
 	var url = request.url;
 
+	//history[method]();???
+	// var handlers = {
+	// 	"/chat": {
+	// 		get: getHandler(),
+	// 		post: postHandler(),
+	// 		put: putHandler(),
+	// 		delete: deleteHandler()
+	// 	}
+	// }
+
 	if(method == "DELETE"){
 		console.log(url);
 		var id = extractId(url);

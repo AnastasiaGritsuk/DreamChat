@@ -35,8 +35,6 @@ History.prototype.delete = function(id, callback){
 	callback();
 }
 
-module.exports.history = History;
-
 function getDateTime() {
 
     var date = new Date();
@@ -49,3 +47,6 @@ function getDateTime() {
 
     return hour + ":" + min;
 }
+
+module.exports.history = History;
+

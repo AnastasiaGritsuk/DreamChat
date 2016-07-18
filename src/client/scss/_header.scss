@@ -1,16 +1,11 @@
-.header-content{
-	display: table;
-    width: 100%;
-}
-
 .user-profile{
-	display: table-cell;
+	float: left;
 	vertical-align: middle;
 	padding: 5px 0 0 5px;
 }
 
 .chat-service{
-	display: table-cell;
+	float: right;
 	vertical-align: middle;
 	padding: 5px 0 0 5px;
 }

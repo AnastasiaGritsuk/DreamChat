@@ -230,26 +230,20 @@ a {
 }
 
 /* line 1, D:/DreamChat/src/client/scss/_header.scss */
-.header-content {
-  display: table;
-  width: 100%;
-}
-
-/* line 6, D:/DreamChat/src/client/scss/_header.scss */
 .user-profile {
-  display: table-cell;
+  float: left;
   vertical-align: middle;
   padding: 5px 0 0 5px;
 }
 
-/* line 12, D:/DreamChat/src/client/scss/_header.scss */
+/* line 7, D:/DreamChat/src/client/scss/_header.scss */
 .chat-service {
-  display: table-cell;
+  float: right;
   vertical-align: middle;
   padding: 5px 0 0 5px;
 }
 
-/* line 19, D:/DreamChat/src/client/scss/_header.scss */
+/* line 14, D:/DreamChat/src/client/scss/_header.scss */
 .server-img {
   background: url("../img/server.png");
   display: inline-block;
@@ -258,7 +252,7 @@ a {
   cursor: pointer;
 }
 
-/* line 27, D:/DreamChat/src/client/scss/_header.scss */
+/* line 22, D:/DreamChat/src/client/scss/_header.scss */
 .user-profile-img {
   font-size: 40px;
   color: #434E3C;
