@@ -3,6 +3,7 @@ var newMessageBox = document.getElementById('newMessageBox');
 document.addEventListener('click', delegateEvent);
 var shadow = document.getElementById('historyBox').createShadowRoot();
 var popup = document.getElementById('popup');
+popup.addEventListener('click', delegatePopupEvent);
 
 var theMessage = function(text){
     return {
@@ -42,7 +43,6 @@ function run(){
 
 function onSendButtonClick(){
 	var newMessage = theMessage(newMessageBox.value);
-    setUsername(newMessage.user);
 
     if(newMessageBox.value == '')
         return;
@@ -52,12 +52,6 @@ function onSendButtonClick(){
     sendMessage(newMessage, function(){
         console.log('Message sent ' + newMessage);
     });
-}
-
-function setUsername(name){
-    var userProfileName = document.getElementsByClassName('user-profile-name')[0];
-    appState.user = name;
-    userProfileName.innerHTML = name;
 }
 
 function sendMessage(message, continueWith){
@@ -135,7 +129,13 @@ function render(appState){
                 return null;
             }
         }else if(msgHistory[index] && !prevDomHistory[k]){
+            var out = document.getElementById('historyBox');
+            var isScrolledToBottom = out.scrollHeight - out.clientHeight <= out.scrollTop + 1;
+
             addMessageInternal(msgHistory[index]);
+
+            if(isScrolledToBottom)
+                out.scrollTop = out.scrollHeight - out.clientHeight;
         }else{
             console.log('Error in history rendering');
         }
@@ -213,12 +213,14 @@ function delegateEvent(evtObj){
     if(evtObj.type == 'click' && evtObj.target.className == 'icon-remove') {
         closePopup(evtObj);
         return;
-    }
+    }    
+}
 
-    // if(evtObj.type == 'click' && evtObj.path[6].dataset.state == 'changeusername') {
-    //     changeUsername();
-    //     return;
-    // }
+function delegatePopupEvent(evtObj){
+    if(evtObj.type == 'click' && evtObj.path[6].dataset.state == 'changeusername') {
+        changeUsername();
+        return;
+    }
 
     // if(evtObj.type == 'click' && evtObj.path[6].dataset.state == 'changeserver') {
     //     changeServer();
@@ -354,7 +356,7 @@ function changeServer(){
 
 function changeUsername(){
     var newUsername = document.getElementById('newUsername').value;
-    setUsername(newUsername);
+    appState.user = newUsername;
     closePopup();
 }
 

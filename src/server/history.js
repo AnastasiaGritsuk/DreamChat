@@ -48,5 +48,5 @@ function getDateTime() {
     return hour + ":" + min;
 }
 
-module.exports.history = History;
+module.exports = History;
 

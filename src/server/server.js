@@ -4,7 +4,7 @@ var handler = ecstatic({ root: '../client', handleError:false });
 var url = require('url');
 var HistoryModule = require('./history');
 
-var history = new HistoryModule.history();
+var history = new HistoryModule();
 
 http.createServer(function(request, response) {
 	if(isMy(request.url) != -1){
@@ -78,16 +78,6 @@ function respond(request, response) {
 	var headers =  request.headers;
 	var method = request.method;
 	var url = request.url;
-
-	//history[method]();???
-	// var handlers = {
-	// 	"/chat": {
-	// 		get: getHandler(),
-	// 		post: postHandler(),
-	// 		put: putHandler(),
-	// 		delete: deleteHandler()
-	// 	}
-	// }
 
 	if(method == "DELETE"){
 		console.log(url);
