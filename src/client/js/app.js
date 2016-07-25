@@ -71,7 +71,7 @@ function doPolling(done){
             var response = JSON.parse(response);
             appState.token = response.token;
 
-            updateHistory(response.messages);
+            syncHistory(response.messages);
             done();
 
             setTimeout(loop, 1000);
@@ -81,30 +81,27 @@ function doPolling(done){
     loop();
 }
 
-function updateHistory(newMsg){
+function syncHistory(newMsg){
     if(newMsg.length === 0)
         return;
 
-    if(appState.history.length === 0){
-        for(var i=0;i<newMsg.length;i++){
-            appState.history.push(newMsg[i]); 
-        }
-        return;
-    }
-    
-    for (var j = 0; j < appState.history.length; j++) {
-        for(var k = 0; k < newMsg.length;k++){
-            if(appState.history[j].id === newMsg[k].id){
-                appState.history[j].text = newMsg[k].text;
-                newMsg[k].id = null;
-            }    
-        }
-    }
+    var msgMap = appState.history.reduce(function(accumulator, msg){
+        accumulator[msg.id] = msg;
 
-    for(var n = 0; n < newMsg.length; n++){
-        if(newMsg[n].id !== null){
-            appState.history.push(newMsg[n]);
+        return accumulator;
+    },{});
+
+    for(var i=0;i<newMsg.length;i++){
+        var id = newMsg[i].id;
+        var item = msgMap[id];
+
+        if(item == null){
+            appState.history.push(newMsg[i]);
+            continue;
         }
+
+        item.text = newMsg[i].text;
+        item.status = newMsg[i].status;
     }
 }
 

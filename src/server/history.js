@@ -3,11 +3,13 @@ function History() {
 }
 
 History.prototype.post = function(newMessage, callback){
+	newMessage.status = "new";
 	this.messageHistory.push(newMessage);
 	callback();
 }
 
 History.prototype.put = function(newMessage, callback){
+	newMessage.status = "edited";
 	this.messageHistory.push(newMessage);
 	callback();
 }
@@ -29,7 +31,8 @@ History.prototype.delete = function(id, callback){
 	{
 		"id":id,
 		"text": "message has been removed",
-		"user": ''
+		"user": '',
+		"status": "deleted"
 	});
 	
 	callback();
