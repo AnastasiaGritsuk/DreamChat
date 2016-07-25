@@ -72,34 +72,64 @@
     display: inline-block;
 }
 
-/*initial state*/
-.message[data-state="initial"] input{
+/*new state*/
+.message[data-state="new"] input{
     display: none;
 }
 
-.message[data-state="initial"] .message-edit{
+.message[data-state="new"] .message-edit{
     display: inline-block;
 }
 
-.message[data-state="initial"] .message-text{
+.message[data-state="new"] .message-text{
     display: inline-block;
 }
 
-.message[data-state="initial"] .message-edit-complete{
+.message[data-state="new"] .message-edit-complete{
     display: none;
 }
 
-.message[data-state="initial"] .message-delete{
+.message[data-state="new"] .message-delete{
+    display: inline-block;
+}
+
+/*edited Other state*/
+
+.message[data-state="edited"].other .message-edit{
+    display: none;
+}
+
+.message[data-state="edited"].other .message-delete{
+    display: none;
+}
+
+.message[data-state="edited"] input{
+    display: none;
+}
+
+.message[data-state="edited"] .message-edit{
+    display: inline-block;
+}
+
+.message[data-state="edited"] .message-text{
+    display: inline-block;
+}
+
+.message[data-state="edited"] .message-edit-complete{
+    display: none;
+}
+
+.message[data-state="edited"] .message-delete{
     display: inline-block;
 }
 
 /*initial Other state*/
 
-.message[data-state="initial"].other .message-edit{
+.message[data-state="new"].other .message-edit{
     display: none;
 }
 
-.message[data-state="initial"].other .message-delete{
+.message[data-state="new"].other .message-delete{
     display: none;
 }
 

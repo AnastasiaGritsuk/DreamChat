@@ -35,8 +35,12 @@ function run(){
     });
 
     sendButton.addEventListener('click', onSendButtonClick);
-    doPolling(function(){
-        render(appState);
+    doPolling(function(chunk){
+        appState.token = chunk.token;
+        syncHistory(chunk.messages, function(isRender){
+            if(isRender)
+                render(appState);    
+        });
     });
 }
 
@@ -50,7 +54,6 @@ function onSendButtonClick(){
     newMessageBox.value = '';
 
     sendMessage(newMessage, function(){
-        console.log('Message sent ' + newMessage);
     });
 }
 
@@ -58,21 +61,18 @@ function sendMessage(message, continueWith){
     var xhr = new XMLHttpRequest();
 
     ajax('POST', appState.mainUrl, JSON.stringify(message), function(response){
-        console.log('message has been sent ');
+        
     });
 
 }
 
-function doPolling(done){
+function doPolling(callback){
     function loop(){
         var xhr = new XMLHttpRequest();
 
         ajax('GET', appState.mainUrl + '?token=' + appState.token, null, function(response){
-            var response = JSON.parse(response);
-            appState.token = response.token;
-
-            syncHistory(response.messages);
-            done();
+            var answer = JSON.parse(response);
+            callback(answer);
 
             setTimeout(loop, 1000);
         });
@@ -81,9 +81,11 @@ function doPolling(done){
     loop();
 }
 
-function syncHistory(newMsg){
-    if(newMsg.length === 0)
+function syncHistory(newMsg, callback){
+    if(newMsg.length === 0){
+        callback();
         return;
+    }
 
     var msgMap = appState.history.reduce(function(accumulator, msg){
         accumulator[msg.id] = msg;
@@ -103,42 +105,56 @@ function syncHistory(newMsg){
         item.text = newMsg[i].text;
         item.status = newMsg[i].status;
     }
+
+    callback(true);
 }
 
 function render(appState){
-    var msgHistory = appState.history;
-
-    if(msgHistory.length === 0)
+    if(appState.history.length === 0)
         return;
 
-    var prevDomHistory = shadow.children;
-    var index = 0;
-    var k = 1;
+    var msgMap = appState.history.reduce(function(accumulator, msg){
+        accumulator[msg.id] = msg;
 
-    while(index < msgHistory.length){
-        if(msgHistory[index] && prevDomHistory[k]){
-            if(msgHistory[index].id == prevDomHistory[k].id){
-                if(msgHistory[index].text != getMsgText(prevDomHistory[k])){
-                    setMsgText(prevDomHistory[k], msgHistory[index].text);
-                }
-            }else{
-                console.log('There is an error in history sync');
-                return null;
-            }
-        }else if(msgHistory[index] && !prevDomHistory[k]){
-            var out = document.getElementById('historyBox');
-            var isScrolledToBottom = out.scrollHeight - out.clientHeight <= out.scrollTop + 1;
+        return accumulator;
+    },{});
 
-            addMessageInternal(msgHistory[index]);
+    updateList(shadow, msgMap);
+    appendToList(shadow, appState.history, msgMap);
+}
 
-            if(isScrolledToBottom)
-                out.scrollTop = out.scrollHeight - out.clientHeight;
-        }else{
-            console.log('Error in history rendering');
+function updateList(element, msgMap){
+    var children = element.children;
+
+    for(var i=1;i<children.length;i=i+2){
+        var child = children[i];
+        var id = child.attributes['data-task-id'].value;
+        var item = msgMap[id];
+
+        renderItemState(child, item);
+        msgMap[id] = null;      
+        
+    }
+}
+
+function appendToList(element, items, msgMap){
+    for(var i=0; i<items.length; i++){
+        var item = items[i];
+
+        if(msgMap[item.id] == null)
+            continue;
+
+        var mode;
+
+        if(item.user != appState.user){
+            mode = 'other';       
         }
 
-        index ++;
-        k = k + 2;
+        msgMap[item.id] = null;
+
+        var child = elementFromTemplate(mode);
+        renderItemState(child.children[1], item);
+        element.appendChild(child);
     }
 }
 
@@ -148,18 +164,6 @@ function getMsgText(item){
 
 function setMsgText(item, newText){
     item.getElementsByClassName('message-text')[0].innerHTML = newText;
-}
-
-function addMessageInternal(message){
-    var mode;
-
-    if(message.user != appState.user){
-        mode = 'other';       
-    }
-  
-    var element = elementFromTemplate(mode);
-    renderItemState(element, message);
-    shadow.appendChild(element);
 }
 
 function elementFromTemplate(mode){
@@ -173,9 +177,8 @@ function elementFromTemplate(mode){
     return template;
 }
 
-function renderItemState(element, message){
-    var item = element.children[1];
-    item.id = message.id;
+function renderItemState(item, message){
+    item.setAttribute('data-task-id', message.id);
     item.getElementsByClassName('message-username')[0].innerHTML = message.user;
     item.getElementsByClassName('message-text')[0].textContent = message.text;
     item.getElementsByClassName('message-time')[0].textContent = message.time;
@@ -263,20 +266,20 @@ function onEditComplete(evtObj){
     var input = current.getElementsByTagName('input')[0];
 
     var updatedMessage = {
-        id: evtObj.path[3].id,
+        id: current.parentElement.dataset.taskId,
         text: input.value,
         user: appState.user 
     }
 
     ajax('PUT', appState.mainUrl, JSON.stringify(updatedMessage), function(){
-        current.parentNode.dataset.state = "initial"; 
+        current.parentNode.dataset.state = "edited"; 
     });
 }
 
 function onDeleteClick(evtObj){
     var current = evtObj.path[2];
 
-    ajax('DELETE', appState.mainUrl + '/'  + 'delete(' + evtObj.path[3].id + ')', null, function(){
+    ajax('DELETE', appState.mainUrl + '/'  + 'delete(' + evtObj.path[3].dataset.taskId + ')', null, function(){
         current.parentNode.dataset.state = "deleted"; 
     });
 }
