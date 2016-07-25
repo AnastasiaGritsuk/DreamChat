@@ -61,7 +61,7 @@ function sendMessage(message, continueWith){
     var xhr = new XMLHttpRequest();
 
     ajax('POST', appState.mainUrl, JSON.stringify(message), function(response){
-        
+        console.log('message has been sent');
     });
 
 }
@@ -133,7 +133,6 @@ function updateList(element, msgMap){
 
         renderItemState(child, item);
         msgMap[id] = null;      
-        
     }
 }
 
@@ -156,14 +155,6 @@ function appendToList(element, items, msgMap){
         renderItemState(child.children[1], item);
         element.appendChild(child);
     }
-}
-
-function getMsgText(item){
-    return item.getElementsByClassName('message-text')[0].innerHTML;
-}
-
-function setMsgText(item, newText){
-    item.getElementsByClassName('message-text')[0].innerHTML = newText;
 }
 
 function elementFromTemplate(mode){
@@ -358,9 +349,4 @@ function changeUsername(){
     var newUsername = document.getElementById('newUsername').value;
     appState.user = newUsername;
     closePopup();
-}
-
-function scrollToBottom(){
-    
-    
 }
