@@ -1,7 +1,7 @@
 var sendButton = document.getElementById('sendButton');
 var newMessageBox = document.getElementById('newMessageBox');
 document.addEventListener('click', delegateEvent);
-var shadow = document.getElementById('historyBox').createShadowRoot();
+var historyBox = document.getElementById('historyBox');
 var popup = document.getElementById('popup');
 popup.addEventListener('click', delegatePopupEvent);
 
@@ -119,8 +119,8 @@ function render(appState){
         return accumulator;
     },{});
 
-    updateList(shadow, msgMap);
-    appendToList(shadow, appState.history, msgMap);
+    updateList(historyBox, msgMap);
+    appendToList(historyBox, appState.history, msgMap);
 }
 
 function updateList(element, msgMap){
@@ -151,28 +151,37 @@ function appendToList(element, items, msgMap){
 
         msgMap[item.id] = null;
 
+        var host = document.createElement('div');
+        host.createShadowRoot();
+        host.classList.add('message');
+        host.setAttribute('data-state', "new");
+        host.setAttribute('data-task-id', item.id);
+        
+
         var child = elementFromTemplate(mode);
-        renderItemState(child.children[1], item);
-        element.appendChild(child);
+        renderItemState(child.children[0], item);
+        host.appendChild(child);
+        
+        element.appendChild(host); 
     }
 }
 
 function elementFromTemplate(mode){
-    var template1 = document.getElementById('message-template');
-    var template = document.importNode(template1.content, true);
+    var template = document.getElementById('message-template');
+    var clone = document.importNode(template.content, true);
 
     if(mode){
-        template.children[1].classList.add('other');
+        clone.children[1].classList.add('other');
     }
      
-    return template;
+    return clone;
 }
 
 function renderItemState(item, message){
-    item.setAttribute('data-task-id', message.id);
+   // item.setAttribute('data-task-id', message.id);
     item.getElementsByClassName('message-username')[0].innerHTML = message.user;
-    item.getElementsByClassName('message-text')[0].textContent = message.text;
-    item.getElementsByClassName('message-time')[0].textContent = message.time;
+    item.getElementsByClassName('message-text')[0].innerHTML = message.text;
+    //item.getElementsByClassName('message-time')[0].innerHTML = message.time;
 }
 
 function delegateEvent(evtObj){
