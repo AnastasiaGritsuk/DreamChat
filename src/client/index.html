@@ -61,26 +61,36 @@
 	</footer>
 
 	<template id="message-template">
-		<div class="message-content">
-			<span class="message-username">Username</span>
-
-			<span class="message-text">
-				<content></content>
-			</span>
-			<input type="text" name="" class="">
-		
-			<span class="message-edit">
-				<i class="icon-edit"></i>
-			</span>
-			<span class="message-edit-complete">
-				<i class="fa fa-check-square-o"></i>
-			</span>
-			<span class="message-delete">
-				<i class="icon-remove-circle"></i> 
-			</span>
+		<style>
+			 @import "css/font-awesome.css";
+			 @import "css/font-awesome.min.css";
+			 @import "css/message.css";
 			
-		</div>
-		<div class="message-time"></div>
+		</style>
+
+		
+			<div class="message-content">
+				<span class="message-username">Username</span>
+
+				<span class="message-text">
+					<content></content>
+				</span>
+				<input class="message-newtext" type="text" name="" class="">
+			
+				<span class="message-edit">
+					<i class="icon-edit"></i>
+				</span>
+				<span class="message-edit-complete">
+					<i class="fa fa-check-square-o"></i>
+				</span>
+				<span class="message-delete">
+					<i class="icon-remove-circle"></i> 
+				</span>
+				
+			</div>
+			<div class="message-time"></div>
+		
+
 	</template>
 
 	<div id="popup" class="popup_wrap hidden" data-state="">

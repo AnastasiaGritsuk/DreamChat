@@ -126,12 +126,12 @@ function render(appState){
 function updateList(element, msgMap){
     var children = element.children;
 
-    for(var i=1;i<children.length;i=i+2){
+    for(var i=0;i<children.length;i++){
         var child = children[i];
-        var id = child.attributes['data-task-id'].value;
+        var id = child.attributes['id'].value;
         var item = msgMap[id];
-
-        renderItemState(child, item);
+        document.getElementById(item.id).textContent = item.text;
+       // renderItemState(child, item);
         msgMap[id] = null;      
     }
 }
@@ -152,17 +152,18 @@ function appendToList(element, items, msgMap){
         msgMap[item.id] = null;
 
         var host = document.createElement('div');
-        host.createShadowRoot();
         host.classList.add('message');
         host.setAttribute('data-state', "new");
-        host.setAttribute('data-task-id', item.id);
-        
+        host.setAttribute('id', item.id);
 
-        var child = elementFromTemplate(mode);
-        renderItemState(child.children[0], item);
-        host.appendChild(child);
-        
-        element.appendChild(host); 
+        element.appendChild(host);
+
+        var shadow = document.getElementById(item.id).createShadowRoot();
+        var template = document.querySelector('#message-template');
+        var clone = document.importNode(template.content, true);
+        shadow.appendChild(clone);
+
+        document.getElementById(item.id).textContent = item.text;
     }
 }
 
@@ -178,10 +179,10 @@ function elementFromTemplate(mode){
 }
 
 function renderItemState(item, message){
-   // item.setAttribute('data-task-id', message.id);
+    item.setAttribute('id', message.id);
     item.getElementsByClassName('message-username')[0].innerHTML = message.user;
     item.getElementsByClassName('message-text')[0].innerHTML = message.text;
-    //item.getElementsByClassName('message-time')[0].innerHTML = message.time;
+    item.getElementsByClassName('message-time')[0].innerHTML = message.time;
 }
 
 function delegateEvent(evtObj){
@@ -262,11 +263,11 @@ function onEditClick(evtObj){
 }
 
 function onEditComplete(evtObj){
-    var current = evtObj.path[2];
-    var input = current.getElementsByTagName('input')[0];
+    var current = evtObj.target;
+    var input = current.shadowRoot.children[1].getElementsByClassName('message-newtext')[0];
 
     var updatedMessage = {
-        id: current.parentElement.dataset.taskId,
+        id: current.id,
         text: input.value,
         user: appState.user 
     }
