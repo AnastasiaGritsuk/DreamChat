@@ -5,12 +5,13 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Chat Project</title>
+		<link href="css/bootstrap.min.css" rel="stylesheet">
 		<link href="css/screen.css" rel="stylesheet">
 		<link href="css/message.css" rel="stylesheet">		
 		<link href="css/font-awesome.css" rel="stylesheet">
 		<link href="css/font-awesome.min.css" rel="stylesheet">
 	</head>
-	<body onload = "run()">
+	<body onload="run()">
 
 	<div class="all">
 		<header class="header">
@@ -49,7 +50,7 @@
 		<div class="footer-inner">
 			<div class="answerService clearfix">
 				<div class="answer_area_wrap">
-					<textarea id="newMessageBox" class="answer_area"></textarea>	
+					<textarea id="newMessageBox" class="answer_area" rows="1" data-provide="typeahead" data-items="4" data-source="[&quot;привет&quot;,&quot;пока&quot;,&quot;нормально&quot;,&quot;пожалуйста&quot;,&quot;спасибо&quot;,&quot;дела&quot;,&quot;хорошо&quot;,&quot;пошли&quot;,&quot;занимаешься&quot;,&quot;делать&quot;,&quot;буду&quot;,&quot;прикольно&quot;,&quot;такой&quot;,&quot;подумала&quot;,&quot;вечером&quot;]"></textarea>	
 				</div>
 				<div class="answer_btn_wrap">
 					<a id = "sendButton" class="answer_btn">
@@ -126,7 +127,9 @@
 			</div>
 		</div>
 	</div>
-
+	
+	<script src="http://code.jquery.com/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
 	<script src="js/app.js"></script>
 	</body>
 </html>

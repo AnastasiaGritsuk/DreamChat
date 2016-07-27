@@ -61,9 +61,16 @@ function delegateEvent(evtObj){
 
 function run(){
     newMessageBox.addEventListener('keypress', function(e){
-        if(e.keyCode == 13)
+
+        console.log('xxx');
+        showTypeheads();
+
+        if(e.keyCode == 13){
             onSendButtonClick();
-        return false;
+            e.preventDefault();
+        }
+        
+        //return false;
     });
 
     sendButton.addEventListener('click', onSendButtonClick);
@@ -77,7 +84,7 @@ function run(){
 }
 
 function onSendButtonClick(){
-	var newMessage = theMessage(newMessageBox.value);
+    var newMessage = theMessage(newMessageBox.value);
 
     if(newMessageBox.value == '')
         return;
@@ -353,4 +360,8 @@ function closePopup(){
 
 function changeServer(){
 
+}
+
+function showTypeheads(){
+    $('.typeahead').typeahead();
 }
