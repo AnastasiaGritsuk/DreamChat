@@ -27,6 +27,38 @@ var appState = {
     token: ''
 }
 
+function delegateEvent(evtObj){
+    if(evtObj.type == 'click' && evtObj.path[0].className == 'icon-edit') {
+        onEditClick(evtObj);
+        return;
+    }
+
+    if(evtObj.type == 'click' && evtObj.path[0].className == 'icon-remove-circle') {
+        onDeleteClick(evtObj);
+        return;
+    }
+
+    if(evtObj.type == 'click' && evtObj.path[0].className == 'fa fa-check-square-o') {
+        onEditComplete(evtObj);
+        return;
+    }
+
+    if(evtObj.type == 'click' && evtObj.target.className == 'icon-male') {
+        showPopup('changeusername');
+        return;
+    }
+
+    if(evtObj.type == 'click' && evtObj.target.className == 'server-img' ) {
+        showPopup('changeserver');
+        return;
+    }
+
+    if(evtObj.type == 'click' && evtObj.target.className == 'icon-remove') {
+        closePopup(evtObj);
+        return;
+    }    
+}
+
 function run(){
     newMessageBox.addEventListener('keypress', function(e){
         if(e.keyCode == 13)
@@ -43,7 +75,6 @@ function run(){
         });
     });
 }
-
 
 function onSendButtonClick(){
 	var newMessage = theMessage(newMessageBox.value);
@@ -63,7 +94,34 @@ function sendMessage(message, continueWith){
     ajax('POST', appState.mainUrl, JSON.stringify(message), function(response){
         console.log('message has been sent');
     });
+}
 
+function onEditClick(evtObj){
+    var current = evtObj.target.shadowRoot.children[1];
+    current.dataset.state = "edit"; 
+}
+
+function onEditComplete(evtObj){
+    var current = evtObj.target.shadowRoot.children[1];
+    var input = current.getElementsByClassName('message-newtext')[0];
+
+    var updatedMessage = {
+        id: current.id,
+        text: input.value,
+        user: appState.user 
+    }
+
+    ajax('PUT', appState.mainUrl, JSON.stringify(updatedMessage), function(){
+        
+    });
+}
+
+function onDeleteClick(evtObj){
+    var current = evtObj.target;
+
+    ajax('DELETE', appState.mainUrl + '/'  + 'delete(' + current.id + ')', null, function(){
+       
+    });
 }
 
 function doPolling(callback){
@@ -130,9 +188,7 @@ function updateList(element, msgMap){
         var child = children[i];
         var id = child.attributes['id'].value;
         var item = msgMap[id];
-        child.getElementsByClassName('username')[0].innerHTML = item.user;
-        child.getElementsByClassName('text')[0].innerHTML = item.text;
-        child.getElementsByClassName('time')[0].innerHTML = item.time;
+        renderItemState(child.shadowRoot.children[1], item);
         msgMap[id] = null;      
     }
 }
@@ -144,43 +200,22 @@ function appendToList(element, items, msgMap){
         if(msgMap[item.id] == null)
             continue;
 
-        var mode;
-
-        if(item.user != appState.user){
-            mode = 'other';       
-        }
-
         msgMap[item.id] = null;
 
-        var host = document.createElement('div');
-        host.classList.add('message');
-        host.setAttribute('data-state', "new");
-        host.setAttribute('id', item.id);
+        var msgWpapper = document.createElement('div');
+        msgWpapper.setAttribute('id', item.id);
+        historyBox.appendChild(msgWpapper);
 
-        var username = document.createElement('p');
-        username.classList.add('username');
-        username.innerHTML = item.user;
+        var root1 = document.getElementById(item.id).createShadowRoot();
+        var template = elementFromTemplate(isCurrentUser(item.user));
+        renderItemState(template.children[1], item);
 
-        host.appendChild(username);
-        var text = document.createElement('p');
-        text.classList.add('text');
-        text.innerHTML = item.text;
-
-        host.appendChild(text);
-
-        var time = document.createElement('p');
-        time.classList.add('time');
-        time.innerHTML = item.time;
-
-        host.appendChild(time);
-
-        element.appendChild(host);
-
-        var shadow = document.getElementById(item.id).createShadowRoot();
-        var template = document.querySelector('#message-template');
-        var clone = document.importNode(template.content, true);
-        shadow.appendChild(clone);
+        root1.appendChild(template);
     }
+}
+
+function isCurrentUser(user){
+    return user != appState.user;
 }
 
 function elementFromTemplate(mode){
@@ -196,109 +231,10 @@ function elementFromTemplate(mode){
 
 function renderItemState(item, message){
     item.setAttribute('id', message.id);
+    item.dataset.state = message.status;
     item.getElementsByClassName('message-username')[0].innerHTML = message.user;
     item.getElementsByClassName('message-text')[0].innerHTML = message.text;
     item.getElementsByClassName('message-time')[0].innerHTML = message.time;
-}
-
-function delegateEvent(evtObj){
-    if(evtObj.type == 'click' && evtObj.path[0].className == 'icon-edit') {
-        onEditClick(evtObj);
-        return;
-    }
-
-    if(evtObj.type == 'click' && evtObj.path[0].className == 'icon-remove-circle') {
-        onDeleteClick(evtObj);
-        return;
-    }
-
-    if(evtObj.type == 'click' && evtObj.path[0].className == 'fa fa-check-square-o') {
-        onEditComplete(evtObj);
-        return;
-    }
-
-    if(evtObj.type == 'click' && evtObj.target.className == 'icon-male') {
-        showPopup('changeusername');
-        return;
-    }
-
-    if(evtObj.type == 'click' && evtObj.target.className == 'server-img' ) {
-        showPopup('changeserver');
-        return;
-    }
-
-    if(evtObj.type == 'click' && evtObj.target.className == 'icon-remove') {
-        closePopup(evtObj);
-        return;
-    }    
-}
-
-function delegatePopupEvent(evtObj){
-    if(evtObj.type == 'click' && evtObj.path[6].dataset.state == 'changeusername') {
-        changeUsername();
-        return;
-    }
-
-    // if(evtObj.type == 'click' && evtObj.path[6].dataset.state == 'changeserver') {
-    //     changeServer();
-    //     return;
-    // }
-}
-
-function generatePopupState(state){
-    var headerText = document.getElementsByClassName('popup_header_text')[0];
-    var label = document.getElementsByClassName('newUsername_form_label')[0];
-    if(state == 'changeserver'){
-        headerText.innerHTML = 'New Server';
-        label.innerHTML = "New Server";
-        return;
-    }
-    if(state == 'changeusername'){
-        headerText.innerHTML = 'New Username';
-        label.innerHTML = "New Username";
-        return;
-    }
-}
-
-function showPopup(state){
-    generatePopupState(state);
-    popup.classList.remove('hidden');
-    popup.classList.add('active');
-    popup.dataset.state = state;
-}
-
-function closePopup(){
-    popup.classList.remove('active');
-    popup.classList.add('hidden');
-}
-
-
-function onEditClick(evtObj){
-    var current = evtObj.path[2];
-    current.parentNode.dataset.state = "edit"; 
-}
-
-function onEditComplete(evtObj){
-    var current = evtObj.target;
-    var input = current.shadowRoot.children[1].getElementsByClassName('message-newtext')[0];
-
-    var updatedMessage = {
-        id: current.id,
-        text: input.value,
-        user: appState.user 
-    }
-
-    ajax('PUT', appState.mainUrl, JSON.stringify(updatedMessage), function(){
-        current.parentNode.dataset.state = "edited"; 
-    });
-}
-
-function onDeleteClick(evtObj){
-    var current = evtObj.target;
-
-    ajax('DELETE', appState.mainUrl + '/'  + 'delete(' + current.id + ')', null, function(){
-        current.parentNode.dataset.state = "deleted"; 
-    });
 }
 
 function ajax(method, url, data, continueWith, continueWithError){
@@ -367,12 +303,54 @@ function isError(text){
     return !!obj.error;
 }
 
-function changeServer(){
-
-}
-
 function changeUsername(){
     var newUsername = document.getElementById('newUsername').value;
     appState.user = newUsername;
     closePopup();
+}
+
+// popup
+function delegatePopupEvent(evtObj){
+    if(evtObj.type == 'click' && evtObj.path[6].dataset.state == 'changeusername') {
+        changeUsername();
+        return;
+    }
+
+    // if(evtObj.type == 'click' && evtObj.path[6].dataset.state == 'changeserver') {
+    //     changeServer();
+    //     return;
+    // }
+}
+
+function generatePopupState(state){
+    var headerText = document.getElementsByClassName('popup_header_text')[0];
+    var label = document.getElementsByClassName('newUsername_form_label')[0];
+    if(state == 'changeserver'){
+        headerText.innerHTML = 'New Server';
+        label.innerHTML = "New Server";
+        return;
+    }
+    if(state == 'changeusername'){
+        headerText.innerHTML = 'New Username';
+        label.innerHTML = "New Username";
+        return;
+    }
+}
+
+function showPopup(state){
+    generatePopupState(state);
+    popup.classList.remove('hidden');
+    popup.classList.add('active');
+    popup.dataset.state = state;
+}
+
+function closePopup(){
+    popup.classList.remove('active');
+    popup.classList.add('hidden');
+} 
+
+//change server
+
+function changeServer(){
+
 }
