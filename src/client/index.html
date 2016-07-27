@@ -68,28 +68,30 @@
 			
 		</style>
 
-		
-			<div class="message-content">
-				<span class="message-username">Username</span>
+		<div class="message-content">
+			<span class="message-username">
+				<content select=".username"></content>
+			</span>
 
-				<span class="message-text">
-					<content></content>
-				</span>
-				<input class="message-newtext" type="text" name="" class="">
-			
-				<span class="message-edit">
-					<i class="icon-edit"></i>
-				</span>
-				<span class="message-edit-complete">
-					<i class="fa fa-check-square-o"></i>
-				</span>
-				<span class="message-delete">
-					<i class="icon-remove-circle"></i> 
-				</span>
-				
-			</div>
-			<div class="message-time"></div>
+			<span class="message-text">
+				<content select=".text"></content>
+			</span>
+			<input class="message-newtext" type="text" name="" class="">
 		
+			<span class="message-edit">
+				<i class="icon-edit"></i>
+			</span>
+			<span class="message-edit-complete">
+				<i class="fa fa-check-square-o"></i>
+			</span>
+			<span class="message-delete">
+				<i class="icon-remove-circle"></i> 
+			</span>
+			
+		</div>
+		<div class="message-time">
+			<content select=".time"></content>
+		</div>
 
 	</template>
 

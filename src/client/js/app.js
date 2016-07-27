@@ -130,8 +130,9 @@ function updateList(element, msgMap){
         var child = children[i];
         var id = child.attributes['id'].value;
         var item = msgMap[id];
-        document.getElementById(item.id).textContent = item.text;
-       // renderItemState(child, item);
+        child.getElementsByClassName('username')[0].innerHTML = item.user;
+        child.getElementsByClassName('text')[0].innerHTML = item.text;
+        child.getElementsByClassName('time')[0].innerHTML = item.time;
         msgMap[id] = null;      
     }
 }
@@ -156,14 +157,29 @@ function appendToList(element, items, msgMap){
         host.setAttribute('data-state', "new");
         host.setAttribute('id', item.id);
 
+        var username = document.createElement('p');
+        username.classList.add('username');
+        username.innerHTML = item.user;
+
+        host.appendChild(username);
+        var text = document.createElement('p');
+        text.classList.add('text');
+        text.innerHTML = item.text;
+
+        host.appendChild(text);
+
+        var time = document.createElement('p');
+        time.classList.add('time');
+        time.innerHTML = item.time;
+
+        host.appendChild(time);
+
         element.appendChild(host);
 
         var shadow = document.getElementById(item.id).createShadowRoot();
         var template = document.querySelector('#message-template');
         var clone = document.importNode(template.content, true);
         shadow.appendChild(clone);
-
-        document.getElementById(item.id).textContent = item.text;
     }
 }
 
@@ -278,9 +294,9 @@ function onEditComplete(evtObj){
 }
 
 function onDeleteClick(evtObj){
-    var current = evtObj.path[2];
+    var current = evtObj.target;
 
-    ajax('DELETE', appState.mainUrl + '/'  + 'delete(' + evtObj.path[3].dataset.taskId + ')', null, function(){
+    ajax('DELETE', appState.mainUrl + '/'  + 'delete(' + current.id + ')', null, function(){
         current.parentNode.dataset.state = "deleted"; 
     });
 }

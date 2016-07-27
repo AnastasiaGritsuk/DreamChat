@@ -6,6 +6,7 @@
 }
 
 .message-username{
+    display: inline-block;
     color: #434E3C;
     font-weight: 600;
 }
