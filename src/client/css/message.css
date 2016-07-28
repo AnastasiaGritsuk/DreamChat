@@ -94,6 +94,10 @@
     display: inline-block;
 }
 
+.message[data-state="new"] .message-edit-cancel{
+    display: none;
+}
+
 /*edited Other state*/
 
 .message[data-state="edited"].other .message-edit{
@@ -156,6 +160,10 @@
     display: none;
 }
 
+.message[data-state="edit"] .message-edit-cancel{
+    display: inline-block;
+}
+
 /*deleted state*/
 
 .message[data-state="deleted"] input{
@@ -175,5 +183,9 @@
 }
 
 .message[data-state="deleted"] .message-delete{
+    display: none;
+}
+
+.message[data-state="deleted"] .message-edit-cancel{
     display: none;
 }

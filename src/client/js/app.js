@@ -33,6 +33,11 @@ function delegateEvent(evtObj){
         return;
     }
 
+    if(evtObj.type == 'click' && evtObj.path[1].className == 'message-edit-cancel') {
+        onEditCancelClick(evtObj);
+        return;
+    }
+
     if(evtObj.type == 'click' && evtObj.path[0].className == 'icon-remove-circle') {
         onDeleteClick(evtObj);
         return;
@@ -151,6 +156,10 @@ function doPolling(callback){
     }
 
     loop();
+}
+
+function onEditCancelClick(evtObj){
+    evtObj.target.shadowRoot.children[1].dataset.state = "new";
 }
 
 function syncHistory(newMsg, callback){
@@ -371,5 +380,5 @@ function changeServer(){
 }
 
 function showTypeheads(){
-    $('.typeahead').typeahead();
+   // $('.typeahead').typeahead();
 }
