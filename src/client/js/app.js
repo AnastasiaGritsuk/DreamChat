@@ -60,6 +60,7 @@ function delegateEvent(evtObj){
 }
 
 function run(){
+    loadUser();
     newMessageBox.addEventListener('keypress', function(e){
 
         console.log('xxx');
@@ -81,6 +82,12 @@ function run(){
                 render(appState);    
         });
     });
+}
+
+function loadUser(){
+    var user = appState.user;
+    appState.user = user;
+    document.getElementsByClassName('user-profile-name')[0].innerHTML = appState.user;
 }
 
 function onSendButtonClick(){
@@ -313,6 +320,7 @@ function isError(text){
 function changeUsername(){
     var newUsername = document.getElementById('newUsername').value;
     appState.user = newUsername;
+    loadUser();
     closePopup();
 }
 
