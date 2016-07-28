@@ -2,8 +2,6 @@ var sendButton = document.getElementById('sendButton');
 var newMessageBox = document.getElementById('newMessageBox');
 document.addEventListener('click', delegateEvent);
 var historyBox = document.getElementById('historyBox');
-var popup = document.getElementById('popup');
-popup.addEventListener('click', delegatePopupEvent);
 
 var theMessage = function(text){
     return {
@@ -49,7 +47,7 @@ function delegateEvent(evtObj){
     }
 
     if(evtObj.type == 'click' && evtObj.target.className == 'icon-male') {
-        showPopup('changeusername');
+        onEditUsernameClick(evtObj);
         return;
     }
 
@@ -82,8 +80,8 @@ function run(){
     sendButton.addEventListener('click', onSendButtonClick);
     doPolling(function(chunk){
         appState.token = chunk.token;
-        syncHistory(chunk.messages, function(isRender){
-            if(isRender)
+        syncHistory(chunk.messages, function(needToRender){
+            if(needToRender)
                 render(appState);    
         });
     });
@@ -92,7 +90,7 @@ function run(){
 function loadUser(){
     var user = appState.user;
     appState.user = user;
-    document.getElementsByClassName('user-profile-name')[0].innerHTML = appState.user;
+    document.getElementsByClassName('icon-text')[0].innerHTML = appState.user;
 }
 
 function onSendButtonClick(){
@@ -346,32 +344,10 @@ function delegatePopupEvent(evtObj){
     // }
 }
 
-function generatePopupState(state){
-    var headerText = document.getElementsByClassName('popup_header_text')[0];
-    var label = document.getElementsByClassName('newUsername_form_label')[0];
-    if(state == 'changeserver'){
-        headerText.innerHTML = 'New Server';
-        label.innerHTML = "New Server";
-        return;
-    }
-    if(state == 'changeusername'){
-        headerText.innerHTML = 'New Username';
-        label.innerHTML = "New Username";
-        return;
-    }
+function onEditUsernameClick(evtObj){
+   evtObj.path[2].dataset.state = "edit";
+   var input = document.getElementsByClassName('icon-input')[0].focus();
 }
-
-function showPopup(state){
-    generatePopupState(state);
-    popup.classList.remove('hidden');
-    popup.classList.add('active');
-    popup.dataset.state = state;
-}
-
-function closePopup(){
-    popup.classList.remove('active');
-    popup.classList.add('hidden');
-} 
 
 //change server
 

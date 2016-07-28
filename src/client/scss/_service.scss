@@ -1,0 +1,52 @@
+.service {
+	background: #F5F4EB;
+	border-radius: 6px;
+	padding: 10px 5px;
+	color: #893667;
+}
+.service-item {
+	float: left;
+	vertical-align: middle;
+	padding: 5px 20px 0 5px;
+}
+
+.icon {
+	font-size: 17px;
+	cursor: pointer;
+	margin-right: 5px;
+	line-height: 30px;
+	vertical-align: middle;
+}
+
+.icon-text{
+	color: #893667;
+}
+
+.service-item[data-state="initial"] {
+	.icon-input {
+		display: none;	
+	}
+
+	.icon-text {
+		display: inline-block;
+		height: 30px;
+	}
+}
+
+.service-item[data-state="edit"] {
+	.icon-input {
+		display: inline-block;
+		background-color: #F5F4EB;	
+		border: none;
+		box-shadow: none;
+		margin: 0;
+	}
+
+	.icon-text {
+		display: none;
+	}
+
+	.icon {
+		color: #FF4500;
+	}
+}
