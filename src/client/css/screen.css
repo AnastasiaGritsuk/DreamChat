@@ -500,19 +500,21 @@ s
   padding: 3px 12px;
   background: #F5F4EB;
   font-size: 14px;
+  border-radius: 4px;
+  margin-bottom: 10px;
 }
 
-/* line 143, D:/DreamChat/src/client/scss/_popup_block.scss */
+/* line 145, D:/DreamChat/src/client/scss/_popup_block.scss */
 .popup_button_wrap {
   display: inline-block;
 }
 
-/* line 147, D:/DreamChat/src/client/scss/_popup_block.scss */
+/* line 149, D:/DreamChat/src/client/scss/_popup_block.scss */
 .newUsername_wrap {
   display: inline-block;
 }
 
-/* line 151, D:/DreamChat/src/client/scss/_popup_block.scss */
+/* line 153, D:/DreamChat/src/client/scss/_popup_block.scss */
 .newUsername_form_label {
   margin-bottom: 12px;
   display: inline-block;
