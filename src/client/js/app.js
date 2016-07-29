@@ -2,6 +2,8 @@ var sendButton = document.getElementById('sendButton');
 var newMessageBox = document.getElementById('newMessageBox');
 document.addEventListener('click', delegateEvent);
 var historyBox = document.getElementById('historyBox');
+var inputUsername = document.getElementsByClassName('icon-input')[0];
+var username = document.getElementById('username');
 
 var theMessage = function(text){
     return {
@@ -51,6 +53,11 @@ function delegateEvent(evtObj){
         return;
     }
 
+    if(evtObj.type == 'click' && evtObj.target.className == 'icon-check') {
+        onEditCompleteUsernameClick(evtObj);
+        return;
+    }
+
     if(evtObj.type == 'click' && evtObj.target.className == 'server-img' ) {
         showPopup('changeserver');
         return;
@@ -90,7 +97,7 @@ function run(){
 function loadUser(){
     var user = appState.user;
     appState.user = user;
-    document.getElementsByClassName('icon-text')[0].innerHTML = appState.user;
+    username.innerHTML = appState.user;
 }
 
 function onSendButtonClick(){
@@ -324,29 +331,15 @@ function isError(text){
     return !!obj.error;
 }
 
-function changeUsername(){
-    var newUsername = document.getElementById('newUsername').value;
-    appState.user = newUsername;
-    loadUser();
-    closePopup();
-}
-
-// popup
-function delegatePopupEvent(evtObj){
-    if(evtObj.type == 'click' && evtObj.path[6].dataset.state == 'changeusername') {
-        changeUsername();
-        return;
-    }
-
-    // if(evtObj.type == 'click' && evtObj.path[6].dataset.state == 'changeserver') {
-    //     changeServer();
-    //     return;
-    // }
-}
-
 function onEditUsernameClick(evtObj){
    evtObj.path[2].dataset.state = "edit";
-   var input = document.getElementsByClassName('icon-input')[0].focus();
+   inputUsername.focus();
+}
+
+function onEditCompleteUsernameClick(evtObj){
+    appState.user = inputUsername.value;
+    loadUser();
+    evtObj.path[2].dataset.state = "initial";
 }
 
 //change server

@@ -249,20 +249,24 @@ a {
 
 /* line 21, D:/DreamChat/src/client/scss/_service.scss */
 .icon-text {
-  color: #893667;
-}
-
-/* line 26, D:/DreamChat/src/client/scss/_service.scss */
-.service-item[data-state="initial"] .icon-input {
-  display: none;
-}
-/* line 30, D:/DreamChat/src/client/scss/_service.scss */
-.service-item[data-state="initial"] .icon-text {
-  display: inline-block;
+  color: #434E3C;
   height: 30px;
 }
 
-/* line 37, D:/DreamChat/src/client/scss/_service.scss */
+/* line 27, D:/DreamChat/src/client/scss/_service.scss */
+.service-item[data-state="initial"] .icon-input {
+  display: none;
+}
+/* line 31, D:/DreamChat/src/client/scss/_service.scss */
+.service-item[data-state="initial"] .icon-text {
+  display: inline-block;
+}
+/* line 35, D:/DreamChat/src/client/scss/_service.scss */
+.service-item[data-state="initial"] .icon.edit {
+  display: none;
+}
+
+/* line 41, D:/DreamChat/src/client/scss/_service.scss */
 .service-item[data-state="edit"] .icon-input {
   display: inline-block;
   background-color: #F5F4EB;
@@ -270,13 +274,17 @@ a {
   box-shadow: none;
   margin: 0;
 }
-/* line 45, D:/DreamChat/src/client/scss/_service.scss */
+/* line 49, D:/DreamChat/src/client/scss/_service.scss */
 .service-item[data-state="edit"] .icon-text {
   display: none;
 }
-/* line 49, D:/DreamChat/src/client/scss/_service.scss */
+/* line 53, D:/DreamChat/src/client/scss/_service.scss */
 .service-item[data-state="edit"] .icon {
-  color: #FF4500;
+  display: none;
+}
+/* line 57, D:/DreamChat/src/client/scss/_service.scss */
+.service-item[data-state="edit"] .icon.edit {
+  display: inline-block;
 }
 
 /* line 1, D:/DreamChat/src/client/scss/_chat.scss */

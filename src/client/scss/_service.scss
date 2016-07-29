@@ -19,7 +19,8 @@
 }
 
 .icon-text{
-	color: #893667;
+	color: #434E3C;
+	height: 30px;
 }
 
 .service-item[data-state="initial"] {
@@ -29,7 +30,10 @@
 
 	.icon-text {
 		display: inline-block;
-		height: 30px;
+	}
+
+	.icon.edit {
+		display: none;
 	}
 }
 
@@ -47,6 +51,10 @@
 	}
 
 	.icon {
-		color: #FF4500;
+		display: none;
+	}
+
+	.icon.edit {
+		display: inline-block;
 	}
 }
