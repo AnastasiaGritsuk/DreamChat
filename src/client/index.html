@@ -7,9 +7,7 @@
 		<title>Chat Project</title>
 		<link href="css/bootstrap.min.css" rel="stylesheet">
 		<link href="css/screen.css" rel="stylesheet">
-		<link href="css/message.css" rel="stylesheet">		
 		<link href="css/font-awesome.css" rel="stylesheet">
-		<link href="css/font-awesome.min.css" rel="stylesheet">
 	</head>
 	<body onload="run()">
 
@@ -18,10 +16,10 @@
 			<div class="section-inner">
 				<div class="service clearfix">
 					<div class="service-item" data-state="initial">
-						<span class="icon">
+						<span class="icon editOn-username">
 							<i class="icon-male"></i> 
 						</span>
-						<span class="icon edit">
+						<span class="icon editOff-username">
 							<i class="icon-check"></i>
 						</span>
 						<span id = "username" class="icon-text"></span>
@@ -38,64 +36,53 @@
 		</header>
 		<main class="content">
 			<div class="content-inner">
-				<div class="chat_wrap clearfix">
-					<div id = "historyBox" class="chat_history"></div>
+				<div class="chatBox_wrap clearfix">
+					<div id = "chatBoxId" class="chatBox"></div>
 				</div>
 			</div>
 		</main>
 	</div>
 	<footer class="footer">
 		<div class="footer-inner">
-			<div class="answerService clearfix">
-				<div class="answer_area_wrap">
-					<textarea id="newMessageBox" class="answer_area" rows="1" data-provide="typeahead" data-items="4" data-source="[&quot;привет&quot;,&quot;пока&quot;,&quot;нормально&quot;,&quot;пожалуйста&quot;,&quot;спасибо&quot;,&quot;дела&quot;,&quot;хорошо&quot;,&quot;пошли&quot;,&quot;занимаешься&quot;,&quot;делать&quot;,&quot;буду&quot;,&quot;прикольно&quot;,&quot;такой&quot;,&quot;подумала&quot;,&quot;вечером&quot;]"></textarea>	
-				</div>
-				<div class="answer_btn_wrap">
-					<a id = "sendButton" class="answer_btn">
+			<div class="msgBox_wrap">
+				<div class="msgBox">
+					<textarea id="msgBox_textareaId" class="msgBox_textarea" rows="1" data-provide="typeahead" data-items="4" data-source="[&quot;привет&quot;,&quot;пока&quot;,&quot;нормально&quot;,&quot;пожалуйста&quot;,&quot;спасибо&quot;,&quot;дела&quot;,&quot;хорошо&quot;,&quot;пошли&quot;,&quot;занимаешься&quot;,&quot;делать&quot;,&quot;буду&quot;,&quot;прикольно&quot;,&quot;такой&quot;,&quot;подумала&quot;,&quot;вечером&quot;]"></textarea>	
+					<a id = "sendButton" class="btn">
 						<i class="icon-location-arrow"></i>
 					</a>
-				</div>							
+				</div>						
 			</div>
 		<div>
 	</footer>
 
-	<template id="message-template">
+	<template id="msg-template">
 		<style>
 			 @import "css/font-awesome.css";
-			 @import "css/font-awesome.min.css";
 			 @import "css/message.css";
 		</style>
-		<div class="message" data-state="new" id="">
-			<div class="message-content">
-				<span class="message-username">
-					<content select=".username"></content>
-				</span>
-
-				<span class="message-text">
-					<content select=".text"></content>
-				</span>
-				<input type="text" class="message-newtext" >
-				<span class="message-edit">
+		<div class="msg" data-state="new" id="">
+			<div class="msg-content">
+				<span class="msg-username"></span>
+				<span class="msg-text"></span>
+				<input type="text" class="msg-editedText" >
+				<span class="icon edit">
 					<i class="icon-edit"></i>
 				</span>
-				<span class="message-edit-complete">
-					<i class="fa fa-check-square-o"></i>
+				<span class="icon complete">
+					<i class="icon-check"></i>
 				</span>
-				<span class="message-edit-cancel">
+				<span class="icon cancel">
 					<i class="icon-remove-circle"></i> 
 				</span>
-				<span class="message-delete">
+				<span class="icon delete">
 					<i class="icon-remove-circle"></i> 
 				</span>
-				
 			</div>
-			<div class="message-time">
-				<content select=".time"></content>
-			</div>
+			<div class="msg-time"></div>
 		</div>
 	</template>
 
-	<!-- <script src="http://code.jquery.com/jquery.js"></script> -->
+	<script src="http://code.jquery.com/jquery.js"></script>
     <script src="js/bootstrap.min.js"></script>
 	<script src="js/app.js"></script>
 	</body>

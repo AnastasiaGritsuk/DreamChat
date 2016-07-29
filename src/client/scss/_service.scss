@@ -10,19 +10,6 @@
 	padding: 5px 20px 0 5px;
 }
 
-.icon {
-	font-size: 17px;
-	cursor: pointer;
-	margin-right: 5px;
-	line-height: 30px;
-	vertical-align: middle;
-}
-
-.icon-text{
-	color: #434E3C;
-	height: 30px;
-}
-
 .service-item[data-state="initial"] {
 	.icon-input {
 		display: none;	
@@ -32,7 +19,7 @@
 		display: inline-block;
 	}
 
-	.icon.edit {
+	.icon.editOff-username {
 		display: none;
 	}
 }
@@ -50,11 +37,24 @@
 		display: none;
 	}
 
-	.icon {
+	.icon.editOn-username {
 		display: none;
 	}
 
-	.icon.edit {
+	.icon.editOff-username {
 		display: inline-block;
 	}
+}
+
+.icon {
+	font-size: 17px;
+	cursor: pointer;
+	margin-right: 5px;
+	line-height: 30px;
+	vertical-align: middle;
+}
+
+.icon-text{
+	color: #434E3C;
+	height: 30px;
 }

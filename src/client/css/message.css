@@ -1,30 +1,20 @@
-.message{
-    display: inline-block;
-    width: 100%;
-    text-align: left;
-   
-}
-
-.message-username{
-    display: inline-block;
-    color: #434E3C;
-    font-weight: 600;
-}
-
-.message-content{
+.msg{
     padding: 5px;
+}
+
+.msg-content{
     display: inline-block;
 }
 
-.message.other .message-text{
+.msg.other .msg-text{
     background-color: #cc6699;
 }
 
-.message.other .message-text:before{
-     border-right: 10px solid #cc6699;
+.msg.other .msg-text:before{
+    border-right-color: #cc6699;
 }
 
-.message-text{
+.msg-text{
     position: relative;
     display: inline-block;
     margin-left: 10px;
@@ -35,7 +25,7 @@
     max-width: 70%;
 }
 
-.message-text:before {
+.msg-text:before{
     content: " ";
     position: absolute;
     left: -10px;
@@ -48,144 +38,71 @@
     border-right: 10px solid #893667;
 }
 
-.message-edit{
-    cursor: pointer;
-}
-
-.message-delete{
-    cursor: pointer;
-}
-
-.message-time{
+.msg-time{
     display: inline-block;
 }
 
 .other{
-    width: 100%;
     text-align: right;
 }
 
-.hidden{
-    display: none;
-}
-
-.active-inline{
-    display: inline-block;
-}
-
 /*new state*/
-.message[data-state="new"] input{
-    display: none;
-}
-
-.message[data-state="new"] .message-edit{
+.msg[data-state="new"] .icon.edit, 
+.msg[data-state="new"] .msg-text, 
+.msg[data-state="new"] .icon.delete{
     display: inline-block;
 }
 
-.message[data-state="new"] .message-text{
-    display: inline-block;
-}
-
-.message[data-state="new"] .message-edit-complete{
+.msg[data-state="new"] .msg-editedText,
+.msg[data-state="new"] .icon.complete, 
+.msg[data-state="new"] .icon.cancel{
     display: none;
 }
-
-.message[data-state="new"] .message-delete{
-    display: inline-block;
-}
-
-.message[data-state="new"] .message-edit-cancel{
-    display: none;
-}
-
 /*edited Other state*/
 
-.message[data-state="edited"].other .message-edit{
+.msg[data-state="edited"].other .icon.edit, 
+.msg[data-state="edited"].other .icon.delete {
+    display: none;    
+}
+
+.msg[data-state="edited"] .msg-editedText, 
+.msg[data-state="edited"] .icon.complete,
+.msg[data-state="edited"] .icon.cancel{
     display: none;
 }
 
-.message[data-state="edited"].other .message-delete{
-    display: none;
-}
-
-.message[data-state="edited"] input{
-    display: none;
-}
-
-.message[data-state="edited"] .message-edit{
+.msg[data-state="edited"] .icon.edit, 
+.msg[data-state="edited"] .icon.delete, 
+.msg[data-state="edited"] .msg-text{
     display: inline-block;
-}
-
-.message[data-state="edited"] .message-text{
-    display: inline-block;
-}
-
-.message[data-state="edited"] .message-edit-complete{
-    display: none;
-}
-
-.message[data-state="edited"] .message-delete{
-    display: inline-block;
-}
+} 
 
 /*initial Other state*/
-
-.message[data-state="new"].other .message-edit{
-    display: none;
-}
-
-.message[data-state="new"].other .message-delete{
+.msg[data-state="new"].other .icon.edit, 
+.msg[data-state="new"].other .icon.delete{
     display: none;
 }
 
 /*edit state*/
-
-.message[data-state="edit"] input{
+.msg[data-state="edit"] .msg-editedText, 
+.msg[data-state="edit"] .icon.complete, 
+.msg[data-state="edit"] .icon.cancel{
     display: inline-block;
 }
-
-.message[data-state="edit"] .message-edit{
+.msg[data-state="edit"] .icon.edit, 
+.msg[data-state="edit"] .msg-text, 
+.msg[data-state="edit"] .icon.delete{
     display: none;
-}
-
-.message[data-state="edit"] .message-text{
-    display: none;
-}
-
-.message[data-state="edit"] .message-edit-complete{
-    display: inline-block;
-}
-
-.message[data-state="edit"] .message-delete{
-    display: none;
-}
-
-.message[data-state="edit"] .message-edit-cancel{
-    display: inline-block;
 }
 
 /*deleted state*/
-
-.message[data-state="deleted"] input{
+.msg[data-state="deleted"] .msg-editedText, 
+.msg[data-state="deleted"] .icon.edit, 
+.msg[data-state="deleted"] .icon.complete, 
+.msg[data-state="deleted"] .icon.delete, 
+.msg[data-state="deleted"] .icon.cancel{
     display: none;
 }
-
-.message[data-state="deleted"] .message-edit{
-    display: none;
-}
-
-.message[data-state="deleted"] .message-text{
-    display: inline-block;
-}
-
-.message[data-state="deleted"] .message-edit-complete{
-    display: none;
-}
-
-.message[data-state="deleted"] .message-delete{
-    display: none;
-}
-
-.message[data-state="deleted"] .message-edit-cancel{
-    display: none;
+.msg[data-state="deleted"] .msg-text{
+     display: inline-block;
 }

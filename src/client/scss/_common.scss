@@ -1,9 +1,6 @@
-
 /*common*/
 body{
-	font-family: 'Open Sans';
-    font-size: 16px;
-    color: #0c2211;
+    color: #434E3C;
     overflow-x: hidden;
 }
 
@@ -32,6 +29,12 @@ a {
     top: 52px;
     width: 100%;
     padding-bottom: 110px;
+}
+
+.content-inner{
+    max-width: 900px;
+    margin: 0 auto;
+    height: 100%;
 }
 
 .clearfix:after {
@@ -68,7 +71,6 @@ a {
 }
 
 /*footer*/
-
 
 .footer-inner{
 	position: relative;

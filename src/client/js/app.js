@@ -1,7 +1,7 @@
 var sendButton = document.getElementById('sendButton');
-var newMessageBox = document.getElementById('newMessageBox');
+var newMessageBox = document.getElementById('msgBox_textareaId');
 document.addEventListener('click', delegateEvent);
-var historyBox = document.getElementById('historyBox');
+var historyBox = document.getElementById('chatBoxId');
 var inputUsername = document.getElementsByClassName('icon-input')[0];
 var username = document.getElementById('username');
 
@@ -28,45 +28,39 @@ var appState = {
 }
 
 function delegateEvent(evtObj){
-    if(evtObj.type == 'click' && evtObj.path[0].className == 'icon-edit') {
+    if(evtObj.type == 'click' && isProperElement(evtObj, 'icon edit')) {
         onEditClick(evtObj);
         return;
     }
 
-    if(evtObj.type == 'click' && evtObj.path[1].className == 'message-edit-cancel') {
+    if(evtObj.type == 'click' && isProperElement(evtObj, 'icon cancel')) {
         onEditCancelClick(evtObj);
         return;
     }
 
-    if(evtObj.type == 'click' && evtObj.path[0].className == 'icon-remove-circle') {
+    if(evtObj.type == 'click' && isProperElement(evtObj, 'icon delete')) {
         onDeleteClick(evtObj);
         return;
     }
 
-    if(evtObj.type == 'click' && evtObj.path[0].className == 'fa fa-check-square-o') {
+    if(evtObj.type == 'click' && isProperElement(evtObj, 'icon complete')) {
         onEditComplete(evtObj);
         return;
     }
 
-    if(evtObj.type == 'click' && evtObj.target.className == 'icon-male') {
+    if(evtObj.type == 'click' && isProperElement(evtObj, 'icon editOn-username')) {
         onEditUsernameClick(evtObj);
         return;
     }
 
-    if(evtObj.type == 'click' && evtObj.target.className == 'icon-check') {
+    if(evtObj.type == 'click' && isProperElement(evtObj, 'icon editOff-username')) {
         onEditCompleteUsernameClick(evtObj);
         return;
-    }
+    }  
+}
 
-    if(evtObj.type == 'click' && evtObj.target.className == 'server-img' ) {
-        showPopup('changeserver');
-        return;
-    }
-
-    if(evtObj.type == 'click' && evtObj.target.className == 'icon-remove') {
-        closePopup(evtObj);
-        return;
-    }    
+function isProperElement(e, classname){
+    return e.path[1].className === classname;
 }
 
 function run(){
@@ -127,7 +121,7 @@ function onEditClick(evtObj){
 
 function onEditComplete(evtObj){
     var current = evtObj.target.shadowRoot.children[1];
-    var input = current.getElementsByClassName('message-newtext')[0];
+    var input = current.getElementsByClassName('msg-editedText')[0];
 
     var updatedMessage = {
         id: current.id,
@@ -235,7 +229,7 @@ function appendToList(element, items, msgMap){
         historyBox.appendChild(msgWpapper);
 
         var root1 = document.getElementById(item.id).createShadowRoot();
-        var template = elementFromTemplate(isCurrentUser(item.user));
+        var template = msgFromTemplate(isCurrentUser(item.user));
         renderItemState(template.children[1], item);
 
         root1.appendChild(template);
@@ -246,8 +240,8 @@ function isCurrentUser(user){
     return user != appState.user;
 }
 
-function elementFromTemplate(mode){
-    var template = document.getElementById('message-template');
+function msgFromTemplate(mode){
+    var template = document.getElementById('msg-template');
     var clone = document.importNode(template.content, true);
 
     if(mode){
@@ -260,9 +254,9 @@ function elementFromTemplate(mode){
 function renderItemState(item, message){
     item.setAttribute('id', message.id);
     item.dataset.state = message.status;
-    item.getElementsByClassName('message-username')[0].innerHTML = message.user;
-    item.getElementsByClassName('message-text')[0].innerHTML = message.text;
-    item.getElementsByClassName('message-time')[0].innerHTML = message.time;
+    item.getElementsByClassName('msg-username')[0].innerHTML = message.user;
+    item.getElementsByClassName('msg-text')[0].innerHTML = message.text;
+    item.getElementsByClassName('msg-time')[0].innerHTML = message.time;
 }
 
 function ajax(method, url, data, continueWith, continueWithError){
@@ -349,5 +343,5 @@ function changeServer(){
 }
 
 function showTypeheads(){
-   // $('.typeahead').typeahead();
+   $('.typeahead').typeahead();
 }

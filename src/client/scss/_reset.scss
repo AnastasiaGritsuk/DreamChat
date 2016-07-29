@@ -33,7 +33,7 @@ text-align: left;
 td, th, nav {
 padding: 0;
 }
-address, blockquote, h1, h2, h3, h4, h5, h6, fieldset, p, ol, ul ,li{
+address, blockquote, h1, h2, h3, h4, h5, h6, fieldset, p, ol, ul ,li, textarea{
 margin: 0;
 padding: 0;
 }
@@ -42,4 +42,12 @@ font-weight: normal;
 }
 ul {
 	list-style: none;
+}
+
+textarea:focus{
+	box-shadow: none;
+}
+
+.btn:active{
+	box-shadow: none;
 }
