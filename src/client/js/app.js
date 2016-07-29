@@ -95,6 +95,7 @@ function loadUser(){
 }
 
 function onSendButtonClick(){
+    sendButton.setAttribute('disabled', 'true');
     var newMessage = theMessage(newMessageBox.value);
 
     if(newMessageBox.value == '')
@@ -103,6 +104,7 @@ function onSendButtonClick(){
     newMessageBox.value = '';
 
     sendMessage(newMessage, function(){
+        sendButton.setAttribute('disabled', 'false');
     });
 }
 
@@ -110,7 +112,7 @@ function sendMessage(message, continueWith){
     var xhr = new XMLHttpRequest();
 
     ajax('POST', appState.mainUrl, JSON.stringify(message), function(response){
-        console.log('message has been sent');
+        continueWith();
     });
 }
 
@@ -343,5 +345,5 @@ function changeServer(){
 }
 
 function showTypeheads(){
-   $('.typeahead').typeahead();
+   // $('.typeahead').typeahead();
 }
