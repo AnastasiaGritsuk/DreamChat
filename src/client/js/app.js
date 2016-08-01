@@ -67,15 +67,14 @@ function run(){
     loadUser();
     newMessageBox.addEventListener('keypress', function(e){
 
-        console.log('xxx');
         showTypeheads();
 
         if(e.keyCode == 13){
-            onSendButtonClick();
+            onSendButtonClick(true);
             e.preventDefault();
         }
         
-        //return false;
+        return false;
     });
 
     sendButton.addEventListener('click', onSendButtonClick);
@@ -94,8 +93,12 @@ function loadUser(){
     username.innerHTML = appState.user;
 }
 
-function onSendButtonClick(){
-    sendButton.setAttribute('disabled', 'true');
+function onSendButtonClick(enterkey){
+    if(sendButton.getAttribute('disabled') && enterkey)
+        return false;
+
+    sendButton.setAttribute('disabled', 'disabled');
+
     var newMessage = theMessage(newMessageBox.value);
 
     if(newMessageBox.value == '')
@@ -104,7 +107,7 @@ function onSendButtonClick(){
     newMessageBox.value = '';
 
     sendMessage(newMessage, function(){
-        sendButton.setAttribute('disabled', 'false');
+        sendButton.removeAttribute('disabled');
     });
 }
 
@@ -117,8 +120,10 @@ function sendMessage(message, continueWith){
 }
 
 function onEditClick(evtObj){
+    sendButton.setAttribute('disabled', 'disabled');
     var current = evtObj.target.shadowRoot.children[1];
     current.dataset.state = "edit"; 
+
 }
 
 function onEditComplete(evtObj){
@@ -132,15 +137,16 @@ function onEditComplete(evtObj){
     }
 
     ajax('PUT', appState.mainUrl, JSON.stringify(updatedMessage), function(){
-        
+        sendButton.removeAttribute('disabled');
     });
 }
 
 function onDeleteClick(evtObj){
+    sendButton.setAttribute('disabled', 'disabled');
     var current = evtObj.target;
 
     ajax('DELETE', appState.mainUrl + '/'  + 'delete(' + current.id + ')', null, function(){
-       
+       sendButton.removeAttribute('disabled');
     });
 }
 
